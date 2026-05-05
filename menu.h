@@ -1,2 +1,2 @@
 #pragma once
-extern void ShowMenu();
+extern void MainMenu();

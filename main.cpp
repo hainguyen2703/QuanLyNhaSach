@@ -1,6 +1,10 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <Windows.h>
+#include <iomanip>
+#include <ctime>
 #include "menu.h"
+#include "KhachHang.h"
 
 using namespace std;
 
@@ -12,7 +16,11 @@ int main()
 	SetConsoleCP(CP_UTF8);
 
 	/* Mở main menu */
-	ShowMenu();
+	//MainMenu();
+
+	KhachHang* kh = new KhachHang();
+
+	kh->XuatThongTin();
 	
 	return 0;
 }

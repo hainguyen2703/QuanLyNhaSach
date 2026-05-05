@@ -5,7 +5,7 @@
 using namespace std;
 
 /* Ham trinh chieu main menu */
-void ShowMenu()
+void MainMenu()
 {
 	cout <<"==============================" << endl; 
 	cout <<"|      Quản Lý Nhà Sách      |" << endl;
