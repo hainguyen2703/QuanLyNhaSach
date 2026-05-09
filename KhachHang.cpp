@@ -53,5 +53,6 @@ void KhachHang::XuatThongTin() const
 		<< "Số điện thoại: " << this->phone << endl
 		<< "Email: " << this->mail << endl
 		<< "Địa chỉ: " << this->address << endl
-		<< "Ngày đăng ký: " << getDateString(this->ngayDK) << endl;
+		<< "Ngày đăng ký: " << getDateString(this->ngayDK) << endl
+		<< "Loại thẻ" << this->type << endl;
 }
