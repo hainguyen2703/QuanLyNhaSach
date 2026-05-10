@@ -3,8 +3,10 @@
 #include <Windows.h>
 #include <iomanip>
 #include <ctime>
+#include <vector>
 #include "menu.h"
 #include "KhachHang.h"
+#include "users.h"
 
 #include "userRegister.h"
 
@@ -23,8 +25,17 @@ int main()
 	//KhachHang* kh = new KhachHang();
 
 	//kh->XuatThongTin();
+	UserManagement& Users = UserManagement::getInstance();
 
-	(void)createUser();
+	userMain();
+	
+	/* Xuất thông tin khách hàng */
+	vector<KhachHang*> danhSachKH = Users.getDanhSach();
+
+	for (KhachHang* kh : danhSachKH)
+	{
+		kh->XuatThongTin();
+	}
 	
 	return 0;
 }

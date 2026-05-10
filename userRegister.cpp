@@ -5,27 +5,21 @@
 #include "KhachHang.h"
 #include "common.h"
 #include "userRegister.h"
+#include "UserManagement.h"
 
 using namespace std;
 
 /* Static function prototype */
+static bool collectUserInfo(UserManagement& Users);
 
 /* Hàm yêu cầu user đưa input để tạo tài khoảng */
-bool createUser()
+bool collectUserInfo(UserManagement& Users)
 {
-	/* Thông tin cần điền: 
-	 * 1. Họ tên 
-	 * 2. Ngày tháng năm sinh
-	 * 3. Số điện thoại
-	 * 4. Mail
-	 * 5. Địa chỉ 
-	 * 6. Loại thẻ (Optional ??) */
-	string hoten;	/* Biến chứa tên khách hàng */
-
 	/* 1. Họ tên */
-	cout << setw(20) << setfill('*') << endl;
+	string hoten;	/* Biến chứa tên khách hàng */
+	cout << setw(20) << setfill('*') << "*" << endl;
 	cout << "Tạo tài khoảng" << endl;
-	cout << setw(20) << setfill('*') << endl;
+	cout << setw(20) << setfill('*') << "" << endl;
 	cout << "Họ tên khách hàng: " << endl;
 	getline(cin, hoten);
 	/* Kiểm tra nếu chuỗi input toàn khoảng trắng */
@@ -93,10 +87,28 @@ bool createUser()
 	cout << "Loại thẻ: ";
 	cin >> the;
 	cin.ignore(100, '\n');
-	if (the != 0 || the != 1)
+	if (the != 0 && the != 1)
 	{
 		cout << "Không hợp lệ!!" << endl;
 	}
 
+	KhachHang* newCustomer = new KhachHang(hoten, phone, mail, address, the);
+
+	Users.themKhachHang(newCustomer);
+
 	return true;
+}
+
+/* Hàm thu thập thông tin và tạo khách hàng mới */
+void createUser(UserManagement &Users)
+{
+	/* Thu thập thông tin */
+	if (collectUserInfo(Users) != true)
+	{
+		cout << "Tạo tài khoảng không thành công!!!\n";
+	}
+	else
+	{
+		cout << "Đã tạo tài khoảng thành công!!!" << endl;
+	}
 }

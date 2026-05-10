@@ -18,21 +18,14 @@ static int numOfUser;
 
 
 /* Hàm khởi tạo mặc định */
-KhachHang::KhachHang()
+KhachHang::KhachHang(string& name, string& phone, string& mail, string& address, int& type)
 {
-	cout << "Nhập vào tên khách hàng: ";
-	getline(cin, this->name);
-	cout << "Nhập vào số điện thoại: ";
-	getline(cin, this->phone);
-	cout << "Nhập vào mail khách hàng: ";
-	getline(cin, this->mail);
-	cout << "Nhập vào địa chỉ: ";
-	getline(cin, this->address);
-	cout << "Hạng khách hàng (0: Thường, 1: VIP): ";
-	cin >> this->type;
-
-	/* Xóa ký tự \n */
-	(void)getchar();
+	/* Set các thông tin đã collect từ trước */
+	setName(name);
+	setPhone(phone);
+	setMail(mail);
+	setAddress(address);
+	setType(type);
 
 	/* Lấy ngày hiện tại làm ngày đăng ký */
 	this->ngayDK = getCurrentDate();
@@ -43,16 +36,45 @@ KhachHang::KhachHang()
 	int replacePos = 8 - nextID.length();
 	baseID.replace(replacePos, nextID.length(), nextID);
 	this->id = "KH" + baseID;
+
+	/* Tạo khách hàng thành công, tăng một customer */
 	KhachHang::cntUserID++;
 }
 
 void KhachHang::XuatThongTin() const
 {
+	string loaiThe = (this->type == 1) ? "VIP" : "Thuong";
+
 	cout << "Mã số khách hàng: " << this->id << endl
 		<< "Tên khách hàng: " << this->name << endl
 		<< "Số điện thoại: " << this->phone << endl
 		<< "Email: " << this->mail << endl
 		<< "Địa chỉ: " << this->address << endl
 		<< "Ngày đăng ký: " << getDateString(this->ngayDK) << endl
-		<< "Loại thẻ" << this->type << endl;
+		<< "Loại thẻ: " << loaiThe << endl;
+}
+
+void KhachHang::setName(string& name)
+{
+	this->name = name;
+}
+void KhachHang::setPhone(string& phone)
+{
+	this->phone = phone;
+}
+void KhachHang::setMail(string& mail)
+{
+	this->mail = mail;
+}
+void KhachHang::setAddress(string& addr)
+{
+	this->address = addr;
+}
+void KhachHang::setDate(Date& date)
+{
+	this->ngayDK = date;
+}
+void KhachHang::setType(int type)
+{
+	this->type = type;
 }

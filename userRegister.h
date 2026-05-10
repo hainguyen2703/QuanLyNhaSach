@@ -1,2 +1,4 @@
 #pragma once
-bool createUser();
+#include "UserManagement.h"
+
+void createUser(UserManagement& Users);
