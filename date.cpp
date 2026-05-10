@@ -34,3 +34,27 @@ string getDateString(const Date& date)
 	/* return string dd/mm/yyyy */
 	return day + "/" + month + "/" + to_string(date.year);
 }
+
+/* Nạp chồng hàm >> cho Date */
+istream& operator>>(istream &in, Date& date)
+{
+	/* Biến dùng để tách ký tự / trong dd/mm/yyyy */
+	char sep1, sep2;
+
+	/* Lấy input từ istream */
+	in >> date.day >> sep1 >> date.month >> sep2 >> date.year;
+
+	/* Kiểm tra size day month year */
+	//bool sizeCheck = ((day.size() == 2 || day.size() == 1) && (month.size() == 2 || month.size() == 1) && year.size() == 4);
+	/* Kiểm tra format dd/mm/yyyy */
+	bool formatCheck = ((sep1 == '/' && sep2 == '/') || (sep1 == '-' && sep2 == '-'));
+
+	/* Check input */
+	if (!in || !formatCheck)
+	{
+		/* Set fail bit */
+		in.setstate(ios::failbit);
+	}
+
+	return in;
+}

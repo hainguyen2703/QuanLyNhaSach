@@ -6,6 +6,8 @@
 #include "menu.h"
 #include "KhachHang.h"
 
+#include "userRegister.h"
+
 using namespace std;
 
 int main()
@@ -18,9 +20,11 @@ int main()
 	/* Mở main menu */
 	//MainMenu();
 
-	KhachHang* kh = new KhachHang();
+	//KhachHang* kh = new KhachHang();
 
-	kh->XuatThongTin();
+	//kh->XuatThongTin();
+
+	(void)createUser();
 	
 	return 0;
 }

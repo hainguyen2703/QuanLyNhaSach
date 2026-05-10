@@ -135,6 +135,7 @@
     <ClInclude Include="Date.h" />
     <ClInclude Include="KhachHang.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="userRegister.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

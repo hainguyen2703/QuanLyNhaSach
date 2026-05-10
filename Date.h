@@ -1,4 +1,5 @@
 #pragma once
+#include <istream>
 #include <string>
 
 struct Date
@@ -8,5 +9,6 @@ struct Date
 	int year;
 };
 
-extern Date getCurrentDate();
-extern std::string getDateString(const Date& date);
+Date getCurrentDate();
+std::string getDateString(const Date& date);
+std::istream& operator>>(std::istream& in, Date& date);
