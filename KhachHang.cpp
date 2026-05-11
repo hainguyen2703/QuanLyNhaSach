@@ -17,7 +17,7 @@ int KhachHang::cntUserID = 0;
 static int numOfUser;
 
 
-/* Hàm khởi tạo mặc định */
+/* Hàm khởi tạo có tham số */
 KhachHang::KhachHang(string& name, string& phone, string& mail, string& address, int& type)
 {
 	/* Set các thông tin đã collect từ trước */

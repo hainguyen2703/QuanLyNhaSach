@@ -17,31 +17,15 @@ bool collectUserInfo(UserManagement& Users)
 {
 	/* 1. Họ tên */
 	string hoten;	/* Biến chứa tên khách hàng */
-	cout << setw(20) << setfill('*') << "*" << endl;
+	cout << setw(30) << setfill('*') << "*" << endl;
 	cout << "Tạo tài khoảng" << endl;
-	cout << setw(20) << setfill('*') << "" << endl;
+	cout << setw(30) << setfill('*') << "" << endl;
 	cout << "Họ tên khách hàng: ";
 	getline(cin, hoten);
 	/* Kiểm tra nếu chuỗi input toàn khoảng trắng */
 	if (isAllBlank(hoten)) return false;
 
-	/* 2. Ngày tháng năm sinh */
-	Date birth;
-	cout << "Ngày tháng năm sinh (dd/mm/yyyy): ";
-	cin >> birth;
-	/* Kiểm tra date input */
-	if (!cin)
-	{
-		cout << "Ngày sinh không hợp lệ!!" << endl;
-		/* Xóa fail bit */
-		cin.clear(); 
-		/* Clear input cache */
-		cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-	}
-
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
-
-	/* 3. Số điện thoại */
+	/* 2. Số điện thoại */
 	string phone;
 	cout << "Số điện thoại: ";
 	getline(cin, phone);
@@ -56,11 +40,11 @@ bool collectUserInfo(UserManagement& Users)
 		if (isdigit(c) == false)
 		{
 			cout << "Số điện thoại không hợp lệ" << endl;
-			break;
+			return false;
 		}
 	}
 
-	/* 4. Mail */
+	/* 3. Mail */
 	string mail;
 	cout << "Mail: ";
 	getline(cin, mail);
@@ -70,9 +54,10 @@ bool collectUserInfo(UserManagement& Users)
 		mail.rfind("@gmail.com") != (mail.size() - 10))
 	{
 		cout << "Địa chỉ mail không hợp lệ" << endl;
+		return false;
 	}
 
-	/* 5. Địa chỉ */
+	/* 4. Địa chỉ */
 	string address;
 	cout << "Địa chỉ: ";
 	getline(cin, address);
@@ -80,9 +65,10 @@ bool collectUserInfo(UserManagement& Users)
 	if (address.empty())
 	{
 		cout << "Địa chỉ không hợp lệ!!\n";
+		return false;
 	}
 
-	/* 6. Loại thẻ */
+	/* 5. Loại thẻ */
 	int the;
 	cout << "Loại thẻ: ";
 	cin >> the;
@@ -90,8 +76,10 @@ bool collectUserInfo(UserManagement& Users)
 	if (the != 0 && the != 1)
 	{
 		cout << "Không hợp lệ!!" << endl;
+		cout << "Mặc định hạng thẻ thường!!!" << endl;
 	}
 
+	/* Tạo user mới */
 	KhachHang* newCustomer = new KhachHang(hoten, phone, mail, address, the);
 
 	Users.themKhachHang(newCustomer);

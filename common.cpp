@@ -26,12 +26,20 @@ void clearInputCache()
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 }
 
-/* Hàm lấy lựa chọn chức năng muốn sử dụng */
+/* Hàm lấy lựa chọn chức năng muốn sử dụng 
+ * Nếu input không hợp lệ: trả về -1 */
 int getOption()
 {
 	int opt;
-
+	/* Lấy giá trị input */
 	cin >> opt;
+	/* Kiểm tra input có phải giá trị digit không */
+	if (cin.fail() == true)
+	{
+		/* Input không phải số nguyên */
+		cin.clear();	/* Xóa lỗi */
+		opt = -1;		/* Trả về - 1*/
+	}
 
 	/* Clear input cache */
 	clearInputCache();

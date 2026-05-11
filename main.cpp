@@ -26,21 +26,36 @@ int main()
 	SetConsoleOutputCP(CP_UTF8);
 	SetConsoleCP(CP_UTF8);
 
-	/* Mở main menu */
-	MainMenu();
-	cout << "Nhập vào chức năng: ";
-	int opt = getOption();
-
-	switch (opt)
+	/* Loop đến khi exit */
+	while (true)
 	{
-	case CUSTOMER_E: userMain(); break;	/* Quản lý khách hàng */
-	case BOOK_E: /* Quản lý sách */
-		break;
-	case BILL_E: /* Quản lý hóa đơn */
-		break;
-	case EXIT_E:
-		break;
+		/* Mở main menu */
+		MainMenu();
+		cout << "Nhập vào chức năng: ";
+		int opt = getOption();
+
+		/* Chọn chức năng */
+		switch (opt)
+		{
+			case CUSTOMER_E: userMain(); break;	/* Quản lý khách hàng */
+			case BOOK_E: /* Quản lý sách */
+				break;
+			case BILL_E: /* Quản lý hóa đơn */
+				break;
+			case EXIT_E:
+				break;
+			default:
+				cout << "Input không hợp lệ!!!" << endl;
+				break;
+		}
+
+		/* Kiểm tra nếu yêu cầu thoát */
+		if (opt == EXIT_E)
+			break;
 	}
+
+	cout << "Ghi dữ liệu..." << endl;
+	cout << "Shutdown..." << endl;
 
 	//KhachHang* kh = new KhachHang();
 
