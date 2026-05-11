@@ -3,3 +3,5 @@
 
 /* Function prototype */
 bool isAllBlank(const std::string str);
+void clearInputCache();
+int getOption();

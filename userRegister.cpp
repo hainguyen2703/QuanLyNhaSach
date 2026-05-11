@@ -20,7 +20,7 @@ bool collectUserInfo(UserManagement& Users)
 	cout << setw(20) << setfill('*') << "*" << endl;
 	cout << "Tạo tài khoảng" << endl;
 	cout << setw(20) << setfill('*') << "" << endl;
-	cout << "Họ tên khách hàng: " << endl;
+	cout << "Họ tên khách hàng: ";
 	getline(cin, hoten);
 	/* Kiểm tra nếu chuỗi input toàn khoảng trắng */
 	if (isAllBlank(hoten)) return false;

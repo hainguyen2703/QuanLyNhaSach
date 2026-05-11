@@ -1,16 +1,23 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include <iostream>
 #include <Windows.h>
-#include <iomanip>
-#include <ctime>
-#include <vector>
+#include <limits>
 #include "menu.h"
+#include "common.h"
 #include "KhachHang.h"
 #include "users.h"
+
 
 #include "userRegister.h"
 
 using namespace std;
+
+enum {
+	EXIT_E = 0,
+	CUSTOMER_E,
+	BOOK_E,
+	BILL_E
+};
 
 int main()
 {
@@ -20,22 +27,28 @@ int main()
 	SetConsoleCP(CP_UTF8);
 
 	/* Mở main menu */
-	//MainMenu();
+	MainMenu();
+	cout << "Nhập vào chức năng: ";
+	int opt = getOption();
+
+	switch (opt)
+	{
+	case CUSTOMER_E: userMain(); break;	/* Quản lý khách hàng */
+	case BOOK_E: /* Quản lý sách */
+		break;
+	case BILL_E: /* Quản lý hóa đơn */
+		break;
+	case EXIT_E:
+		break;
+	}
 
 	//KhachHang* kh = new KhachHang();
 
 	//kh->XuatThongTin();
-	UserManagement& Users = UserManagement::getInstance();
-
-	userMain();
 	
 	/* Xuất thông tin khách hàng */
-	vector<KhachHang*> danhSachKH = Users.getDanhSach();
+	//vector<KhachHang*> danhSachKH = Users.getDanhSach();
 
-	for (KhachHang* kh : danhSachKH)
-	{
-		kh->XuatThongTin();
-	}
 	
 	return 0;
 }
