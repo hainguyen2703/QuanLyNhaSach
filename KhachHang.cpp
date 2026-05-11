@@ -21,11 +21,11 @@ static int numOfUser;
 KhachHang::KhachHang(string& name, string& phone, string& mail, string& address, int& type)
 {
 	/* Set các thông tin đã collect từ trước */
-	setName(name);
-	setPhone(phone);
-	setMail(mail);
-	setAddress(address);
-	setType(type);
+	this->name = name;
+	this->phone = phone;
+	this->mail = mail;
+	this->address = address;
+	this->type = type;
 
 	/* Lấy ngày hiện tại làm ngày đăng ký */
 	this->ngayDK = getCurrentDate();
@@ -41,6 +41,7 @@ KhachHang::KhachHang(string& name, string& phone, string& mail, string& address,
 	KhachHang::cntUserID++;
 }
 
+/* Xuất thông tin khách hàng */
 void KhachHang::XuatThongTin() const
 {
 	string loaiThe = (this->type == 1) ? "VIP" : "Thuong";
@@ -52,29 +53,4 @@ void KhachHang::XuatThongTin() const
 		<< "Địa chỉ: " << this->address << endl
 		<< "Ngày đăng ký: " << getDateString(this->ngayDK) << endl
 		<< "Loại thẻ: " << loaiThe << endl;
-}
-
-void KhachHang::setName(string& name)
-{
-	this->name = name;
-}
-void KhachHang::setPhone(string& phone)
-{
-	this->phone = phone;
-}
-void KhachHang::setMail(string& mail)
-{
-	this->mail = mail;
-}
-void KhachHang::setAddress(string& addr)
-{
-	this->address = addr;
-}
-void KhachHang::setDate(Date& date)
-{
-	this->ngayDK = date;
-}
-void KhachHang::setType(int type)
-{
-	this->type = type;
 }
