@@ -25,7 +25,7 @@ public:
 	string getMail();
 	string getAddress();
 	Date getRegisterDate();
-	bool getType();
+	int getType();
 	void XuatThongTin() const;
 };
 

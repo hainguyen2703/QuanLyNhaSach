@@ -82,6 +82,7 @@ bool collectUserInfo(UserManagement& Users)
 	/* Tạo user mới */
 	KhachHang* newCustomer = new KhachHang(hoten, phone, mail, address, the);
 
+	/* Thêm user vào danh sách quản lý */
 	Users.themKhachHang(newCustomer);
 
 	return true;

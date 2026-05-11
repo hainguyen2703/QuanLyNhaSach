@@ -128,6 +128,7 @@
     <ClCompile Include="date.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
+    <ClCompile Include="storeData.cpp" />
     <ClCompile Include="userMain.cpp" />
     <ClCompile Include="UserManagement.cpp" />
     <ClCompile Include="userRegister.cpp" />
