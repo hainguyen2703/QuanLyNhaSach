@@ -7,9 +7,7 @@
 #include "KhachHang.h"
 #include "users.h"
 #include "storeData.h"
-
-
-#include "userRegister.h"
+#include "loadData.h"
 
 using namespace std;
 
@@ -26,6 +24,8 @@ int main()
 	/* Note: hiện mặc định hỗ trợ hệ điều hành Window */
 	SetConsoleOutputCP(CP_UTF8);
 	SetConsoleCP(CP_UTF8);
+
+	loadData();
 
 	/* Loop đến khi exit */
 	while (true)

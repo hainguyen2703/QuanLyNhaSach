@@ -31,13 +31,12 @@ void loadData()
 	int size = getFileSizeInByte(inputFile);
 
 	/* Mở được file => Lấy data */
-	char* line_c = new char[size];
-	inputFile.getline(line_c, size);
+	string line;
+	getline(inputFile, line);
 
-	/* Chuyển sang dạng string */
-	string line = line_c;
-	delete[] line_c;
+	cout << line << endl;
 
+	inputFile.close();
 }
 
 int getFileSizeInByte(ifstream& fileInput)
