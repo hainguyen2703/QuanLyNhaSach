@@ -54,3 +54,9 @@ void KhachHang::XuatThongTin() const
 		<< "Ngày đăng ký: " << getDateString(this->ngayDK) << endl
 		<< "Loại thẻ: " << loaiThe << endl;
 }
+
+/* Hàm sắp xếp dữ liệu để ghi file csv */
+string KhachHang::getCsvString()
+{
+	return id + "," + name + "," + phone + "," + mail + "," + address + "," + getDateCsvString(this->ngayDK) + "," + to_string(type);
+}

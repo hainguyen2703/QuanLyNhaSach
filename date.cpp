@@ -35,6 +35,17 @@ string getDateString(const Date& date)
 	return day + "/" + month + "/" + to_string(date.year);
 }
 
+/* Hàm trả về ngày/tháng/năm theo dạng string */
+string getDateCsvString(const Date& date)
+{
+	/* Tạo string ngày và tháng */
+	string day = (date.day > 9) ? to_string(date.day) : ("0" + to_string(date.day));
+	string month = (date.month > 9) ? to_string(date.month) : ("0" + to_string(date.month));
+
+	/* return string dd/mm/yyyy */
+	return to_string(date.year) + "-" + month + "-" + day;
+}
+
 /* Nạp chồng hàm >> cho Date */
 istream& operator>>(istream &in, Date& date)
 {

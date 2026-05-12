@@ -26,6 +26,7 @@ public:
 	string getAddress();
 	Date getRegisterDate();
 	int getType();
+	string getCsvString();
 	void XuatThongTin() const;
 };
 

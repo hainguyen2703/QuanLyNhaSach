@@ -126,6 +126,7 @@
     <ClCompile Include="common.cpp" />
     <ClCompile Include="KhachHang.cpp" />
     <ClCompile Include="date.cpp" />
+    <ClCompile Include="loadData.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="storeData.cpp" />
@@ -136,8 +137,11 @@
   <ItemGroup>
     <ClInclude Include="common.h" />
     <ClInclude Include="Date.h" />
+    <ClInclude Include="global.h" />
     <ClInclude Include="KhachHang.h" />
+    <ClInclude Include="loadData.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="storeData.h" />
     <ClInclude Include="UserManagement.h" />
     <ClInclude Include="userRegister.h" />
     <ClInclude Include="users.h" />

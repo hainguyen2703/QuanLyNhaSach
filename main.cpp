@@ -6,6 +6,7 @@
 #include "common.h"
 #include "KhachHang.h"
 #include "users.h"
+#include "storeData.h"
 
 
 #include "userRegister.h"
@@ -55,6 +56,7 @@ int main()
 	}
 
 	cout << "Ghi dữ liệu..." << endl;
+	storeCustomerData();
 	cout << "Shutdown..." << endl;
 
 	//KhachHang* kh = new KhachHang();
