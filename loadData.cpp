@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <sstream>
 #include "UserManagement.h"
 #include "loadData.h"
 #include "global.h"
@@ -9,6 +10,7 @@ using namespace std;
 
 /* Static function prototype */
 static int getFileSizeInByte(ifstream& fileInput);
+static KhachHang* TransferData(string& line);
 
 /* Hàm load data từ file csv */
 void loadData()
@@ -32,10 +34,12 @@ void loadData()
 
 	/* Mở được file => Lấy data */
 	string line;
-	getline(inputFile, line);
+	while (getline(inputFile, line))
+	{
+		(void)TransferData(line);
+	}	
 
-	cout << line << endl;
-
+	/* Đóng file */
 	inputFile.close();
 }
 
@@ -51,4 +55,25 @@ int getFileSizeInByte(ifstream& fileInput)
 	fileInput.seekg(0, ios::beg);
 
 	return fileSize;
+}
+
+KhachHang* TransferData(string& line)
+{
+	string id, name, phone, mail, address, date, type;
+	stringstream ss(line);
+	string info;
+
+	vector<string> attribute;
+
+	while (getline(ss, info, ',')) {
+		attribute.push_back(info);
+	}
+
+	for (string str : attribute)
+	{
+		cout << str << ",";
+	}
+	cout << endl;
+
+	return nullptr;
 }
