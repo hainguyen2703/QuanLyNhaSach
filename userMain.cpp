@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include "KhachHang.h"
 #include "UserManagement.h"
 #include "userRegister.h"
 #include "users.h"
@@ -12,8 +11,6 @@ using namespace std;
 /* Hàm main của việc quản lý khách hàng */
 void userMain()
 {
-	UserManagement& Users = UserManagement::getInstance();
-
 	/* Loop đến khi yêu cầu dừng */
 	while (true)
 	{
@@ -25,7 +22,7 @@ void userMain()
 		switch (opt)
 		{
 		case LIST_E:
-		case ADD_E: createUser(Users); break;	/* Thêm khách hàng mới */
+		case ADD_E: createUser(); break;	/* Thêm khách hàng mới */
 		case MOD_E:
 		case DEL_E:
 		case FIND_NUM:

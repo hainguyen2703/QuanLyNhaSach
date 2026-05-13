@@ -6,6 +6,7 @@
 
 using namespace std;
 
+/* Hàm lưu thông tin customer xuống file csv */
 void storeCustomerData()
 {
 	cout << "Tiến hành lưu thông tin khách hàng..." << endl;

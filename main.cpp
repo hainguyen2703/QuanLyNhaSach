@@ -9,8 +9,6 @@
 #include "storeData.h"
 #include "loadData.h"
 
-#include "UserManagement.h"
-
 using namespace std;
 
 enum {
@@ -27,16 +25,8 @@ int main()
 	SetConsoleOutputCP(CP_UTF8);
 	SetConsoleCP(CP_UTF8);
 
+	/* load dữ liệu từ csv */
 	loadData();
-
-	UserManagement& Users = UserManagement::getInstance();
-
-	for (KhachHang* kh : Users.getDanhSach())
-	{
-		kh->XuatThongTin();
-	}
-
-	cout << "Tổng số lượng active account trong hệ thống: " << Users.getSoLuongKH() << endl;
 
 	/* Loop đến khi exit */
 	while (true)
@@ -67,16 +57,9 @@ int main()
 	}
 
 	cout << "Ghi dữ liệu..." << endl;
+	/* Ghi dữ liệu xuống file csv */
 	storeCustomerData();
 	cout << "Shutdown..." << endl;
-
-	//KhachHang* kh = new KhachHang();
-
-	//kh->XuatThongTin();
-	
-	/* Xuất thông tin khách hàng */
-	//vector<KhachHang*> danhSachKH = Users.getDanhSach();
-
 	
 	return 0;
 }

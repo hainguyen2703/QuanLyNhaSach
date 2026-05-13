@@ -1,6 +1,5 @@
 #include <iostream>
 #include "KhachHang.h"
-#include "Date.h"
 
 using namespace std;
 
@@ -15,7 +14,6 @@ int KhachHang::cntUserID = 0;
 
 /* Khởi tạo giá trị ban đầu cho biến numOfUser */
 static int numOfUser;
-
 
 /* Hàm khởi tạo có tham số */
 KhachHang::KhachHang(string& name, string& phone, string& mail, string& address, int& type)
@@ -101,7 +99,9 @@ void KhachHang::XuatThongTin() const
 }
 
 /* Hàm sắp xếp dữ liệu để ghi file csv */
+/* Thứ tự: ID, name, phone, mail, date (yyyy-mm-dd), type (string), address 
+ * Lưu address cuối để không quan tâm đến các dầu phẩy trong phần address */
 string KhachHang::getCsvString()
 {
-	return id + "," + name + "," + phone + "," + mail + "," + address + "," + getDateCsvString(this->ngayDK) + "," + to_string(type);
+	return id + "|" + name + "|" + phone + "|" + mail + '|' + address + "|" + getDateCsvString(this->ngayDK) + "|" + to_string(type);
 }

@@ -89,8 +89,10 @@ bool collectUserInfo(UserManagement& Users)
 }
 
 /* Hàm thu thập thông tin và tạo khách hàng mới */
-void createUser(UserManagement &Users)
+void createUser()
 {
+	UserManagement& Users = UserManagement::getInstance();
+
 	/* Thu thập thông tin */
 	if (collectUserInfo(Users) != true)
 	{

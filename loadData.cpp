@@ -71,10 +71,19 @@ KhachHang* CollectCustomerData(string& line)
 
 	stringstream ss(line);
 	string info;
+	int item_cnt = 0;
 
 	/* Tách dòng string theo delmi là dấu phẩy */
-	while (getline(ss, info, ',')) {
+	while (getline(ss, info, '|')) {
 		attribute.push_back(info);
+
+		/* Đọc đến thông tin address thì thoát hẳn */
+		if (++item_cnt == 6)
+		{
+			getline(ss, info);
+			attribute.push_back(info);
+			break;
+		}
 	}
 
 	int type = (attribute[6] == "1") ? 1 : 0;
