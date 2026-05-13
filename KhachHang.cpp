@@ -33,13 +33,58 @@ KhachHang::KhachHang(string& name, string& phone, string& mail, string& address,
 	/* Set ID */
 	string baseID = "00000000";
 	string nextID = to_string(KhachHang::cntUserID + 1);
-	int replacePos = 8 - nextID.length();
+	size_t replacePos = 8 - nextID.length();
 	baseID.replace(replacePos, nextID.length(), nextID);
 	this->id = "KH" + baseID;
 
 	/* Tạo khách hàng thành công, tăng một customer */
 	KhachHang::cntUserID++;
 }
+
+/********************************* Hàm set attribute **************************************/
+/* Hàm set ID */
+void KhachHang::setID(string& id)
+{
+	this->id = id;
+}
+
+/* Hàm set name */
+void KhachHang::setName(string& name)
+{
+	this->name = name;
+}
+
+/* Ham set phone */
+void KhachHang::setPhone(string& phone)
+{
+	this->phone = phone;
+}
+
+/* Ham set mail */
+void KhachHang::setMail(string& mail)
+{
+	this->mail = mail;
+}
+
+/* Ham set address */
+void KhachHang::setAddress(string& adr)
+{
+	this->address = adr;
+}
+
+/* Ham set Date */
+void KhachHang::setDate(Date& date)
+{
+	this->ngayDK = date;
+}
+
+/* Ham set type */
+void KhachHang::setType(int& type)
+{
+	this->type = type;
+}
+/*****************************************************************************************/
+
 
 /* Xuất thông tin khách hàng */
 void KhachHang::XuatThongTin() const

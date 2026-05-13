@@ -10,7 +10,7 @@ using namespace std;
 
 /* Static function prototype */
 static int getFileSizeInByte(ifstream& fileInput);
-static KhachHang* TransferData(string& line);
+static KhachHang* CollectCustomerData(string& line);
 
 /* Hàm load data từ file csv */
 void loadData()
@@ -36,13 +36,20 @@ void loadData()
 	string line;
 	while (getline(inputFile, line))
 	{
-		(void)TransferData(line);
-	}	
+		KhachHang* kh = CollectCustomerData(line);
+
+		/* Thêm khách hàng vào vector */
+		if (kh != nullptr)
+		{
+			Users.themKhachHang(kh);
+		}
+	}
 
 	/* Đóng file */
 	inputFile.close();
 }
 
+/* Lấy size của file cần đọc */
 int getFileSizeInByte(ifstream& fileInput)
 {
 	/* Lấy vị trí đầu file */
@@ -57,23 +64,26 @@ int getFileSizeInByte(ifstream& fileInput)
 	return fileSize;
 }
 
-KhachHang* TransferData(string& line)
+/* Hàm tách string thành customer data */
+KhachHang* CollectCustomerData(string& line)
 {
-	string id, name, phone, mail, address, date, type;
+	vector<string> attribute;
+
 	stringstream ss(line);
 	string info;
 
-	vector<string> attribute;
-
+	/* Tách dòng string theo delmi là dấu phẩy */
 	while (getline(ss, info, ',')) {
 		attribute.push_back(info);
 	}
 
-	for (string str : attribute)
-	{
-		cout << str << ",";
-	}
-	cout << endl;
+	int type = (attribute[6] == "1") ? 1 : 0;
+	Date date = getDateFromString(attribute[5]);
 
-	return nullptr;
+	KhachHang* kh = new KhachHang(attribute[1], attribute[2], attribute[3], attribute[4], type);
+
+	kh->setID(attribute[0]);
+	kh->setDate(date);
+
+	return kh;
 }

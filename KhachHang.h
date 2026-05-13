@@ -19,12 +19,19 @@ private:
 
 public:
 	KhachHang(string &name, string &phone, string &mail, string &address, int &type);	//Hàm khởi tạo có tham số
+	void setID(string& id);
 	string getID();
+	void setName(string& name);
 	string getName();
+	void setPhone(string& phone);
 	string getPhone();
+	void setMail(string& mail);
 	string getMail();
+	void setAddress(string& adr);
 	string getAddress();
+	void setDate(Date& date);
 	Date getRegisterDate();
+	void setType(int& type);
 	int getType();
 	string getCsvString();
 	void XuatThongTin() const;

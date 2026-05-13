@@ -2,7 +2,6 @@
 #include <iostream>
 #include <ctime>
 #include <iomanip>
-#include <string>
 #include "Date.h"
 
 using namespace std;
@@ -33,6 +32,21 @@ string getDateString(const Date& date)
 
 	/* return string dd/mm/yyyy */
 	return day + "/" + month + "/" + to_string(date.year);
+}
+
+Date getDateFromString(const string &str)
+{
+	string year = str.substr(0, 4);
+	string month = str.substr(5, 2);
+	string day = str.substr(8, 2);
+	
+	/* Set date*/
+	Date date;
+	date.day = stoi(day);
+	date.month = stoi(month);
+	date.year = stoi(year);
+
+	return date;
 }
 
 /* Hàm trả về ngày/tháng/năm theo dạng string */

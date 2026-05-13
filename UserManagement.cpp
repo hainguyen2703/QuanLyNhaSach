@@ -23,6 +23,7 @@ vector<KhachHang*>& UserManagement::getDanhSach() {
     return this->danhSach;
 }
 
+/* Lấy số lượng active account */
 int UserManagement::getSoLuongKH()
 {
     return soLuong;
