@@ -21,8 +21,8 @@ void userMain()
 
 		switch (opt)
 		{
-		case LIST_E:
-		case ADD_E: createUser(); break;	/* Thêm khách hàng mới */
+		case LIST_E: UserManagement::getInstance().XuatDanhSachKH(); break;	/* Xuất tất cả khách hàng có trong hệ thống */
+		case ADD_E: createUser(); break;			/* Thêm khách hàng mới */
 		case MOD_E:
 		case DEL_E:
 		case FIND_NUM:

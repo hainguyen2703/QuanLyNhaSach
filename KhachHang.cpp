@@ -70,8 +70,8 @@ void KhachHang::setAddress(string& adr)
 	this->address = adr;
 }
 
-/* Ham set Date */
-void KhachHang::setDate(Date& date)
+/* Ham set RegisterDate */
+void KhachHang::setRegisterDate(Date& date)
 {
 	this->ngayDK = date;
 }
@@ -83,6 +83,50 @@ void KhachHang::setType(int& type)
 }
 /*****************************************************************************************/
 
+
+/********************************* Hàm get attribute *************************************/
+/* Hàm get ID */
+string KhachHang::getID()
+{
+	return this->id;
+}
+
+/* Hàm get name */
+string KhachHang::getName()
+{
+	return this->name;
+}
+
+/* Ham get phone */
+string KhachHang::getPhone()
+{
+	return this->phone;
+}
+
+/* Ham get mail */
+string KhachHang::getMail()
+{
+	return this->mail;
+}
+
+/* Ham get address */
+string KhachHang::getAddress()
+{
+	return this->address;
+}
+
+/* Ham get Date */
+Date KhachHang::getRegisterDate()
+{
+	return this->ngayDK;
+}
+
+/* Ham get type */
+int KhachHang::getType()
+{
+	return this->type;
+}
+/*****************************************************************************************/
 
 /* Xuất thông tin khách hàng */
 void KhachHang::XuatThongTin() const

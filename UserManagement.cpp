@@ -1,3 +1,4 @@
+#include <iostream>
 #include <vector>
 #include "UserManagement.h"
 
@@ -27,4 +28,14 @@ vector<KhachHang*>& UserManagement::getDanhSach() {
 int UserManagement::getSoLuongKH()
 {
     return soLuong;
+}
+
+void UserManagement::XuatDanhSachKH()
+{
+    /* Xuất thông tin của khách hàng */
+    for (KhachHang* kh : this->danhSach)
+    { 
+        cout << kh->getID() << '|' << kh->getName() << "|" << kh->getPhone() << '|' << kh->getMail() << '|';
+        cout << kh->getAddress() << '|' << getDateString(kh->getRegisterDate()) << '|' << kh->getType() << endl;
+    }
 }

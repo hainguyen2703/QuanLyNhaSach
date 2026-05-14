@@ -10,10 +10,10 @@
 using namespace std;
 
 /* Static function prototype */
-static bool collectUserInfo(UserManagement& Users);
+static KhachHang* collectUserInfo();
 
 /* Hàm yêu cầu user đưa input để tạo tài khoảng */
-bool collectUserInfo(UserManagement& Users)
+KhachHang* collectUserInfo()
 {
 	/* 1. Họ tên */
 	string hoten;	/* Biến chứa tên khách hàng */
@@ -23,7 +23,7 @@ bool collectUserInfo(UserManagement& Users)
 	cout << "Họ tên khách hàng: ";
 	getline(cin, hoten);
 	/* Kiểm tra nếu chuỗi input toàn khoảng trắng */
-	if (isAllBlank(hoten)) return false;
+	if (isAllBlank(hoten)) return nullptr;
 
 	/* 2. Số điện thoại */
 	string phone;
@@ -33,6 +33,7 @@ bool collectUserInfo(UserManagement& Users)
 	if (phone.size() != 10 || phone[0] != '0')
 	{
 		cout << "Số điện thoại không hợp lệ";
+		return nullptr;
 	}
 	/* Kiểm tra nếu input chứa ký tự khác chữ số */
 	for (char c : phone)
@@ -40,7 +41,7 @@ bool collectUserInfo(UserManagement& Users)
 		if (isdigit(c) == false)
 		{
 			cout << "Số điện thoại không hợp lệ" << endl;
-			return false;
+			return nullptr;
 		}
 	}
 
@@ -50,11 +51,11 @@ bool collectUserInfo(UserManagement& Users)
 	getline(cin, mail);
 	/* Kiểm tra mail input */
 	/* Mail không có @gmail.com và @gmail.com không phải là chuỗi kết thúc */
-	if (mail.size() <= 10 || 
+	if (mail.size() <= 10 ||
 		mail.rfind("@gmail.com") != (mail.size() - 10))
 	{
 		cout << "Địa chỉ mail không hợp lệ" << endl;
-		return false;
+		return nullptr;
 	}
 
 	/* 4. Địa chỉ */
@@ -65,7 +66,7 @@ bool collectUserInfo(UserManagement& Users)
 	if (address.empty())
 	{
 		cout << "Địa chỉ không hợp lệ!!\n";
-		return false;
+		return nullptr;
 	}
 
 	/* 5. Loại thẻ */
@@ -77,15 +78,13 @@ bool collectUserInfo(UserManagement& Users)
 	{
 		cout << "Không hợp lệ!!" << endl;
 		cout << "Mặc định hạng thẻ thường!!!" << endl;
+		the = 0;
 	}
 
 	/* Tạo user mới */
 	KhachHang* newCustomer = new KhachHang(hoten, phone, mail, address, the);
 
-	/* Thêm user vào danh sách quản lý */
-	Users.themKhachHang(newCustomer);
-
-	return true;
+	return newCustomer;
 }
 
 /* Hàm thu thập thông tin và tạo khách hàng mới */
@@ -94,12 +93,16 @@ void createUser()
 	UserManagement& Users = UserManagement::getInstance();
 
 	/* Thu thập thông tin */
-	if (collectUserInfo(Users) != true)
+	KhachHang* newUser = collectUserInfo();
+
+	/* Nếu có lỗi trong quá trình thu thập thông tin */
+	if (newUser == nullptr)
 	{
 		cout << "Tạo tài khoảng không thành công!!!\n";
 	}
 	else
 	{
+		Users.themKhachHang(newUser);
 		cout << "Đã tạo tài khoảng thành công!!!" << endl;
 	}
 }

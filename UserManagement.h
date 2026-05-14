@@ -18,5 +18,6 @@ public:
     void themKhachHang(KhachHang* kh);
     std::vector<KhachHang*>& getDanhSach();
     static int getSoLuongKH();
+    void XuatDanhSachKH();
 };
 

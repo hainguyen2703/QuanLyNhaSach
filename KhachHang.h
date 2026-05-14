@@ -29,7 +29,7 @@ public:
 	string getMail();
 	void setAddress(string& adr);
 	string getAddress();
-	void setDate(Date& date);
+	void setRegisterDate(Date& date);
 	Date getRegisterDate();
 	void setType(int& type);
 	int getType();

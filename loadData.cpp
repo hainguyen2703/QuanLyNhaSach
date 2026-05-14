@@ -10,7 +10,7 @@ using namespace std;
 
 /* Static function prototype */
 static int getFileSizeInByte(ifstream& fileInput);
-static KhachHang* CollectCustomerData(string& line);
+static KhachHang* loadCustomerData(string& line);
 
 /* Hàm load data từ file csv */
 void loadData()
@@ -36,7 +36,7 @@ void loadData()
 	string line;
 	while (getline(inputFile, line))
 	{
-		KhachHang* kh = CollectCustomerData(line);
+		KhachHang* kh = loadCustomerData(line);
 
 		/* Thêm khách hàng vào vector */
 		if (kh != nullptr)
@@ -65,7 +65,7 @@ int getFileSizeInByte(ifstream& fileInput)
 }
 
 /* Hàm tách string thành customer data */
-KhachHang* CollectCustomerData(string& line)
+KhachHang* loadCustomerData(string& line)
 {
 	vector<string> attribute;
 
@@ -74,25 +74,24 @@ KhachHang* CollectCustomerData(string& line)
 	int item_cnt = 0;
 
 	/* Tách dòng string theo delmi là dấu phẩy */
-	while (getline(ss, info, '|')) {
+	while (getline(ss, info, '|')) 
+	{
 		attribute.push_back(info);
-
-		/* Đọc đến thông tin address thì thoát hẳn */
-		if (++item_cnt == 6)
-		{
-			getline(ss, info);
-			attribute.push_back(info);
-			break;
-		}
 	}
 
+	/* Convert type sang int */
 	int type = (attribute[6] == "1") ? 1 : 0;
+	
+	/* Convert string sang Date */
 	Date date = getDateFromString(attribute[5]);
 
+	/* Tạo khách hàng */
 	KhachHang* kh = new KhachHang(attribute[1], attribute[2], attribute[3], attribute[4], type);
 
+	/* Set thông tin ID và ngày đăng ký */
 	kh->setID(attribute[0]);
-	kh->setDate(date);
+	kh->setRegisterDate(date);
 
+	/* Trả về con trỏ khách hàng */
 	return kh;
 }
