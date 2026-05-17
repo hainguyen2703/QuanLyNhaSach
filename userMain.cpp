@@ -41,3 +41,8 @@ void userMain()
 
 	/* Xuất thông tin khách hàng */
 }
+
+void XuatListKH()
+{
+
+}

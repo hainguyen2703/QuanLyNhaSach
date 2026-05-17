@@ -39,6 +39,7 @@ public:
 	Date getRegisterDate();
 	void setType(int& type);
 	int getType();
+	string getLoaiThe() const;
 	string getCsvString();
 	void XuatThongTin() const;
 };

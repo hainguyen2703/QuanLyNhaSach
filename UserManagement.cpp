@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <iomanip>
 #include "UserManagement.h"
 
 using namespace std;
@@ -29,12 +30,25 @@ int UserManagement::getSoLuongKH()
 /* Hàm xuất danh sách khách hàng trong hệ thống */
 void UserManagement::XuatDanhSachKH()
 {
+    /* Tạo khung */
+    cout << setfill('_') << setw(70) << "" << endl;
+    cout << left << setfill(' ') 
+        << setw(15) << "|ID"
+        << setw(15) << "|Class"
+        << setw(15) << "|Phone"
+        << "|Tên khách hàng" << endl;
+	cout << setfill('_') << setw(70) << "" << endl;
+
     /* Xuất thông tin của khách hàng */
     for (KhachHang* kh : this->danhSach)
     { 
-        cout << kh->getID() << '|' << kh->getName() << "|" << kh->getPhone() << '|' << kh->getMail() << '|';
-        cout << kh->getAddress() << '|' << getDateString(kh->getRegisterDate()) << '|' << kh->getType() << endl;
+        cout << left << setfill(' ')
+            << "|" << setw(14) << kh->getID()
+            << "|" << setw(14) << kh->getLoaiThe()
+            << "|" << setw(14) << kh->getPhone()
+            << "|" << kh->getName() << endl;
     }
+    cout << setfill('_') << setw(70) << "" << endl;
 }
 
 /* Hàm tìm kiếm theo số điện thoại */

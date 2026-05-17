@@ -120,12 +120,18 @@ int KhachHang::getType()
 {
 	return this->type;
 }
+
+/* Hàm get loại thẻ */
+string KhachHang::getLoaiThe() const
+{
+	return (this->type == 1) ? "VIP" : "Normal";
+}
 /*****************************************************************************************/
 
 /* Xuất thông tin khách hàng */
 void KhachHang::XuatThongTin() const
 {
-	string loaiThe = (this->type == 1) ? "VIP" : "Thuong";
+	string loaiThe = getLoaiThe();
 
 	cout << "Mã số khách hàng: " << this->id << endl
 		<< "Tên khách hàng: " << this->name << endl
