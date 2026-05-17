@@ -75,8 +75,6 @@ KhachHang* collectUserInfo()
 /* Hàm thu thập thông tin và tạo khách hàng mới */
 void createUser()
 {
-	UserManagement& Users = UserManagement::getInstance();
-
 	/* Thu thập thông tin */
 	KhachHang* newUser = collectUserInfo();
 
@@ -87,7 +85,7 @@ void createUser()
 	}
 	else
 	{
-		Users.themKhachHang(newUser);
+		UserManagement::getInstance().themKhachHang(newUser);
 		cout << "Đã tạo tài khoảng thành công!!!" << endl;
 	}
 }

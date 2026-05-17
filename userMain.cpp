@@ -19,30 +19,28 @@ void userMain()
 		cout << "Nhập vào chức năng: ";
 		int opt = getOption();
 
+		/* Thực hiện chức năng tương ứng */
 		switch (opt)
 		{
-		case LIST_E: UserManagement::getInstance().XuatDanhSachKH(); break;	/* Xuất tất cả khách hàng có trong hệ thống */
-		case ADD_E: createUser(); break;			/* Thêm khách hàng mới */
-		case MOD_E:
-		case DEL_E:
-		case FIND_NUM:
-		case FIND_NAME:
-		case BACK_E:
-			break;
+			case LIST_E: UserManagement::getInstance().XuatDanhSachKH(); break;	/* Xuất tất cả khách hàng có trong hệ thống */
+			case ADD_E: createUser(); break;									/* Thêm khách hàng mới */
+			case MOD_E: 
+			case DEL_E: deleteUser(); break;									/* Xóa khách hàng */
+			case FIND_NUM:
+			case FIND_NAME:
+			case BACK_E:
+				break;
 		}
 
+		/* Back về main menu*/
 		if (opt == BACK_E)
 		{
 			break;
 		}
 	}
-
-	//cout << "Số lượng khách hàng trong hệ thống: " << UserManagement::getSoLuongKH() << endl;
-
-	/* Xuất thông tin khách hàng */
 }
 
-void XuatListKH()
+void deleteUser()
 {
 
 }
