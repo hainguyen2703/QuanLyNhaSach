@@ -34,8 +34,16 @@ void loadData()
 
 	/* Mở được file => Lấy data */
 	string line;
+	bool bomChecked = false;
 	while (getline(inputFile, line))
 	{
+		/* Xóa BOM ở line đầu tiên trong file */
+		if (!bomChecked)
+		{
+			line.erase(line.begin(), line.begin() + 3);	/* Xóa BOM nếu có */
+			bomChecked = true;
+		}
+
 		KhachHang* kh = loadCustomerData(line);
 
 		/* Thêm khách hàng vào vector */

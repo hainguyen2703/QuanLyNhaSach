@@ -3,12 +3,6 @@
 
 using namespace std;
 
-enum
-{
-	THUONG = 0,
-	VIP = 1
-};
-
 /* Khởi tạo giá trị ban đầu cho biến Class */
 int KhachHang::cntUserID = 0;
 

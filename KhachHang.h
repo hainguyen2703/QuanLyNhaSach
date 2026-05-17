@@ -4,6 +4,12 @@
 
 using namespace std;
 
+enum
+{
+	THUONG = 0,
+	VIP
+};
+
 class KhachHang
 {
 private:
