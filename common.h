@@ -7,3 +7,4 @@ void clearInputCache();
 int getOption();
 std::string toUpper(const std::string& str);
 std::string toLower(const std::string& str);
+std::string toLowerUtf8(const std::string& str);

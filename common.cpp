@@ -2,6 +2,12 @@
 #include <algorithm>
 #include <cctype>
 #include "common.h"
+
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include "Windows.h"
+
 using namespace std;
 
 /* Kiểm tra string input toàn space, tab hoặc newline */
@@ -62,4 +68,22 @@ string toLower(const string& str)
 	string result = str;
 	transform(result.begin(), result.end(), result.begin(), [](unsigned char c) { return std::tolower(c); });
 	return result;
+}
+
+/* Hàm convert to lower case cho UTF-8 */
+string toLowerUtf8(const string& str) {
+	// UTF-8 → UTF-16
+	int len = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, nullptr, 0);
+	wstring wstr(len, 0);
+	MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, &wstr[0], len);
+
+	// tolower Unicode
+	CharLowerBuffW(&wstr[0], wstr.size());
+
+	// UTF-16 → UTF-8
+	int outLen = WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);
+	string out(outLen, 0);
+	WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, &out[0], outLen, nullptr, nullptr);
+
+	return out;
 }
