@@ -93,7 +93,10 @@ int UserManagement::findName(const string& name)
 {
     for (int index = 0; index < this->danhSach.size(); index++)
     {
-        if (danhSach[index]->getName() == name)
+        /* Đổi tên thành lowercase */
+        string tmp = toLowerUtf8(danhSach[index]->getName());
+        /* So sánh tên */
+        if (tmp == name)
         {
             /* Tìm thấy, trả về index */
             return index;

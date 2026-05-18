@@ -124,6 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="common.cpp" />
+    <ClCompile Include="editUser.cpp" />
     <ClCompile Include="KhachHang.cpp" />
     <ClCompile Include="date.cpp" />
     <ClCompile Include="loadData.cpp" />

@@ -20,8 +20,8 @@ enum {
 
 /* Static Functions Prototype  */
 static void deleteUser();
-static bool ktUserID(const string& id);
 static void findUserPhone();
+static void findUserName();
 
 /* Hàm main của việc quản lý khách hàng */
 void userMain()
@@ -37,12 +37,12 @@ void userMain()
 		/* Thực hiện chức năng tương ứng */
 		switch (opt)
 		{
-			case LIST_USER_E: UserManagement::getInstance().XuatDanhSachKH(); break;	/* Xuất tất cả khách hàng có trong hệ thống */
+			case LIST_USER_E: UserManagement::getInstance().XuatDanhSachKH(); break;/* Xuất tất cả khách hàng có trong hệ thống */
 			case ADD_USER_E: createUser(); break;									/* Thêm khách hàng mới */
-			case MOD_USER_E: 
+			case MOD_USER_E: editUser(); break;										/* Chỉnh sửa thông tin khách hàng */
 			case DEL_USER_E: deleteUser(); break;									/* Xóa khách hàng */
 			case FIND_USER_NUM: findUserPhone(); break;								/* Tìm kiếm khách hàng theo số điện thoại */
-			case FIND_USER_NAME:
+			case FIND_USER_NAME: findUserName(); break;								/* Tìm kiếm khách hàng theo tên khách hàng */
 			case BACK_TO_MAIN:
 				break;
 		}
@@ -53,26 +53,6 @@ void userMain()
 			break;
 		}
 	}
-}
-
-/* Kiểm tra xem User ID có hợp lệ hay không */
-bool ktUserID(const string &id)
-{
-	/* Kiểm tra id empty hoặc size không đủ */
-	if (id.empty() || id.size() != 10)
-	{
-		return false;
-	}
-
-	/* Kiểm tra ID có bắt đầu bằng KH */
-	string tmp = toUpper(id);
-
-	if (tmp.find_first_of("KH") != 0)
-	{
-		return false;
-	}
-
-	return true;
 }
 
 /* Xóa Khách Hàng theo Mã KH  */
@@ -135,5 +115,41 @@ void findUserPhone()
 	else
 	{
 		cout << "Không tìm thấy khách hàng" << endl;
+	}
+}
+
+/* Hàm tìm khách hàng theo tên */
+void findUserName()
+{
+	string name;
+	cout << "Nhập vào tên khách hàng cần tìm: ";
+	getline(cin, name);
+
+	/* Kiểm tra input hợp lệ */
+	if (name.empty())
+	{
+		cout << "Tên không hợp lệ!!!\n";
+		return;
+	}
+
+	/* Convert về lowercase */
+	name = toLowerUtf8(name);
+
+	/* Lấy Users */
+	UserManagement& Users = UserManagement::getInstance();
+
+	int index = Users.findName(name);
+
+	if (index == -1)
+	{
+		cout << "Không tìm thấy khách hàng" << endl;
+	}
+	else
+	{
+		cout << setfill('=') << setw(42) << "" << endl;
+		cout << setfill(' ') << setw(12) << "" << "Thông tin khách hàng" << endl;
+		cout << setfill('=') << setw(42) << "" << endl;
+		/* Tìm thấy khách hàng, xuất thông tin */
+		Users.getDanhSach()[index]->XuatThongTin();
 	}
 }

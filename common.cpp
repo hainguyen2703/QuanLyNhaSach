@@ -2,6 +2,13 @@
 #include <algorithm>
 #include <cctype>
 #include "common.h"
+#include "UserManagement.h"
+
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include "Windows.h"
+
 using namespace std;
 
 /* Kiểm tra string input toàn space, tab hoặc newline */
@@ -48,6 +55,84 @@ int getOption()
 	return opt;
 }
 
+/* Kiểm tra xem User ID có hợp lệ hay không */
+bool ktUserID(const string& id)
+{
+	/* Kiểm tra id empty hoặc size không đủ */
+	if (id.empty() || id.size() != 10)
+	{
+		return false;
+	}
+
+	/* Kiểm tra ID có bắt đầu bằng KH */
+	string tmp = toUpper(id);
+
+	if (tmp.find_first_of("KH") != 0)
+	{
+		return false;
+	}
+
+	return true;
+}
+
+/* Hàm kiểm tra số điện thoại hợp lệ hay không */
+bool phoneValidate(const string& phone)
+{
+	/* Kiểm tra phone input có đủ 10 chữ số */
+	if (phone.size() != 10 || phone[0] != '0')
+	{
+		cout << "Số điện thoại không hợp lệ";
+		return false;
+	}
+
+	/* Kiểm tra nếu input chứa ký tự khác chữ số */
+	for (char c : phone)
+	{
+		if (isdigit(c) == false)
+		{
+			cout << "Số điện thoại không hợp lệ" << endl;
+			return false;
+		}
+	}
+
+	/* Kiểm tra số điện thoại đã được đăng ký chưa */
+	if (UserManagement::getInstance().findPhone(phone) != -1)
+	{
+		cout << "Số điện thoại đã được đăng ký!!!" << endl;
+		return false;
+	}
+
+	return true;
+}
+
+/* Hàm kiểm tra mail input */
+bool mailValidate(const string& mail)
+{
+	/* Mail không có @gmail.com và @gmail.com không phải là chuỗi kết thúc */
+	if (mail.size() <= 10)
+	{
+		cout << "Địa chỉ mail không hợp lệ" << endl;
+		return false;
+	}
+
+	string tmp = toLower(mail);
+	if (tmp.rfind("@gmail.com") != (mail.size() - 10))
+	{
+		cout << "Địa chỉ mail không hợp lệ" << endl;
+		return false;
+	}
+
+	/* Kiểm tra xem mail đã được đăng ký chưa */
+	if (UserManagement::getInstance().findMail(tmp) != -1)
+	{
+		cout << "Địa chỉ mail đã được đăng ký!!!" << endl;
+		return false;
+	}
+
+	/* Hợp lệ */
+	return true;
+}
+
 /* Hàm convert string về uppercase */
 string toUpper(const string& str)
 {
@@ -62,4 +147,22 @@ string toLower(const string& str)
 	string result = str;
 	transform(result.begin(), result.end(), result.begin(), [](unsigned char c) { return std::tolower(c); });
 	return result;
+}
+
+/* Hàm convert to lower case cho UTF-8 */
+string toLowerUtf8(const string& str) {
+	// UTF-8 → UTF-16
+	int len = MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, nullptr, 0);
+	wstring wstr(len, 0);
+	MultiByteToWideChar(CP_UTF8, 0, str.c_str(), -1, &wstr[0], len);
+
+	// tolower Unicode
+	CharLowerBuffW(&wstr[0], wstr.size());
+
+	// UTF-16 → UTF-8
+	int outLen = WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, nullptr, 0, nullptr, nullptr);
+	string out(outLen, 0);
+	WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, &out[0], outLen, nullptr, nullptr);
+
+	return out;
 }
