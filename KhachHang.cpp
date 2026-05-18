@@ -3,12 +3,6 @@
 
 using namespace std;
 
-enum
-{
-	THUONG = 0,
-	VIP = 1
-};
-
 /* Khởi tạo giá trị ban đầu cho biến Class */
 int KhachHang::cntUserID = 0;
 
@@ -126,20 +120,24 @@ int KhachHang::getType()
 {
 	return this->type;
 }
+
+/* Hàm get loại thẻ */
+string KhachHang::getLoaiThe() const
+{
+	return (this->type == 1) ? "VIP" : "Normal";
+}
 /*****************************************************************************************/
 
 /* Xuất thông tin khách hàng */
 void KhachHang::XuatThongTin() const
 {
-	string loaiThe = (this->type == 1) ? "VIP" : "Thuong";
-
 	cout << "Mã số khách hàng: " << this->id << endl
 		<< "Tên khách hàng: " << this->name << endl
 		<< "Số điện thoại: " << this->phone << endl
 		<< "Email: " << this->mail << endl
 		<< "Địa chỉ: " << this->address << endl
 		<< "Ngày đăng ký: " << getDateString(this->ngayDK) << endl
-		<< "Loại thẻ: " << loaiThe << endl;
+		<< "Loại thẻ: " << getLoaiThe() << endl;
 }
 
 /* Hàm sắp xếp dữ liệu để ghi file csv */

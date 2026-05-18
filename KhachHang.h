@@ -4,6 +4,12 @@
 
 using namespace std;
 
+enum
+{
+	THUONG = 0,
+	VIP
+};
+
 class KhachHang
 {
 private:
@@ -33,6 +39,7 @@ public:
 	Date getRegisterDate();
 	void setType(int& type);
 	int getType();
+	string getLoaiThe() const;
 	string getCsvString();
 	void XuatThongTin() const;
 };

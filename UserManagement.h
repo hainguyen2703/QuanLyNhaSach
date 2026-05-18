@@ -6,7 +6,6 @@ class UserManagement
 {
 private: 
 	std::vector<KhachHang*> danhSach;
-    static int soLuong;
 	UserManagement() {};	/* Hàm khởi tạo mặc định không làm gì hết */
 public:
     // Không cho phép copy
@@ -17,7 +16,14 @@ public:
     static UserManagement& getInstance();
     void themKhachHang(KhachHang* kh);
     std::vector<KhachHang*>& getDanhSach();
-    static int getSoLuongKH();
+    int getSoLuongKH();
     void XuatDanhSachKH();
+    void XoaKhachHang(const int& index);
+
+    /* Các hàm tìm kiếm */
+    int findPhone(const string& phone);
+	int findMail(const string& mail);
+    int findName(const string& name);
+    int findID(const string& id);
 };
 

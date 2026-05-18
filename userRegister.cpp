@@ -2,15 +2,16 @@
 #include <string>
 #include <cctype>
 #include <iomanip>
-#include "KhachHang.h"
 #include "common.h"
-#include "userRegister.h"
 #include "UserManagement.h"
+#include "userRegister.h"
 
 using namespace std;
 
 /* Static function prototype */
 static KhachHang* collectUserInfo();
+static bool phoneValidate(const string& phone);
+static bool mailValidate(const string& mail);
 
 /* Hàm yêu cầu user đưa input để tạo tài khoảng */
 KhachHang* collectUserInfo()
@@ -30,33 +31,18 @@ KhachHang* collectUserInfo()
 	cout << "Số điện thoại: ";
 	getline(cin, phone);
 	/* Kiểm tra phone input */
-	if (phone.size() != 10 || phone[0] != '0')
-	{
-		cout << "Số điện thoại không hợp lệ";
+	if (phoneValidate(phone) == false)
 		return nullptr;
-	}
-	/* Kiểm tra nếu input chứa ký tự khác chữ số */
-	for (char c : phone)
-	{
-		if (isdigit(c) == false)
-		{
-			cout << "Số điện thoại không hợp lệ" << endl;
-			return nullptr;
-		}
-	}
 
 	/* 3. Mail */
 	string mail;
 	cout << "Mail: ";
 	getline(cin, mail);
 	/* Kiểm tra mail input */
-	/* Mail không có @gmail.com và @gmail.com không phải là chuỗi kết thúc */
-	if (mail.size() <= 10 ||
-		mail.rfind("@gmail.com") != (mail.size() - 10))
-	{
-		cout << "Địa chỉ mail không hợp lệ" << endl;
+	if (mailValidate(mail) != true) 
 		return nullptr;
-	}
+	else
+		mail = toLower(mail);
 
 	/* 4. Địa chỉ */
 	string address;
@@ -90,8 +76,6 @@ KhachHang* collectUserInfo()
 /* Hàm thu thập thông tin và tạo khách hàng mới */
 void createUser()
 {
-	UserManagement& Users = UserManagement::getInstance();
-
 	/* Thu thập thông tin */
 	KhachHang* newUser = collectUserInfo();
 
@@ -102,7 +86,64 @@ void createUser()
 	}
 	else
 	{
-		Users.themKhachHang(newUser);
+		UserManagement::getInstance().themKhachHang(newUser);
 		cout << "Đã tạo tài khoảng thành công!!!" << endl;
 	}
+}
+
+/* Hàm kiểm tra số điện thoại hợp lệ hay không */
+bool phoneValidate(const string& phone)
+{
+	/* Kiểm tra phone input có đủ 10 chữ số */
+	if (phone.size() != 10 || phone[0] != '0')
+	{
+		cout << "Số điện thoại không hợp lệ";
+		return false;
+	}
+
+	/* Kiểm tra nếu input chứa ký tự khác chữ số */
+	for (char c : phone)
+	{
+		if (isdigit(c) == false)
+		{
+			cout << "Số điện thoại không hợp lệ" << endl;
+			return false;
+		}
+	}
+
+	/* Kiểm tra số điện thoại đã được đăng ký chưa */
+	if(UserManagement::getInstance().findPhone(phone) != -1)
+	{
+		cout << "Số điện thoại đã được đăng ký!!!" << endl;
+		return false;
+	}
+
+	return true;
+}
+
+bool mailValidate(const string& mail)
+{
+	/* Mail không có @gmail.com và @gmail.com không phải là chuỗi kết thúc */
+	if (mail.size() <= 10)
+	{
+		cout << "Địa chỉ mail không hợp lệ" << endl;
+		return false;
+	}
+
+	string tmp = toLower(mail);
+	if (tmp.rfind("@gmail.com") != (mail.size() - 10))
+	{
+		cout << "Địa chỉ mail không hợp lệ" << endl;
+		return false;
+	}
+	
+	/* Kiểm tra xem mail đã được đăng ký chưa */
+	if (UserManagement::getInstance().findMail(tmp) != -1)
+	{
+		cout << "Địa chỉ mail đã được đăng ký!!!" << endl;
+		return false;
+	}
+
+	/* Hợp lệ */
+	return true;
 }

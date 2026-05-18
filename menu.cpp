@@ -21,31 +21,33 @@ void MainMenu()
 /* Menu chức năng quản lý Khách hàng */
 void CustomerMenu()
 {
-	cout << setw(30) << setfill('=') << "" << endl;
-	cout << "Quản lý khách hàng" << endl;
-	cout << setw(30) << setfill('=') << "" << endl;
-	cout << "1. Xem danh sách khách hàng" << endl;
-	cout << "2. Thêm khách hàng mới" << endl;
-	cout << "3. Chỉnh sửa thông tin khách hàng" << endl;
-	cout << "4. Xóa thông tin khách hàng" << endl;
-	cout << "5. TÌm kiếm khách hàng theo số điện thoại" << endl;
-	cout << "6. Tìm kiếm khách hàng theo họ tên" << endl;
-	cout << "0. Thoát" << endl;
-	cout << setw(30) << setfill('=') << "" << endl;
+	cout << setfill('=') 
+	     << setw(42) << "" << endl
+	     << setfill(' ') << setw(12) << "" << "Quản lý khách hàng" << endl
+	     << setfill('=') << setw(42) << "" << endl
+		 << "1. Xem danh sách khách hàng" << endl
+		 << "2. Thêm khách hàng mới" << endl
+		 << "3. Chỉnh sửa thông tin khách hàng" << endl
+		 << "4. Xóa thông tin khách hàng" << endl
+		 << "5. Tìm kiếm khách hàng theo số điện thoại" << endl
+		 << "6. Tìm kiếm khách hàng theo họ tên" << endl
+		 << "0. Thoát" << endl
+		 << setw(42) << "" << endl;
 }
 
 /* Menu chức năng quản lý sách */
 void BookMenu()
 {
-	cout << setw(30) << setfill('=') << "" << endl;
-	cout << "Quản lý sách" << endl;
-	cout << setw(30) << setfill('=') << "" << endl;
-	cout << "1. Xem danh sách các loại sách trong kho" << endl;
-	cout << "2. Thêm sách mới" << endl;
-	cout << "3. Chỉnh sửa thông tin sách" << endl;
-	cout << "4. Xóa thông tin sách" << endl;
-	cout << "5. TÌm kiếm khách hàng theo ISBN" << endl;
-	cout << "6. Tìm kiếm khách hàng theo tên sách" << endl;
-	cout << "0. Thoát" << endl;
-	cout << setw(30) << setfill('=') << "" << endl;
+	cout << setfill('=')
+		<< setw(42) << "" << endl
+		<< setfill(' ') << setw(12) << "" << "Quản lý sách" << endl
+		<< setfill('=') << setw(42) << "" << endl
+	    << "1. Xem danh sách các loại sách trong kho" << endl
+		<< "2. Thêm sách mới" << endl
+		<< "3. Chỉnh sửa thông tin sách" << endl
+		<< "4. Xóa thông tin sách" << endl
+		<< "5. TÌm kiếm khách hàng theo ISBN" << endl
+		<< "6. Tìm kiếm khách hàng theo tên sách" << endl
+		<< "0. Thoát" << endl
+		<< setw(42) << "" << endl;
 }
