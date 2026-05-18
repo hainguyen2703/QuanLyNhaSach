@@ -131,15 +131,13 @@ string KhachHang::getLoaiThe() const
 /* Xuất thông tin khách hàng */
 void KhachHang::XuatThongTin() const
 {
-	string loaiThe = getLoaiThe();
-
 	cout << "Mã số khách hàng: " << this->id << endl
 		<< "Tên khách hàng: " << this->name << endl
 		<< "Số điện thoại: " << this->phone << endl
 		<< "Email: " << this->mail << endl
 		<< "Địa chỉ: " << this->address << endl
 		<< "Ngày đăng ký: " << getDateString(this->ngayDK) << endl
-		<< "Loại thẻ: " << loaiThe << endl;
+		<< "Loại thẻ: " << getLoaiThe() << endl;
 }
 
 /* Hàm sắp xếp dữ liệu để ghi file csv */

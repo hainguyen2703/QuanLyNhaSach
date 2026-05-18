@@ -2,10 +2,9 @@
 #include <string>
 #include <cctype>
 #include <iomanip>
-#include "KhachHang.h"
 #include "common.h"
-#include "userRegister.h"
 #include "UserManagement.h"
+#include "userRegister.h"
 
 using namespace std;
 
@@ -42,6 +41,8 @@ KhachHang* collectUserInfo()
 	/* Kiểm tra mail input */
 	if (mailValidate(mail) != true) 
 		return nullptr;
+	else
+		mail = toLower(mail);
 
 	/* 4. Địa chỉ */
 	string address;
@@ -123,15 +124,21 @@ bool phoneValidate(const string& phone)
 bool mailValidate(const string& mail)
 {
 	/* Mail không có @gmail.com và @gmail.com không phải là chuỗi kết thúc */
-	if (mail.size() <= 10 ||
-		mail.rfind("@gmail.com") != (mail.size() - 10))
+	if (mail.size() <= 10)
+	{
+		cout << "Địa chỉ mail không hợp lệ" << endl;
+		return false;
+	}
+
+	string tmp = toLower(mail);
+	if (tmp.rfind("@gmail.com") != (mail.size() - 10))
 	{
 		cout << "Địa chỉ mail không hợp lệ" << endl;
 		return false;
 	}
 	
 	/* Kiểm tra xem mail đã được đăng ký chưa */
-	if (UserManagement::getInstance().findMail(mail) != -1)
+	if (UserManagement::getInstance().findMail(tmp) != -1)
 	{
 		cout << "Địa chỉ mail đã được đăng ký!!!" << endl;
 		return false;

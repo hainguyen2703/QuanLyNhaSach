@@ -18,10 +18,12 @@ public:
     std::vector<KhachHang*>& getDanhSach();
     int getSoLuongKH();
     void XuatDanhSachKH();
+    void XoaKhachHang(const int& index);
 
     /* Các hàm tìm kiếm */
     int findPhone(const string& phone);
 	int findMail(const string& mail);
     int findName(const string& name);
+    int findID(const string& id);
 };
 

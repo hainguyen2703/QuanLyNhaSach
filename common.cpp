@@ -1,5 +1,6 @@
 #include <iostream>
-#include <string>
+#include <algorithm>
+#include <cctype>
 #include "common.h"
 using namespace std;
 
@@ -45,4 +46,20 @@ int getOption()
 	clearInputCache();
 
 	return opt;
+}
+
+/* Hàm convert string về uppercase */
+string toUpper(const string& str)
+{
+	string result = str;
+	transform(result.begin(), result.end(), result.begin(), [](unsigned char c) { return std::toupper(c); });
+	return result;
+}
+
+/* Hàm convert string về lowercase */
+string toLower(const string& str)
+{
+	string result = str;
+	transform(result.begin(), result.end(), result.begin(), [](unsigned char c) { return std::tolower(c); });
+	return result;
 }

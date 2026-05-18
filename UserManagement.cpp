@@ -2,6 +2,7 @@
 #include <vector>
 #include <iomanip>
 #include "UserManagement.h"
+#include "common.h"
 
 using namespace std;
 
@@ -31,24 +32,28 @@ int UserManagement::getSoLuongKH()
 void UserManagement::XuatDanhSachKH()
 {
     /* Tạo khung */
-    cout << setfill('_') << setw(70) << "" << endl;
+    cout << setfill('=')
+        << setw(70) << "" << endl
+        << setfill(' ') << setw(24) << "" << "Danh sách khách hàng" << endl
+        << setfill('=') << setw(70) << "" << endl;
     cout << left << setfill(' ') 
-        << setw(15) << "|ID"
+        << setw(15) << "ID"
         << setw(15) << "|Class"
         << setw(15) << "|Phone"
         << "|Tên khách hàng" << endl;
-	cout << setfill('_') << setw(70) << "" << endl;
+	cout << setfill('=') << setw(70) << "" << endl;
 
     /* Xuất thông tin của khách hàng */
     for (KhachHang* kh : this->danhSach)
     { 
         cout << left << setfill(' ')
-            << "|" << setw(14) << kh->getID()
+            << setw(15) << kh->getID()
             << "|" << setw(14) << kh->getLoaiThe()
             << "|" << setw(14) << kh->getPhone()
             << "|" << kh->getName() << endl;
+        cout << setfill('_') << setw(70) << "" << endl;
     }
-    cout << setfill('_') << setw(70) << "" << endl;
+    //cout << setfill('=') << setw(70) << "" << endl;
 }
 
 /* Hàm tìm kiếm theo số điện thoại */
@@ -97,4 +102,35 @@ int UserManagement::findName(const string& name)
 
     /* Không tìm thấy, trả về -1 */
     return -1;
+}
+
+/* Hàm tìm kiếm theo ID */
+int UserManagement::findID(const string& id)
+{
+    for (int index = 0; index < this->danhSach.size(); index++)
+    {
+        /* So sánh ignore case */
+        if (danhSach[index]->getID() == id)
+        {
+            /* Tìm thấy, trả về index */
+            return index;
+        }
+    }
+
+    /* Không tìm thấy, trả về -1 */
+    return -1;
+}
+
+/* Hàm xóa khách hàng theo ID */
+void UserManagement::XoaKhachHang(const int& index)
+{
+    /* Vì index luôn luôn hợp lệ nên không cần kiểm tra lại */
+    /* Lấy địa chỉ của object cần xóa */
+    KhachHang* kh = this->danhSach[index];
+    
+    /* Cập nhật vector */
+    this->danhSach.erase(this->danhSach.begin() + index);
+
+    /* Giải phóng bộ nhớ */
+    delete kh;
 }
