@@ -1,5 +1,6 @@
 #include <iostream>
 #include "KhachHang.h"
+#include "common.h"
 
 using namespace std;
 
@@ -55,7 +56,7 @@ void KhachHang::setPhone(string& phone)
 /* Ham set mail */
 void KhachHang::setMail(string& mail)
 {
-	this->mail = mail;
+	this->mail = toLower(mail);
 }
 
 /* Ham set address */

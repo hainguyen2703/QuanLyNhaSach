@@ -20,7 +20,6 @@ enum {
 
 /* Static Functions Prototype  */
 static void deleteUser();
-static bool ktUserID(const string& id);
 static void findUserPhone();
 static void findUserName();
 
@@ -38,9 +37,9 @@ void userMain()
 		/* Thực hiện chức năng tương ứng */
 		switch (opt)
 		{
-			case LIST_USER_E: UserManagement::getInstance().XuatDanhSachKH(); break;	/* Xuất tất cả khách hàng có trong hệ thống */
+			case LIST_USER_E: UserManagement::getInstance().XuatDanhSachKH(); break;/* Xuất tất cả khách hàng có trong hệ thống */
 			case ADD_USER_E: createUser(); break;									/* Thêm khách hàng mới */
-			case MOD_USER_E: 
+			case MOD_USER_E: editUser(); break;										/* Chỉnh sửa thông tin khách hàng */
 			case DEL_USER_E: deleteUser(); break;									/* Xóa khách hàng */
 			case FIND_USER_NUM: findUserPhone(); break;								/* Tìm kiếm khách hàng theo số điện thoại */
 			case FIND_USER_NAME: findUserName(); break;								/* Tìm kiếm khách hàng theo tên khách hàng */
@@ -54,26 +53,6 @@ void userMain()
 			break;
 		}
 	}
-}
-
-/* Kiểm tra xem User ID có hợp lệ hay không */
-bool ktUserID(const string &id)
-{
-	/* Kiểm tra id empty hoặc size không đủ */
-	if (id.empty() || id.size() != 10)
-	{
-		return false;
-	}
-
-	/* Kiểm tra ID có bắt đầu bằng KH */
-	string tmp = toUpper(id);
-
-	if (tmp.find_first_of("KH") != 0)
-	{
-		return false;
-	}
-
-	return true;
 }
 
 /* Xóa Khách Hàng theo Mã KH  */
