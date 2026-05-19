@@ -67,6 +67,7 @@ void editUser()
 		cout << "Nhập vào thông tin cần thay đổi: ";
 		/* Lấy thông tin cần cập nhật */
 		int opt = getOption();
+		bool back = false;
 
 		/* Thực hiện chức năng tương ứng */
 		switch (opt)
@@ -76,15 +77,14 @@ void editUser()
 			case USER_ADDRESS_E: editUserAddress(index); break;		/* Chỉnh sửa địa chỉ */
 			case USER_MAIL_E: editUserMail(index); break;			/* Chỉnh sửa email */
 			case USER_TYPE_E: editUserType(index); break;			/* Chỉnh sửa loại thẻ */
-			case BACK_TO_MAIN:
+			default:
+				back = true;
 				break;
 		}
 
 		/* Back về main menu*/
-		if (opt == BACK_TO_MAIN)
-		{
-			break;
-		}
+		if (back == true) break;
+
 		cout << setfill('_') << setw(42) << "" << endl;
 		Users.getDanhSach()[index]->XuatThongTin();
 		cout << setfill('_') << setw(42) << "" << endl;

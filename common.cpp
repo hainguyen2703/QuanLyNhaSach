@@ -11,9 +11,13 @@
 
 using namespace std;
 
-/* Kiểm tra string input toàn space, tab hoặc newline */
+static int utf8_length(const std::string& s);
+
+/* Kiểm tra string input toàn space, tab hoặc newline hoặc empty */
 bool isAllBlank(const string str)
 {
+	if (str.empty()) return true;
+
 	/* Duyệt qua từng ký tự */
 	for (char c : str)
 	{
@@ -75,24 +79,29 @@ bool ktUserID(const string& id)
 	return true;
 }
 
+/* Kiểm tra string input có chứa ký tự không */
+bool isAllDigit(const string& str)
+{
+	/* Kiểm tra nếu input chứa ký tự khác chữ số */
+	for (char c : str)
+	{
+		if (isdigit(c) == false)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
 /* Hàm kiểm tra số điện thoại hợp lệ hay không */
 bool phoneValidate(const string& phone)
 {
 	/* Kiểm tra phone input có đủ 10 chữ số */
-	if (phone.size() != 10 || phone[0] != '0')
+	if (phone.size() != 10 || phone[0] != '0' || isAllDigit(phone) != true)
 	{
 		cout << "Số điện thoại không hợp lệ";
 		return false;
-	}
-
-	/* Kiểm tra nếu input chứa ký tự khác chữ số */
-	for (char c : phone)
-	{
-		if (isdigit(c) == false)
-		{
-			cout << "Số điện thoại không hợp lệ" << endl;
-			return false;
-		}
 	}
 
 	/* Kiểm tra số điện thoại đã được đăng ký chưa */
@@ -165,4 +174,26 @@ string toLowerUtf8(const string& str) {
 	WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, &out[0], outLen, nullptr, nullptr);
 
 	return out;
+}
+
+/* Hàm đếm số byte của chuỗi unicode */
+int utf8_length(const string& s) {
+	int len = 0;
+	for (size_t i = 0; i < s.size(); ) {
+		unsigned char c = s[i];
+		if (c < 0x80) i += 1;      // 1 byte
+		else if (c < 0xE0) i += 2;      // 2 byte
+		else if (c < 0xF0) i += 3;      // 3 byte
+		else               i += 4;      // 4 byte
+		len++;
+	}
+	return len;
+}
+
+/* Hàm canh trái của chuỗi unicode */
+void print_utf8_left(const string& s, int width) {
+	int len = utf8_length(s);
+	int pad = width - len;
+	cout << s;
+	for (int i = 0; i < pad; i++) cout << ' ';
 }

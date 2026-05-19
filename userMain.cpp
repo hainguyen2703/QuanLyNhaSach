@@ -33,6 +33,7 @@ void userMain()
 		CustomerMenu();
 		cout << "Nhập vào chức năng: ";
 		int opt = getOption();
+		bool back = false;
 
 		/* Thực hiện chức năng tương ứng */
 		switch (opt)
@@ -43,15 +44,13 @@ void userMain()
 			case DEL_USER_E: deleteUser(); break;									/* Xóa khách hàng */
 			case FIND_USER_NUM: findUserPhone(); break;								/* Tìm kiếm khách hàng theo số điện thoại */
 			case FIND_USER_NAME: findUserName(); break;								/* Tìm kiếm khách hàng theo tên khách hàng */
-			case BACK_TO_MAIN:
+			default:
+				back = true;
 				break;
 		}
 
 		/* Back về main menu*/
-		if (opt == BACK_TO_MAIN)
-		{
-			break;
-		}
+		if (back == true) break;
 	}
 }
 

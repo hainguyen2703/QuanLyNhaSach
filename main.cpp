@@ -2,6 +2,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <limits>
+#include "main.h"
 #include "menu.h"
 #include "common.h"
 #include "KhachHang.h"
@@ -40,8 +41,7 @@ int main()
 		switch (opt)
 		{
 			case CUSTOMER_E: userMain(); break;	/* Quản lý khách hàng */
-			case BOOK_E: /* Quản lý sách */
-				break;
+			case BOOK_E: bookMain(); break;		/* Quản lý sách */
 			case BILL_E: /* Quản lý hóa đơn */
 				break;
 			case EXIT_E:

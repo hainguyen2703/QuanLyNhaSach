@@ -53,7 +53,6 @@ void UserManagement::XuatDanhSachKH()
             << "|" << kh->getName() << endl;
         cout << setfill('_') << setw(70) << "" << endl;
     }
-    //cout << setfill('=') << setw(70) << "" << endl;
 }
 
 /* Hàm tìm kiếm theo số điện thoại */
