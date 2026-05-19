@@ -9,6 +9,7 @@
 #include "users.h"
 #include "storeData.h"
 #include "loadData.h"
+#include "BookManagement.h"
 
 using namespace std;
 
@@ -28,6 +29,7 @@ int main()
 
 	/* load dữ liệu từ csv */
 	loadData();
+	BookManagement::loadBooksFromFile();
 
 	/* Loop đến khi exit */
 	while (true)
@@ -59,6 +61,7 @@ int main()
 	cout << "Ghi dữ liệu..." << endl;
 	/* Ghi dữ liệu xuống file csv */
 	storeCustomerData();
+	BookManagement::storeBooksToFile();
 	cout << "Shutdown..." << endl;
 	
 	return 0;

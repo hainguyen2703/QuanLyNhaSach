@@ -4,5 +4,6 @@
 #include <vector>
 #include <iomanip>
 #include "BookManagement.h"
+#include "common.h"
 
-Book* collectBookInfo();
+bool isbnValidate(const std::string& isbn);

@@ -60,7 +60,7 @@ void loadData()
 /* Lấy size của file cần đọc */
 int getFileSizeInByte(ifstream& fileInput)
 {
-	/* Lấy vị trí đầu file */
+	/* Di chuyển con trỏ file về cuối file */
 	fileInput.seekg(0, ios::end);
 
 	/* Lấy vị trí cuối file */

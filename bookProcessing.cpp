@@ -13,16 +13,14 @@ enum {
 };
 
 /* Static function prototype */
-static bool isbnValidate(const string& isbn);
-static bool checkGS1Prefix(const string& isbn);
-static bool isbnDigitCheck(const string& isbn);
-static bool isIsbnRegistered(const string& isbn);
+static void findBookISBN();
+static void findBookName();
 
 /* Hàm main của việc quản lý sách */
 void bookMain()
 {
 	/* Lấy object Books */
-	BookManagement Books = BookManagement::getInstance();
+	BookManagement &Books = BookManagement::getInstance();
 
 	/* Loop đến khi yêu cầu dừng */
 	while (true)
@@ -38,10 +36,10 @@ void bookMain()
 		{
 			case LIST_BOOK_E: Books.XuatDanhSachBooks(); break;		/* Xuất tất cả sách có trong hệ thống */
 			case ADD_BOOK_E: Books.addBook(); break;				/* Thêm sách mới */
-			case MOD_BOOK_E: /* Chỉnh sửa thông tin sách */ break;
-			case DEL_BOOK_E: /* Xóa sách */ break;
-			case FIND_BOOK_ISBN: /* Tìm kiếm sách theo ISBN */ break;
-			case FIND_BOOK_NAME: /* Tìm kiếm sách theo tên */ break;
+			case MOD_BOOK_E:  break;								/* Chỉnh sửa thông tin sách */
+			case DEL_BOOK_E:  break;								/* Xóa sách */
+			case FIND_BOOK_ISBN: findBookISBN(); break;				/* Tìm kiếm sách theo ISBN */
+			case FIND_BOOK_NAME: findBookName(); break;				/* Tìm kiếm sách theo tên */
 			default:
 				back = true;
 				break;
@@ -52,166 +50,63 @@ void bookMain()
 	}
 }
 
-/* Hàm thu thập thông tin sách */
-Book* collectBookInfo()
+/* Hàm tìm và xuất thông tin sách theo ISBN */
+void findBookISBN()
 {
-	/* 1. ISBN */
 	string isbn;
-	cout << "ISBN: ";
+	cout << "Nhập vào ISBN cần tìm: ";
 	getline(cin, isbn);
-	/* Kiểm tra isbn */
+
+	/* Kiểm tra nếu ISBN không hợp lệ */
 	if (isbnValidate(isbn) != true)
 	{
 		cout << "ISBN không hợp lệ!!\n";
-		return NULL;
+		return;
 	}
 
-	/* 2. Tên sách */
+	/* Tìm kiếm theo ISBN */
+	BookManagement &Books = BookManagement::getInstance();
+	int index = Books.findISBN(isbn);
+
+	/* Nếu tìm thấy, xuất thông tin sách*/
+	if (index != -1)
+	{
+		cout << setfill('=')
+			<< setw(42) << "" << endl
+			<< setfill(' ') << setw(12) << "" << "Thông tin sách" << endl
+			<< setfill('=') << setw(42) << "" << endl;
+		Books.getDanhSachBooks()[index]->XuatThongTin();
+		cout << setfill('=') << setw(42) << "" << endl;
+	}
+	else
+		cout << "Không tìm thấy sách có ISBN: " << isbn << endl;
+}
+
+/* Hàm tìm và xuất thông tin sách theo tên sách */
+void findBookName()
+{
 	string name;
-	cout << "Tên sách: ";
+	cout << "Nhập vào tên sách cần tìm: ";
 	getline(cin, name);
+
+	/* Kiểm tra input */
 	if (isAllBlank(name))
 	{
-		cout << "Tên sách không hợp lệ!!\n";
-		return NULL;
+		cout << "Tên sách không hợp lệ" << endl;
+		return;
 	}
-	
-	/* 3. Tác giả */
-	string author;
-	cout << "Tác giả: ";
-	getline(cin, author);
-	if (isAllBlank(author))
+
+	/* Tìm sách theo tên */
+	int index = BookManagement::getInstance().findName(toLowerUtf8(name));
+	if (index != -1)
 	{
-		cout << "Tác giả không hợp lệ!!\n";
-		return NULL;
+		cout << setfill('=')
+			<< setw(42) << "" << endl
+			<< setfill(' ') << setw(12) << "" << "Thông tin sách" << endl
+			<< setfill('=') << setw(42) << "" << endl;
+		BookManagement::getInstance().getDanhSachBooks()[index]->XuatThongTin();
+		cout << setfill('=') << setw(42) << "" << endl;
 	}
-
-	/* 4. Nhà xuất bản */
-	string nxb;
-	cout << "Nhà xuất bản: ";
-	getline(cin, nxb);
-	if (isAllBlank(nxb))
-	{
-		cout << "Nhà xuất bản không hợp lệ!!\n";
-		return NULL;
-	}
-
-	/* 5. Năm xuất bản */
-	int year;
-	cout << "Năm xuất bản: ";
-	cin >> year;
-	cin.ignore(100, '\n');	/* Làm sạch buffer */
-	if (year <= 0)
-	{
-		cout << "Năm xuất bản không hợp lệ";
-		return NULL;
-	}
-
-	/* 6. Thể loại */
-	string category;
-	cout << "Thể loại: ";
-	getline(cin, category);
-	if (isAllBlank(category))
-	{
-		cout << "Thể loại không xác định\n";
-		category = "NA";
-	}
-
-	/* 7. Giá nhập */
-	double importPrice;
-	cout << "Giá nhập vào: ";
-	cin >> importPrice;
-	cin.ignore(100, '\n'); /* Làm sạch buffer */
-	/* Mặc định giá nhập phải từ 10.000 vnd */
-	if (importPrice < 10000)
-	{
-		cout << "Giá nhập không hợp lệ!!\n";
-		return NULL;
-	}
-
-	double sellingPrice = importPrice * 1.3; /* Giá bán mặc định cao hơn 30% */
-
-	/* 8. Số lượng */
-	int soLuong;
-	cout << "Số lượng: ";
-	cin >> soLuong;
-	cin.ignore(100, '\n'); /* Làm sạch buffer */
-	if(soLuong <= 0)
-	{
-		cout << "Số lượng không hợp lệ!!\n";
-		return NULL;
-	}
-
-	/* Tạo book mới dựa trên thông tin thu thập được */
-	Book* newBook = new Book(isbn, name, author, nxb, year, category, importPrice, sellingPrice, soLuong);
-
-	return newBook;
-}
-
-/* Hàm kiểm tra isbn có hợp lệ hay không */
-/* Điều kiện để 1 ISBN-13 hợp lệ:
- * - Độ dài phải là 13 ký tự
- * - Ký tự đầu tiên phải là 978 hoặc 979
- * - Các ký tự còn lại phải là số
- */
-bool isbnValidate(const string& isbn)
-{
-	/* 1. Kiểm tra nếu isbn rỗng 
-	 * 2. Kiểm tra nếu isbn có độ dài khác 13 
-	 * 3. Kiểm tra nếu isbn chứa ký tự không phải số 
-	 * 4. Kiểm tra 3 chữ số đầu tiên có phải GS1 prefix 
-	 * 5. Kiểm tra digit num của isbn */
-	if (isAllBlank(isbn) || isbn.length() != 13 || isAllDigit(isbn) != true ||
-		checkGS1Prefix(isbn) != true ||
-		isbnDigitCheck(isbn) != true)
-		return false;
-
-	return true;
-}
-
-/* Hàm kiểm tra GS1 Prefix */
-bool checkGS1Prefix(const string& isbn)
-{
-	vector<string> gs1_prefix = { "978", "979" };
-	for (string gs1 : gs1_prefix)
-	{
-		if (isbn.substr(0, 3) == gs1)
-		{
-			return true;
-		}
-	}
-	return false;
-}
-
-/* Hàm kiểm tra ISBN Digit check number */
-bool isbnDigitCheck(const string& isbn)
-{
-	int sum = 0;
-	int digitNum = 0;
-
-	for (int i = 0; i < isbn.size() - 1; i++)
-	{
-		int digit = isbn[i] - '0'; /* Chuyển sang integer */
-		/* Tính tổng isbn */
-		sum += (i % 2 == 0) ? digit : (3 * digit);
-	}
-
-	digitNum = (10 - (sum % 10)) % 10;
-
-	/* So sánh digit num tính được và digit num trong isbn */
-	return (digitNum == (isbn[isbn.size() - 1] - '0')) ? true : false;
-}
-
-/* Hàm kiểm tra nếu ISBN đã được đăng ký trong hệ thông */
-bool isIsbnRegistered(const string& isbn)
-{
-	for(Book* book: BookManagement::getInstance().getDanhSachBooks())
-	{
-		/* ISBN là digit nên không cần quan tâm upper hay lowercase */
-		if (book->getIsbn() == isbn)
-		{
-			return true;
-		}
-	}
-	return false;
+	else
+		cout << "Không tìm thấy sách " << name << endl;
 }

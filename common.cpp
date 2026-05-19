@@ -1,6 +1,8 @@
 #include <iostream>
 #include <algorithm>
 #include <cctype>
+#include <fstream>
+#include <sstream>
 #include "common.h"
 #include "UserManagement.h"
 
@@ -10,6 +12,19 @@
 #include "Windows.h"
 
 using namespace std;
+
+/* Thứ tự: ISBN, name, author, nxb, year, category, importPrice, sellingPrice, soLuong */
+enum {
+	ISBN = 0,
+	NAME,
+	AUTHOR,
+	NXB,
+	YEAR,
+	CATEGORY,
+	IMPORT_PRICE,
+	SELLING_PRICE,
+	SO_LUONG
+};
 
 static int utf8_length(const std::string& s);
 
@@ -196,4 +211,44 @@ void print_utf8_left(const string& s, int width) {
 	int pad = width - len;
 	cout << s;
 	for (int i = 0; i < pad; i++) cout << ' ';
+}
+
+/* Lấy size của file cần đọc */
+int getFileSizeInByte(ifstream& fileInput)
+{
+	/* Di chuyển con trỏ file về cuối file */
+	fileInput.seekg(0, ios::end);
+
+	/* Lấy vị trí cuối file */
+	int fileSize = fileInput.tellg();
+
+	/* Trả về đầu file */
+	fileInput.seekg(0, ios::beg);
+
+	return fileSize;
+}
+
+/* Hàm tách string thành book data */
+Book* loadBookFromCsvString(string& line)
+{
+	vector<string> attribute;
+
+	stringstream ss(line);
+	string info;
+	int item_cnt = 0;
+
+	/* Tách dòng string theo delmi là dấu gạch dọc */
+	/* Thứ tự: ISBN, name, author, nxb, year, category, importPrice, sellingPrice, soLuong */
+	while (getline(ss, info, '|'))
+	{
+		attribute.push_back(info);
+	}
+
+	/* Convert string sang double */
+	double importPrice = stod(attribute[IMPORT_PRICE]);
+	double sellingPrice = stod(attribute[SELLING_PRICE]);
+	int soLuong = stoi(attribute[SO_LUONG]);
+
+	/* Tạo khách hàng */
+	return new Book(attribute[ISBN], attribute[NAME], attribute[AUTHOR], attribute[NXB], stoi(attribute[YEAR]), attribute[CATEGORY], importPrice, sellingPrice, stoi(attribute[SO_LUONG]));
 }

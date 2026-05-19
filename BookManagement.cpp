@@ -1,3 +1,4 @@
+#include <fstream>
 #include "book_ultis.h"
 #include "BookManagement.h"
 #include "common.h"
@@ -5,7 +6,7 @@
 using namespace std;
 
 /* Hàm truy cập instance duy nhất */
-BookManagement BookManagement::getInstance()
+BookManagement& BookManagement::getInstance()
 {
 	static BookManagement instance;
 	return instance;
@@ -21,12 +22,13 @@ vector<Book*>& BookManagement::getDanhSachBooks()
 void BookManagement::addBook()
 {
 	/* Tạo sách mới */
-	Book* newBook = collectBookInfo();
+	Book* newBook = Book::createNewBook();
 
 	/* Kiểm tra nếu sách mới tạo thành công */
 	if (newBook != NULL)
 	{
 		this->books.push_back(newBook);	/* Thêm sách vào vector books */
+		cout << "Đã thêm sách mới thành công!" << endl;
 	}
 }
 
@@ -71,4 +73,110 @@ void BookManagement::XuatDanhSachBooks() const
 			 << "|" << book->getSellingPrice() << endl;
 		cout << setfill('_') << setw(70) << "" << endl;
 	}
+}
+
+/* Hàm tìm kiếm theo ISBN */
+int BookManagement::findISBN(const string& isbn)
+{
+	for (int i = 0; i < this->books.size(); i++)
+	{
+		if (books[i]->getIsbn() == isbn)
+			return i;
+	}
+	/* Không tìm thấy */
+	return -1;
+}
+
+/* Hàm tìm kiếm theo tên sách */
+int BookManagement::findName(const std::string& name)
+{
+	for (int index = 0; index < this->books.size(); index++)
+	{
+		/* Đổi tên sách sang lowercase */
+		string name_lwc = toLowerUtf8(this->books[index]->getName());
+
+		/* So sánh */
+		if (name_lwc == name)
+			return index;
+	}
+
+	/* Không tìm thấy */
+	return -1;
+}
+
+/* Hàm store data */
+void BookManagement::storeBooksToFile(const string& filename)
+{
+	cout << "Tiến hành lưu thông tin Sách..." << endl;
+
+	/* Mở file để lưu */
+	ofstream outputFile;
+	outputFile.open(filename, ios::out);
+
+	/* Kiểm tra nếu mở file thành công */
+	if (outputFile.is_open() != true)
+	{
+		cout << "Không thể mở được file " << filename << endl;
+		cout << "Lưu thông tin sách thất bại!!" << endl;
+		return;
+	}
+
+	/* Ghi BOM để file excel hiển thị Unicode */
+	unsigned char bom[] = { 0xEF, 0xBB, 0xBF };
+	outputFile.write((char*)bom, 3);
+
+	/* Ghi dữ liệu sách xuống file csv */
+	BookManagement &Books = BookManagement::getInstance();
+	vector<Book*>& danhSachBooks = Books.getDanhSachBooks();
+
+	for (Book* book : danhSachBooks)
+	{
+		outputFile << book->getCsvString() << "\n";
+	}
+
+	/* Đóng file */
+	outputFile.close();
+	cout << "Lưu thông tin sách thành công!" << endl;
+}
+
+/* Hàm load data */
+void BookManagement::loadBooksFromFile(const std::string& filename)
+{
+	ifstream inputFile;
+	inputFile.open(filename, ios::in);
+
+	/* Kiểm tra nếu mở file thành công */
+	if (inputFile.is_open() != true)
+	{
+		cout << "Không mở được file " << filename << endl;
+	}
+
+	/* Lấy file size */
+	int size = getFileSizeInByte(inputFile);
+
+	/* Mở được file => Lấy data */
+	string line;
+	bool bomChecked = false;
+	BookManagement &books = BookManagement::getInstance();
+	while (getline(inputFile, line))
+	{
+		/* Xóa BOM ở line đầu tiên trong file */
+		if (!bomChecked)
+		{
+			line.erase(line.begin(), line.begin() + 3);	/* Xóa BOM nếu có */
+			bomChecked = true;
+		}
+
+		/* Load book data */
+		Book* book = loadBookFromCsvString(line);
+
+		/* Thêm book vào vector */
+		if (book != NULL)
+		{
+			books.getDanhSachBooks().push_back(book);
+		}
+	}
+
+	/* Đóng file */
+	inputFile.close();
 }
