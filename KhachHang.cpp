@@ -1,14 +1,18 @@
 #include <iostream>
+#include <iomanip>
 #include "KhachHang.h"
 #include "common.h"
 
 using namespace std;
 
 /* Khởi tạo giá trị ban đầu cho biến Class */
-int KhachHang::cntUserID = 0;
+int KhachHang::cntCustomerID = 0;
 
-/* Khởi tạo giá trị ban đầu cho biến numOfUser */
-static int numOfUser;
+/* Hàm cập nhật số user id hiện tại */
+void KhachHang::setCntCustomerID(const int& cnt)
+{
+	KhachHang::cntCustomerID = cnt;
+}
 
 /* Hàm khởi tạo có tham số */
 KhachHang::KhachHang(string& name, string& phone, string& mail, string& address, int& type)
@@ -25,13 +29,65 @@ KhachHang::KhachHang(string& name, string& phone, string& mail, string& address,
 
 	/* Set ID */
 	string baseID = "00000000";
-	string nextID = to_string(KhachHang::cntUserID + 1);
+	string nextID = to_string(KhachHang::cntCustomerID + 1);
 	size_t replacePos = 8 - nextID.length();
 	baseID.replace(replacePos, nextID.length(), nextID);
 	this->id = "KH" + baseID;
 
 	/* Tạo khách hàng thành công, tăng một customer */
-	KhachHang::cntUserID++;
+	KhachHang::cntCustomerID++;
+}
+
+/* Hàm tạo khách hàng mới */
+KhachHang* KhachHang::createNewKhachHang()
+{
+	/* 1. Họ tên */
+	string hoten;	/* Biến chứa tên khách hàng */
+	cout << setw(30) << setfill('*') << "*" << endl;
+	cout << "Tạo tài khoảng" << endl;
+	cout << setw(30) << setfill('*') << "" << endl;
+	cout << "Họ tên khách hàng: ";
+	if(getStringLine(hoten) != true) return NULL;
+
+	/* 2. Số điện thoại */
+	string phone;
+	cout << "Số điện thoại: ";
+	/* Kiểm tra phone input */
+	if (getStringLine(phone) != true || phoneValidate(phone) == false)
+		return NULL;
+
+	/* 3. Mail */
+	string mail;
+	cout << "Mail: ";
+	/* Kiểm tra mail input */
+	if (getStringLine(mail) != true || mailValidate(mail) != true)
+		return NULL;
+	else
+		mail = toLower(mail);
+
+	/* 4. Địa chỉ */
+	string address;
+	cout << "Địa chỉ: ";
+	if(getStringLine(address) != true)
+	{
+		cout << "Địa chỉ không hợp lệ!!\n";
+		return NULL;
+	}
+
+	/* 5. Loại thẻ */
+	int the;
+	cout << "Loại thẻ (0: Thường, 1: VIP): ";
+	cin >> the;
+	cin.ignore(100, '\n');
+	if (the != 0 && the != 1)
+	{
+		cout << "Không hợp lệ!!" << endl;
+		cout << "Mặc định hạng thẻ thường!!!" << endl;
+		the = 0;
+	}
+
+	/* Tạo user mới */
+	return new KhachHang(hoten, phone, mail, address, the);
 }
 
 /********************************* Hàm set attribute **************************************/
@@ -132,13 +188,25 @@ string KhachHang::getLoaiThe() const
 /* Xuất thông tin khách hàng */
 void KhachHang::XuatThongTin() const
 {
-	cout << "Mã số khách hàng: " << this->id << endl
-		<< "Tên khách hàng: " << this->name << endl
-		<< "Số điện thoại: " << this->phone << endl
-		<< "Email: " << this->mail << endl
-		<< "Địa chỉ: " << this->address << endl
-		<< "Ngày đăng ký: " << getDateString(this->ngayDK) << endl
-		<< "Loại thẻ: " << getLoaiThe() << endl;
+	cout << setfill('=') << setw(42) << "" << endl
+		 << setfill(' ') << setw(12) << "" << "Thông tin khách hàng" << endl
+		 << setfill('=') << setw(42) << "" << endl;
+
+	print_utf8_left("Mã khách hàng", 15);
+	cout << ": " << this->id << endl;
+	print_utf8_left("Tên khách hàng", 15);
+	cout << ": " << this->name << endl;
+	print_utf8_left("Số điện thoại", 15);
+	cout << ": " << this->phone << endl;
+	print_utf8_left("Email", 15);
+	cout << ": " << this->mail << endl;
+	print_utf8_left("Địa chỉ", 15);
+	cout << ": " << this->address << endl;
+	print_utf8_left("Ngày đăng ký", 15);
+	cout << ": " << getDateString(this->ngayDK) << endl;
+	print_utf8_left("Loại thẻ", 15);
+	cout << ": " << getLoaiThe() << endl;
+	cout << setfill('=') << setw(42) << "" << endl;
 }
 
 /* Hàm sắp xếp dữ liệu để ghi file csv */

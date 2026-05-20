@@ -1,8 +1,11 @@
 #include <iostream>
 #include <algorithm>
 #include <cctype>
+#include <fstream>
+#include <sstream>
+#include <vector>
 #include "common.h"
-#include "UserManagement.h"
+#include "CustomerManagement.h"
 
 #ifndef NOMINMAX
 #define NOMINMAX
@@ -11,20 +14,25 @@
 
 using namespace std;
 
-/* Kiểm tra string input toàn space, tab hoặc newline */
+/* Thứ tự: ISBN, name, author, nxb, year, category, importPrice, sellingPrice, soLuong */
+enum {
+	ISBN = 0,
+	NAME,
+	AUTHOR,
+	NXB,
+	YEAR,
+	CATEGORY,
+	IMPORT_PRICE,
+	SELLING_PRICE,
+	SO_LUONG
+};
+
+static int utf8_length(const std::string& s);
+
+/* Kiểm tra string input toàn space, tab hoặc newline hoặc empty */
 bool isAllBlank(const string str)
 {
-	/* Duyệt qua từng ký tự */
-	for (char c : str)
-	{
-		/* Kiểm tra nếu ký tự khác blank */
-		/* isspace return 0 nếu ký tự check khác space */
-		if (isspace(c) == 0)
-			return false;
-	}
-
-	/* Không tìm thấy ký tự nào khác -> All blank*/
-	return true;
+	return str.find_first_not_of(" \t\n\r") == string::npos;
 }
 
 /* Clear input cache */
@@ -32,6 +40,19 @@ void clearInputCache()
 {
 	/* Clear input cache */
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+/* Hàm lấy 1 line input dạng string */
+bool getStringLine(string& str)
+{
+	getline(cin, str);
+	if (isAllBlank(str))
+	{
+		cout << "Tên không hợp lệ" << endl;
+		return false;
+	}
+
+	return true;
 }
 
 /* Hàm lấy lựa chọn chức năng muốn sử dụng 
@@ -75,28 +96,33 @@ bool ktUserID(const string& id)
 	return true;
 }
 
+/* Kiểm tra string input có chứa ký tự không */
+bool isAllDigit(const string& str)
+{
+	/* Kiểm tra nếu input chứa ký tự khác chữ số */
+	for (char c : str)
+	{
+		if (isdigit(c) == false)
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
 /* Hàm kiểm tra số điện thoại hợp lệ hay không */
 bool phoneValidate(const string& phone)
 {
 	/* Kiểm tra phone input có đủ 10 chữ số */
-	if (phone.size() != 10 || phone[0] != '0')
+	if (phone.size() != 10 || phone[0] != '0' || isAllDigit(phone) != true)
 	{
 		cout << "Số điện thoại không hợp lệ";
 		return false;
 	}
 
-	/* Kiểm tra nếu input chứa ký tự khác chữ số */
-	for (char c : phone)
-	{
-		if (isdigit(c) == false)
-		{
-			cout << "Số điện thoại không hợp lệ" << endl;
-			return false;
-		}
-	}
-
 	/* Kiểm tra số điện thoại đã được đăng ký chưa */
-	if (UserManagement::getInstance().findPhone(phone) != -1)
+	if (CustomerManagement::getInstance().findPhone(phone) != -1)
 	{
 		cout << "Số điện thoại đã được đăng ký!!!" << endl;
 		return false;
@@ -123,7 +149,7 @@ bool mailValidate(const string& mail)
 	}
 
 	/* Kiểm tra xem mail đã được đăng ký chưa */
-	if (UserManagement::getInstance().findMail(tmp) != -1)
+	if (CustomerManagement::getInstance().findMail(tmp) != -1)
 	{
 		cout << "Địa chỉ mail đã được đăng ký!!!" << endl;
 		return false;
@@ -165,4 +191,98 @@ string toLowerUtf8(const string& str) {
 	WideCharToMultiByte(CP_UTF8, 0, wstr.c_str(), -1, &out[0], outLen, nullptr, nullptr);
 
 	return out;
+}
+
+/* Hàm đếm số byte của chuỗi unicode */
+int utf8_length(const string& s) {
+	int len = 0;
+	for (size_t i = 0; i < s.size(); ) {
+		unsigned char c = s[i];
+		if (c < 0x80) i += 1;      // 1 byte
+		else if (c < 0xE0) i += 2;      // 2 byte
+		else if (c < 0xF0) i += 3;      // 3 byte
+		else               i += 4;      // 4 byte
+		len++;
+	}
+	return len;
+}
+
+/* Hàm canh trái của chuỗi unicode */
+void print_utf8_left(const string& s, int width) {
+	int len = utf8_length(s);
+	int pad = width - len;
+	cout << s;
+	for (int i = 0; i < pad; i++) cout << ' ';
+}
+
+/* Lấy size của file cần đọc */
+int getFileSizeInByte(ifstream& fileInput)
+{
+	/* Di chuyển con trỏ file về cuối file */
+	fileInput.seekg(0, ios::end);
+
+	/* Lấy vị trí cuối file */
+	int fileSize = fileInput.tellg();
+
+	/* Trả về đầu file */
+	fileInput.seekg(0, ios::beg);
+
+	return fileSize;
+}
+
+/* Hàm tách string thành book data */
+Book* loadBookFromCsvString(string& line)
+{
+	vector<string> attribute;
+
+	stringstream ss(line);
+	string info;
+	int item_cnt = 0;
+
+	/* Tách dòng string theo delmi là dấu gạch dọc */
+	/* Thứ tự: ISBN, name, author, nxb, year, category, importPrice, sellingPrice, soLuong */
+	while (getline(ss, info, '|'))
+	{
+		attribute.push_back(info);
+	}
+
+	/* Convert string sang double */
+	double importPrice = stod(attribute[IMPORT_PRICE]);
+	double sellingPrice = stod(attribute[SELLING_PRICE]);
+	int soLuong = stoi(attribute[SO_LUONG]);
+
+	/* Tạo khách hàng */
+	return new Book(attribute[ISBN], attribute[NAME], attribute[AUTHOR], attribute[NXB], stoi(attribute[YEAR]), attribute[CATEGORY], importPrice, sellingPrice, stoi(attribute[SO_LUONG]));
+}
+
+/* Hàm tách string thành Khách Hàng data */
+KhachHang* loadUserFromCsvString(string& line)
+{
+	vector<string> attribute;
+
+	stringstream ss(line);
+	string info;
+	int item_cnt = 0;
+
+	/* Tách dòng string theo delmi là dấu phẩy */
+	while (getline(ss, info, '|'))
+	{
+		attribute.push_back(info);
+	}
+
+	/* Convert type sang int */
+	int type = (attribute[6] == "1") ? 1 : 0;
+
+	/* Convert string sang Date */
+	Date date = getDateFromString(attribute[5]);
+
+	/* Tạo khách hàng */
+	KhachHang* kh = new KhachHang(attribute[1], attribute[2], attribute[3], attribute[4], type);
+
+	/* Set thông tin ID và ngày đăng ký */
+	kh->setID(attribute[0]);
+	kh->setRegisterDate(date);
+
+	/* Trả về con trỏ khách hàng */
+	return kh;
 }

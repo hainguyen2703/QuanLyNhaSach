@@ -2,12 +2,13 @@
 #include <iostream>
 #include <Windows.h>
 #include <limits>
-#include "menu.h"
+#include <iomanip>
+#include "main.h"
 #include "common.h"
 #include "KhachHang.h"
 #include "users.h"
-#include "storeData.h"
-#include "loadData.h"
+#include "CustomerManagement.h"
+#include "BookManagement.h"
 
 using namespace std;
 
@@ -18,6 +19,10 @@ enum {
 	BILL_E
 };
 
+/* Static function prototype */
+static void storeData();
+static void showMainMenu();
+
 int main()
 {
 	/* Set up ban đầu để chương trình có thể hiểu và in ra ký tự Unicode */
@@ -26,13 +31,14 @@ int main()
 	SetConsoleCP(CP_UTF8);
 
 	/* load dữ liệu từ csv */
-	loadData();
+	CustomerManagement::loadFromCsv();
+	BookManagement::loadFromCsv();
 
 	/* Loop đến khi exit */
 	while (true)
 	{
 		/* Mở main menu */
-		MainMenu();
+		showMainMenu();
 		cout << "Nhập vào chức năng: ";
 		int opt = getOption();
 
@@ -40,8 +46,7 @@ int main()
 		switch (opt)
 		{
 			case CUSTOMER_E: userMain(); break;	/* Quản lý khách hàng */
-			case BOOK_E: /* Quản lý sách */
-				break;
+			case BOOK_E: bookMain(); break;		/* Quản lý sách */
 			case BILL_E: /* Quản lý hóa đơn */
 				break;
 			case EXIT_E:
@@ -57,9 +62,31 @@ int main()
 	}
 
 	cout << "Ghi dữ liệu..." << endl;
-	/* Ghi dữ liệu xuống file csv */
-	storeCustomerData();
+	storeData();
 	cout << "Shutdown..." << endl;
 	
 	return 0;
+}
+
+/* Ham trinh chieu main menu */
+void showMainMenu()
+{
+	cout << setfill('=')
+		<< setw(42) << "" << endl
+		<< setfill(' ') << setw(12) << "" << "Quản Lý Nhà Sách" << endl
+		<< setfill('=') << setw(42) << "" << endl
+		<< "1. Quản lý khách hàng" << endl
+		<< "2. Quản lý sách" << endl
+		<< "3. Quản lý hóa đơn bán hàng" << endl
+		<< "0. Thoát" << endl
+		<< setw(42) << "" << endl;
+}
+
+/* Ghi dữ liệu xuống file csv */
+void storeData()
+{
+	cout << "Tiến hành lưu thông tin khách hàng..." << endl;
+	CustomerManagement::storeToCsv();
+	cout << "Tiến hành lưu thông tin Sách..." << endl;
+	BookManagement::storeToCsv();
 }

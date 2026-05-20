@@ -1,10 +1,8 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include "UserManagement.h"
-#include "userRegister.h"
+#include "CustomerManagement.h"
 #include "users.h"
-#include "menu.h"
 #include "common.h"
 
 using namespace std;
@@ -26,45 +24,45 @@ static void findUserName();
 /* Hàm main của việc quản lý khách hàng */
 void userMain()
 {
+	/* Lấy Users */
+	CustomerManagement &Users = CustomerManagement::getInstance();
+
 	/* Loop đến khi yêu cầu dừng */
 	while (true)
 	{
 		/* Show Customer Menu */
-		CustomerMenu();
+		Users.Menu();
 		cout << "Nhập vào chức năng: ";
 		int opt = getOption();
+		bool back = false;
 
 		/* Thực hiện chức năng tương ứng */
 		switch (opt)
 		{
-			case LIST_USER_E: UserManagement::getInstance().XuatDanhSachKH(); break;/* Xuất tất cả khách hàng có trong hệ thống */
-			case ADD_USER_E: createUser(); break;									/* Thêm khách hàng mới */
-			case MOD_USER_E: editUser(); break;										/* Chỉnh sửa thông tin khách hàng */
-			case DEL_USER_E: deleteUser(); break;									/* Xóa khách hàng */
-			case FIND_USER_NUM: findUserPhone(); break;								/* Tìm kiếm khách hàng theo số điện thoại */
-			case FIND_USER_NAME: findUserName(); break;								/* Tìm kiếm khách hàng theo tên khách hàng */
-			case BACK_TO_MAIN:
+			case LIST_USER_E: Users.XuatDanhSachKH(); break;	/* Xuất tất cả khách hàng có trong hệ thống */
+			case ADD_USER_E: Users.addCustomer(); break;		/* Thêm khách hàng mới */
+			case MOD_USER_E: editUser(); break;					/* Chỉnh sửa thông tin khách hàng */
+			case DEL_USER_E: deleteUser(); break;				/* Xóa khách hàng */
+			case FIND_USER_NUM: findUserPhone(); break;			/* Tìm kiếm khách hàng theo số điện thoại */
+			case FIND_USER_NAME: findUserName(); break;			/* Tìm kiếm khách hàng theo tên khách hàng */
+			default:
+				back = true;
 				break;
 		}
 
 		/* Back về main menu*/
-		if (opt == BACK_TO_MAIN)
-		{
-			break;
-		}
+		if (back == true) break;
 	}
 }
 
 /* Xóa Khách Hàng theo Mã KH  */
 void deleteUser()
 {
-	UserManagement& Users = UserManagement::getInstance();
+	CustomerManagement& Users = CustomerManagement::getInstance();
 	string delID;
-	cout << "Nhập vào ID khách hàng cần xóa: ";
-	getline(cin, delID);
-	
+	cout << "Nhập vào ID khách hàng cần xóa: ";	
 	/* Kiểm tra xem ID có hợp lệ hay không */
-	if (ktUserID(delID) != true)
+	if (getStringLine(delID) != true || ktUserID(delID) != true)
 	{
 		cout << "ID không hợp lệ" << endl;
 		return;
@@ -89,13 +87,11 @@ void deleteUser()
 /* Hàm tìm kiếm Khách Hàng theo số điện thoại */
 void findUserPhone()
 {
-	UserManagement& Users = UserManagement::getInstance();
+	CustomerManagement& Users = CustomerManagement::getInstance();
 	string phone;
 	cout << "Nhập vào số điện thoại cần tìm: ";
-	getline(cin, phone);
-
 	/* Kiểm tra số điện thoại có hợp lệ không */
-	if (phone.empty() || phone.size() != 10)
+	if (getStringLine(phone) != true || phone.size() != 10)
 	{
 		cout << "Số điện thoại không hợp lệ" << endl;
 		return;
@@ -123,10 +119,7 @@ void findUserName()
 {
 	string name;
 	cout << "Nhập vào tên khách hàng cần tìm: ";
-	getline(cin, name);
-
-	/* Kiểm tra input hợp lệ */
-	if (name.empty())
+	if(getStringLine(name) != true)
 	{
 		cout << "Tên không hợp lệ!!!\n";
 		return;
@@ -136,7 +129,7 @@ void findUserName()
 	name = toLowerUtf8(name);
 
 	/* Lấy Users */
-	UserManagement& Users = UserManagement::getInstance();
+	CustomerManagement& Users = CustomerManagement::getInstance();
 
 	int index = Users.findName(name);
 

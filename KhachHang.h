@@ -13,8 +13,7 @@ enum
 class KhachHang
 {
 private:
-	static int cntUserID;	//Biến của class để đếm số lượng Khách hàng
-	static int numOfUser;
+	static int cntCustomerID;	//Biến của class để đếm số lượng Khách hàng
 	string id;
 	string name;
 	string phone;
@@ -25,6 +24,10 @@ private:
 
 public:
 	KhachHang(string &name, string &phone, string &mail, string &address, int &type);	//Hàm khởi tạo có tham số
+	static KhachHang* createNewKhachHang();
+
+	static void setCntCustomerID(const int& cnt);
+
 	void setID(string& id);
 	string getID();
 	void setName(string& name);

@@ -1,8 +1,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include "menu.h"
-#include "UserManagement.h"
+#include "CustomerManagement.h"
 #include "common.h"
 #include "users.h"
 
@@ -17,28 +16,27 @@ enum {
 };
 
 /* Static function prototyp */
-static void editUserName(const int& index);
-static void editUserPhone(const int& index);
-static void editUserAddress(const int& index);
-static void editUserMail(const int& index);
-static void editUserType(const int& index);
+static void editUserMenu();
+static void editUserName(KhachHang* kh);
+static void editUserPhone(KhachHang* kh);
+static void editUserAddress(KhachHang* kh);
+static void editUserMail(KhachHang* kh);
+static void editUserType(KhachHang* kh);
 
 /* Hàm chỉnh sửa thông tin Khách hàng */
 void editUser()
 {
 	string id;
 	cout << "Nhập vào ID khách hàng cần sửa: ";
-	getline(cin, id);
-
 	/* Kiểm tra ID nhập vào có hợp lệ hay không */
-	if (ktUserID(id) != true)
+	if (getStringLine(id) != true || ktUserID(id) != true)
 	{
 		cout << "ID không hợp lệ" << endl;
 		return;
 	}
 
 	/* Lấy Users */
-	UserManagement& Users = UserManagement::getInstance();
+	CustomerManagement& Users = CustomerManagement::getInstance();
 
 	/* Tìm kiếm khách hàng theo ID */
 	int index = Users.findID(toUpper(id));
@@ -51,13 +49,11 @@ void editUser()
 		return;
 	}
 
+	/* Lấy khách hàng ra */
+	KhachHang* kh = CustomerManagement::getInstance().getDanhSach()[index];
+
 	/* Xuất thông tin khách hàng */
-	cout << setfill('=') << setw(42) << "" << endl;
-	cout << setfill(' ') << setw(12) << "" << "Thông tin khách hàng" << endl;
-	cout << setfill('=') << setw(42) << "" << endl;
-	/* Tìm thấy khách hàng, xuất thông tin */
-	Users.getDanhSach()[index]->XuatThongTin();
-	cout << setfill('_') << setw(42) << "" << endl;
+	kh->XuatThongTin();
 
 	while (true)
 	{
@@ -67,106 +63,118 @@ void editUser()
 		cout << "Nhập vào thông tin cần thay đổi: ";
 		/* Lấy thông tin cần cập nhật */
 		int opt = getOption();
+		bool back = false;
 
 		/* Thực hiện chức năng tương ứng */
 		switch (opt)
 		{
-			case USER_NAME_E: editUserName(index); break;			/* Chỉnh sửa tên khách hàng */
-			case USER_PHONE_E: editUserPhone(index); break;			/* Chỉnh sửa số điện thoại */
-			case USER_ADDRESS_E: editUserAddress(index); break;		/* Chỉnh sửa địa chỉ */
-			case USER_MAIL_E: editUserMail(index); break;			/* Chỉnh sửa email */
-			case USER_TYPE_E: editUserType(index); break;			/* Chỉnh sửa loại thẻ */
-			case BACK_TO_MAIN:
+			case USER_NAME_E: editUserName(kh); break;			/* Chỉnh sửa tên khách hàng */
+			case USER_PHONE_E: editUserPhone(kh); break;			/* Chỉnh sửa số điện thoại */
+			case USER_ADDRESS_E: editUserAddress(kh); break;		/* Chỉnh sửa địa chỉ */
+			case USER_MAIL_E: editUserMail(kh); break;			/* Chỉnh sửa email */
+			case USER_TYPE_E: editUserType(kh); break;			/* Chỉnh sửa loại thẻ */
+			default:
+				back = true;
 				break;
 		}
 
 		/* Back về main menu*/
-		if (opt == BACK_TO_MAIN)
+		if (back == true)
 		{
+			/* Lưu xuống csv */
+			CustomerManagement::storeToCsv();
 			break;
 		}
+
 		cout << setfill('_') << setw(42) << "" << endl;
 		Users.getDanhSach()[index]->XuatThongTin();
 		cout << setfill('_') << setw(42) << "" << endl;
 	}
 }
 
+/* Menu chức năng edit thông tin khách hàng */
+void editUserMenu()
+{
+	cout << setfill('=') << setw(42) << "" << endl;
+	cout << setfill(' ') << setw(10) << "" << "Chỉnh sửa thông tin" << endl;
+	cout << setfill('=') << setw(42) << "" << endl;
+	cout << "1. Chỉnh sửa tên khách hàng" << endl;
+	cout << "2. Chỉnh sửa số điện thoại" << endl;
+	cout << "3. Chỉnh sửa địa chỉ" << endl;
+	cout << "4. Chỉnh sửa mail" << endl;
+	cout << "5. Chỉnh sửa loại thẻ" << endl;
+	cout << "0. Thoát" << endl;
+	cout << setw(42) << "" << endl;
+}
+
 /* Thay đổi tên khách hàng */
-void editUserName(const int &index)
+void editUserName(KhachHang* kh)
 {
 	string name;
 	cout << "Nhập vào tên khách hàng mới: ";
-	getline(cin, name);
-
-	/* Kiểm tra input hợp lệ */
-	if (name.empty())
+	if(getStringLine(name) != true)
 	{
 		cout << "Tên không hợp lệ!!!\n";
 		return;
 	}
 
 	/* Cập nhật tên khách hàng */
-	UserManagement::getInstance().getDanhSach()[index]->setName(name);
+	kh->setName(name);
 	cout << "Đã cập nhật tên khách hàng thành công!" << endl;
 }
 
 /* Thay đổi số điện thoại khách hàng */
-void editUserPhone(const int& index)
+void editUserPhone(KhachHang* kh)
 {
 	string phone;
 	cout << "Nhập vào số điện thoại mới: ";
-	getline(cin, phone);
-
 	/* Kiểm tra số điện thoại có hợp lệ không */
-	if(phoneValidate(phone) != true)
+	if(getStringLine(phone) != true || phoneValidate(phone) != true)
 	{
 		cout << "Số điện thoại không hợp lệ" << endl;
 		return;
 	}
 
 	/* Cập nhật số điện thoại khách hàng */
-	UserManagement::getInstance().getDanhSach()[index]->setPhone(phone);
+	kh->setPhone(phone);
 	cout << "Đã cập nhật số điện thoại khách hàng thành công!" << endl;
 }
 
 /* Thay đổi địa chỉ khách hàng */ 
-void editUserAddress(const int& index)
+void editUserAddress(KhachHang* kh)
 {
 	string address;
 	cout << "Nhập vào địa chỉ mới: ";
-	getline(cin, address);
-	/* Kiểm tra địa chỉ có hợp lệ không */
-	if (address.empty())
+	if(getStringLine(address) != true)
 	{
 		cout << "Địa chỉ không hợp lệ" << endl;
 		return;
 	}
+	
 	/* Cập nhật địa chỉ khách hàng */
-	UserManagement::getInstance().getDanhSach()[index]->setAddress(address);
+	kh->setAddress(address);
 	cout << "Đã cập nhật địa chỉ khách hàng thành công!" << endl;
 }
 
 /* Thay đổi email khách hàng */
-void editUserMail(const int& index)
+void editUserMail(KhachHang* kh)
 {
-	UserManagement& Users = UserManagement::getInstance();
+	CustomerManagement& Users = CustomerManagement::getInstance();
 	string mail;
 	cout << "Nhập vào email mới: ";
-	getline(cin, mail);
-
-	if(mailValidate(mail) != true)
+	if(getStringLine(mail) != true || mailValidate(mail) != true)
 	{
 		cout << "Email không hợp lệ" << endl;
 		return;
 	}
 
 	/* Cập nhật email khách hàng */
-	Users.getDanhSach()[index]->setMail(mail);
+	kh->setMail(mail);
 	cout << "Đã cập nhật email khách hàng thành công!" << endl;
 }
 
 /* Thay đổi loại thẻ khách hàng */
-void editUserType(const int& index)
+void editUserType(KhachHang* kh)
 {
 	int type;
 	cout << "Nhập vào loại thẻ mới(0: Normal, 1: VIP): ";
@@ -177,7 +185,8 @@ void editUserType(const int& index)
 		cout << "Loại thẻ không hợp lệ!!" << endl;
 		return;
 	}
+
 	/* Cập nhật loại thẻ khách hàng */
-	UserManagement::getInstance().getDanhSach()[index]->setType(type);
+	kh->setType(type);
 	cout << "Đã cập nhật loại thẻ khách hàng thành công!" << endl;
 }
