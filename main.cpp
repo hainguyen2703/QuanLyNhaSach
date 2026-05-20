@@ -4,7 +4,6 @@
 #include <limits>
 #include <iomanip>
 #include "main.h"
-#include "menu.h"
 #include "common.h"
 #include "KhachHang.h"
 #include "users.h"
