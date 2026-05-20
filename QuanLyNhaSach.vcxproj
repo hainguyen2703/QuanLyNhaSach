@@ -128,7 +128,7 @@
     <ClCompile Include="bookMain.cpp" />
     <ClCompile Include="book_libs.cpp" />
     <ClCompile Include="common.cpp" />
-    <ClCompile Include="editUser.cpp" />
+    <ClCompile Include="customer_lib.cpp" />
     <ClCompile Include="KhachHang.cpp" />
     <ClCompile Include="date.cpp" />
     <ClCompile Include="main.cpp" />
@@ -144,7 +144,7 @@
     <ClInclude Include="KhachHang.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="CustomerManagement.h" />
-    <ClInclude Include="users.h" />
+    <ClInclude Include="customer_ultis.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

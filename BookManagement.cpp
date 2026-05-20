@@ -29,8 +29,8 @@ void BookManagement::Menu()
 		<< "2. Thêm sách mới" << endl
 		<< "3. Chỉnh sửa thông tin sách" << endl
 		<< "4. Xóa thông tin sách" << endl
-		<< "5. TÌm kiếm khách hàng theo ISBN" << endl
-		<< "6. Tìm kiếm khách hàng theo tên sách" << endl
+		<< "5. TÌm kiếm theo ISBN" << endl
+		<< "6. Tìm kiếm theo tên sách" << endl
 		<< "0. Thoát" << endl
 		<< setw(42) << "" << endl;
 }
@@ -57,24 +57,28 @@ void BookManagement::XuatDanhSachBooks() const
 {
 	/* Tạo khung */
 	cout << setfill('=')
-		<< setw(70) << "" << endl
-		<< setfill(' ') << setw(24) << "" << "List thông tin sách" << endl
-		<< setfill('=') << setw(70) << "" << endl;
+		<< setw(100) << "" << endl
+		<< setfill(' ') << setw(40) << "" << "List thông tin sách" << endl
+		<< setfill('=') << setw(100) << "" << endl;
 
 	print_utf8_left("Tên sách", 48);
 	cout << "|";
+	print_utf8_left("Tác giả", 30);
+	cout << "|";
 	print_utf8_left("Số lượng", 10);
 	cout << "|Giá (vnd)" << endl;
-	cout << setfill('=') << setw(70) << "" << endl;
+	cout << setfill('=') << setw(100) << "" << endl;
 
 	/* Xuất thông tin của sách */
 	for (Book* book : this->books)
 	{
 		print_utf8_left(book->getName(), 48);
+		cout << "|";
+		print_utf8_left(book->getAuthor(), 30);
 		cout << left << setfill(' ')
 			 << "|" << std::setw(10) << book->getSoLuong()
 			 << "|" << book->getSellingPrice() << endl;
-		cout << setfill('_') << setw(70) << "" << endl;
+		cout << setfill('_') << setw(100) << "" << endl;
 	}
 }
 
@@ -91,8 +95,11 @@ int BookManagement::findISBN(const string& isbn)
 }
 
 /* Hàm tìm kiếm theo tên sách */
-int BookManagement::findName(const std::string& name)
+vector<Book*> BookManagement::findName(const string& name)
 {
+	/* Danh sách các book trùng tên (nếu có) */
+	vector<Book*> list_book;
+
 	for (int index = 0; index < this->books.size(); index++)
 	{
 		/* Đổi tên sách sang lowercase */
@@ -100,21 +107,21 @@ int BookManagement::findName(const std::string& name)
 
 		/* So sánh */
 		if (name_lwc == name)
-			return index;
+		{
+			list_book.push_back(this->books[index]);
+		}
 	}
 
 	/* Không tìm thấy */
-	return -1;
+	return list_book;
 }
 
 /* Remove book */
 void BookManagement::removeBook(const int& index)
 {
-	vector<Book*> books = BookManagement::getInstance().getDanhSachBooks();
-
 	/* Remove sách */
-	Book* book = books[index];
-	books.erase(books.begin() + index);
+	Book* book = this->books[index];
+	this->books.erase(this->books.begin() + index);
 	delete book;
 
 	/* Lưu xuống file csv ngay */

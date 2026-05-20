@@ -21,13 +21,14 @@ public:
     /* Menu quản lý sách */
 	void Menu();
 
+    /* Các hàm thêm/xóa/xuất danh sách sách */
     void addBook();
     void removeBook(const int& index);
     void XuatDanhSachBooks() const;
 
     /* Các hàm tìm kiếm */
     int findISBN(const std::string& isbn);
-    int findName(const std::string& name);
+    std::vector<Book*> findName(const std::string& name);
 
     /* Các hàm load và store data */
 	static void loadFromCsv(const std::string& filename = "books.csv");  /* Mặc định là books.csv */

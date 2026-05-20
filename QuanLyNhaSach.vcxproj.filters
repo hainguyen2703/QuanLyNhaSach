@@ -33,7 +33,7 @@
     <ClCompile Include="CustomerManagement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="editUser.cpp">
+    <ClCompile Include="customer_lib.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Book.cpp">
@@ -62,7 +62,7 @@
     <ClInclude Include="CustomerManagement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="users.h">
+    <ClInclude Include="customer_ultis.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Book.h">

@@ -29,6 +29,7 @@ static void findBookISBN();
 static void findBookName();
 static void deleteBook();
 static void editBook();
+static void khungBookInfo();
 
 /* Hàm main của việc quản lý sách */
 void bookMain()
@@ -62,6 +63,32 @@ void bookMain()
 		/* Back về main menu*/
 		if (back == true) break;
 	}
+}
+
+void khungBookInfo()
+{
+	cout << setfill('=') << setw(155) << "" << endl;
+	cout << left << setfill(' ') << setw(3) << "No.";
+	cout << "|";
+	print_utf8_left("ISBN", 15);
+	cout << "|";
+	print_utf8_left("Tên sách", 25);
+	cout << "|";
+	print_utf8_left("Tác giả", 20);
+	cout << "|";
+	print_utf8_left("NXB", 20);
+	cout << "|";
+	print_utf8_left("Năm XB", 10);
+	cout << "|";
+	print_utf8_left("Thể loại", 15);
+	cout << "|";
+	print_utf8_left("Giá nhập", 15);
+	cout << "|";
+	print_utf8_left("Giá bán", 15);
+	cout << "|";
+	print_utf8_left("Số lượng", 15);
+	cout << endl;
+	cout << setfill('=') << setw(155) << "" << endl;
 }
 
 /* Hàm tìm và xuất thông tin sách theo ISBN */
@@ -99,11 +126,24 @@ void findBookName()
 	}
 
 	/* Tìm sách theo tên */
-	int index = BookManagement::getInstance().findName(toLowerUtf8(name));
-	if (index != -1)
-		BookManagement::getInstance().getDanhSachBooks()[index]->XuatThongTin();
-	else
+	vector<Book*> list_book = BookManagement::getInstance().findName(toLowerUtf8(name));
+	if (list_book.empty())
 		cout << "Không tìm thấy sách " << name << endl;
+	else
+	{
+		/* Tạo khung info sách */
+		khungBookInfo();
+		/* In thông tin sách */
+		int count = 1;
+		for (Book* book : list_book)
+		{
+			cout << left << setfill(' ') << setw(3) << count++;
+			cout << "|";
+			book->XuatThongTin();
+			cout << endl << setfill('_') << setw(155) << "" << endl;
+		}
+	}
+		
 }
 
 /* Hàm xóa book khỏi nhà sách theo tên sách */
@@ -111,20 +151,52 @@ void deleteBook()
 {
 	cout << "Nhập vào tên sách muốn xóa: ";
 	string bookName;
-	if(getStringLine(bookName) != true)
+	if (getStringLine(bookName) != true)
 	{
 		cout << "Không tìm thấy sách" << endl;
 		return;
 	}
 
 	/* Tìm sách theo tên sách */
-	int index = BookManagement::getInstance().findName(toLowerUtf8(bookName));
+	vector<Book*> list_book = BookManagement::getInstance().findName(toLowerUtf8(bookName));
+
+	int index = -1;
 
 	/* Kiểm tra nếu không tìm thấy sách*/
-	if (index == -1)
+	if (list_book.empty())
 	{
 		cout << "Không tìm thấy sách" << endl;
 		return;
+	}
+	else if (list_book.size() > 1)
+	{
+		/* Có ít nhất 2 sách trùng tên */
+		/* Tạo khung info sách */
+		khungBookInfo();
+		/* In thông tin sách */
+		int count = 1;
+		for (Book* book : list_book)
+		{
+			cout << left << setfill(' ') << setw(3) << count++;
+			cout << "|";
+			book->XuatThongTin();
+			cout << endl << setfill('_') << setw(155) << "" << endl;
+		}
+		cout << "Chọn sách muốn xóa theo index (No.): ";
+		int opt = getOption();
+		if (opt < 1 || opt > list_book.size())
+		{
+			cout << "Lựa chọn không hợp lệ" << endl;
+			return;
+		}
+		else
+			/* Chỉ có 1 sách nên lấy index từ isbn */
+			index = BookManagement::getInstance().findISBN(list_book[opt - 1]->getIsbn());
+	}
+	else
+	{
+		/* Chỉ có 1 sách nên lấy index từ isbn */
+		index = BookManagement::getInstance().findISBN(list_book[0]->getIsbn());
 	}
 
 	/* Kiểm tra nếu sách có thể xóa được 
@@ -154,20 +226,56 @@ void editBook()
 	}
 
 	/* Tìm sách */
-	int index = BookManagement::getInstance().findName(toLowerUtf8(name));
+	vector<Book*> list_book = BookManagement::getInstance().findName(toLowerUtf8(name));
+	
+	int index;
 
 	/* Kiểm tra nếu tìm thấy sách */
-	if (index == -1)
+	if (list_book.empty())
 	{
 		cout << "Không tìm thấy sách" << endl;
 		return;
+	}
+	else if (list_book.size() > 1)
+	{
+		/* Có ít nhất 2 sách trùng tên */
+		/* Tạo khung info sách */
+		khungBookInfo();
+		/* In thông tin sách */
+		int count = 1;
+		for (Book* book : list_book)
+		{
+			cout << left << setfill(' ') << setw(3) << count++;
+			cout << "|";
+			book->XuatThongTin();
+			cout << endl << setfill('_') << setw(155) << "" << endl;
+		}
+		cout << "Chọn sách muốn sửa theo index (No.): ";
+		int opt = getOption();
+		if (opt < 1 || opt > list_book.size())
+		{
+			cout << "Lựa chọn không hợp lệ" << endl;
+			return;
+		}
+		else
+			/* Chỉ có 1 sách nên lấy index từ isbn */
+			index = BookManagement::getInstance().findISBN(list_book[opt - 1]->getIsbn());
+	}
+	else
+	{
+		/* Chỉ có 1 sách nên lấy index từ isbn */
+		index = BookManagement::getInstance().findISBN(list_book[0]->getIsbn());
 	}
 
 	/* Lấy book ra */
 	Book* book = BookManagement::getInstance().getDanhSachBooks()[index];
 
 	/* Xuất thông tin sách trước khi sửa */
-	BookManagement::getInstance().getDanhSachBooks()[index]->XuatThongTin();
+	/* Tạo khung info sách */
+	khungBookInfo();
+	cout << left << setfill(' ') << setw(3) << "1" << "|";
+	book->XuatThongTin();
+	cout << endl << setfill('_') << setw(155) << "" << endl;
 
 	while (true)
 	{

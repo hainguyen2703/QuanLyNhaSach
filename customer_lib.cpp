@@ -1,97 +1,79 @@
-#include <iostream>
-#include <string>
-#include <iomanip>
+#include "customer_ultis.h"
 #include "CustomerManagement.h"
-#include "common.h"
-#include "users.h"
 
 using namespace std;
 
-enum {
-	USER_NAME_E = 1,
-	USER_PHONE_E,
-	USER_ADDRESS_E,
-	USER_MAIL_E,
-	USER_TYPE_E
-};
-
-/* Static function prototyp */
-static void editUserMenu();
-static void editUserName(KhachHang* kh);
-static void editUserPhone(KhachHang* kh);
-static void editUserAddress(KhachHang* kh);
-static void editUserMail(KhachHang* kh);
-static void editUserType(KhachHang* kh);
-
-/* Hàm chỉnh sửa thông tin Khách hàng */
-void editUser()
+/* Kiểm tra xem User ID có hợp lệ hay không */
+bool ktUserID(const string& id)
 {
-	string id;
-	cout << "Nhập vào ID khách hàng cần sửa: ";
-	/* Kiểm tra ID nhập vào có hợp lệ hay không */
-	if (getStringLine(id) != true || ktUserID(id) != true)
+	/* Kiểm tra id empty hoặc size không đủ */
+	if (id.empty() || id.size() != 10)
 	{
-		cout << "ID không hợp lệ" << endl;
-		return;
+		return false;
 	}
 
-	/* Lấy Users */
-	CustomerManagement& Users = CustomerManagement::getInstance();
+	/* Kiểm tra ID có bắt đầu bằng KH */
+	string tmp = toUpper(id);
 
-	/* Tìm kiếm khách hàng theo ID */
-	int index = Users.findID(toUpper(id));
-
-	/* Xuất thông tin nếu tìm thấy khách hàng */
-	if (index == -1)
+	if (tmp.find_first_of("KH") != 0)
 	{
-		/* Không tìm thấy khách hàng */
-		cout << "Không tìm thấy khách hàng có ID: " << id << endl;
-		return;
+		return false;
 	}
 
-	/* Lấy khách hàng ra */
-	KhachHang* kh = CustomerManagement::getInstance().getDanhSach()[index];
-
-	/* Xuất thông tin khách hàng */
-	kh->XuatThongTin();
-
-	while (true)
-	{
-		/* Xuất menu edit */
-		editUserMenu();
-
-		cout << "Nhập vào thông tin cần thay đổi: ";
-		/* Lấy thông tin cần cập nhật */
-		int opt = getOption();
-		bool back = false;
-
-		/* Thực hiện chức năng tương ứng */
-		switch (opt)
-		{
-			case USER_NAME_E: editUserName(kh); break;			/* Chỉnh sửa tên khách hàng */
-			case USER_PHONE_E: editUserPhone(kh); break;			/* Chỉnh sửa số điện thoại */
-			case USER_ADDRESS_E: editUserAddress(kh); break;		/* Chỉnh sửa địa chỉ */
-			case USER_MAIL_E: editUserMail(kh); break;			/* Chỉnh sửa email */
-			case USER_TYPE_E: editUserType(kh); break;			/* Chỉnh sửa loại thẻ */
-			default:
-				back = true;
-				break;
-		}
-
-		/* Back về main menu*/
-		if (back == true)
-		{
-			/* Lưu xuống csv */
-			CustomerManagement::storeToCsv();
-			break;
-		}
-
-		cout << setfill('_') << setw(42) << "" << endl;
-		Users.getDanhSach()[index]->XuatThongTin();
-		cout << setfill('_') << setw(42) << "" << endl;
-	}
+	return true;
 }
 
+/* Hàm kiểm tra số điện thoại hợp lệ hay không */
+bool phoneValidate(const string& phone)
+{
+	/* Kiểm tra phone input có đủ 10 chữ số */
+	if (phone.size() != 10 || phone[0] != '0' || isAllDigit(phone) != true)
+	{
+		cout << "Số điện thoại không hợp lệ";
+		return false;
+	}
+
+	/* Kiểm tra số điện thoại đã được đăng ký chưa */
+	if (CustomerManagement::getInstance().findPhone(phone) != -1)
+	{
+		cout << "Số điện thoại đã được đăng ký!!!" << endl;
+		return false;
+	}
+
+	return true;
+}
+
+/* Hàm kiểm tra mail input */
+bool mailValidate(const string& mail)
+{
+	/* Mail không có @gmail.com và @gmail.com không phải là chuỗi kết thúc */
+	if (mail.size() <= 10)
+	{
+		cout << "Địa chỉ mail không hợp lệ" << endl;
+		return false;
+	}
+
+	string tmp = toLower(mail);
+	if (tmp.rfind("@gmail.com") != (mail.size() - 10))
+	{
+		cout << "Địa chỉ mail không hợp lệ" << endl;
+		return false;
+	}
+
+	/* Kiểm tra xem mail đã được đăng ký chưa */
+	if (CustomerManagement::getInstance().findMail(tmp) != -1)
+	{
+		cout << "Địa chỉ mail đã được đăng ký!!!" << endl;
+		return false;
+	}
+
+	/* Hợp lệ */
+	return true;
+}
+
+
+
+/************************************* Edit Khách Hàng *********************************/
 /* Menu chức năng edit thông tin khách hàng */
 void editUserMenu()
 {
@@ -159,7 +141,6 @@ void editUserAddress(KhachHang* kh)
 /* Thay đổi email khách hàng */
 void editUserMail(KhachHang* kh)
 {
-	CustomerManagement& Users = CustomerManagement::getInstance();
 	string mail;
 	cout << "Nhập vào email mới: ";
 	if(getStringLine(mail) != true || mailValidate(mail) != true)
