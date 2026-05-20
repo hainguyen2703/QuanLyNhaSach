@@ -38,6 +38,7 @@ KhachHang::KhachHang(string& name, string& phone, string& mail, string& address,
 	KhachHang::cntCustomerID++;
 }
 
+/* Hàm tạo khách hàng mới */
 KhachHang* KhachHang::createNewKhachHang()
 {
 	/* 1. Họ tên */
@@ -75,7 +76,7 @@ KhachHang* KhachHang::createNewKhachHang()
 
 	/* 5. Loại thẻ */
 	int the;
-	cout << "Loại thẻ: ";
+	cout << "Loại thẻ (0: Thường, 1: VIP): ";
 	cin >> the;
 	cin.ignore(100, '\n');
 	if (the != 0 && the != 1)
@@ -187,6 +188,10 @@ string KhachHang::getLoaiThe() const
 /* Xuất thông tin khách hàng */
 void KhachHang::XuatThongTin() const
 {
+	cout << setfill('=') << setw(42) << "" << endl
+		 << setfill(' ') << setw(12) << "" << "Thông tin khách hàng" << endl
+		 << setfill('=') << setw(42) << "" << endl;
+
 	print_utf8_left("Mã khách hàng", 15);
 	cout << ": " << this->id << endl;
 	print_utf8_left("Tên khách hàng", 15);
@@ -201,6 +206,7 @@ void KhachHang::XuatThongTin() const
 	cout << ": " << getDateString(this->ngayDK) << endl;
 	print_utf8_left("Loại thẻ", 15);
 	cout << ": " << getLoaiThe() << endl;
+	cout << setfill('=') << setw(42) << "" << endl;
 }
 
 /* Hàm sắp xếp dữ liệu để ghi file csv */

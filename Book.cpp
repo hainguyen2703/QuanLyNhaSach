@@ -106,78 +106,93 @@ Book* Book::createNewBook()
 	return new Book(isbn, name, author, nxb, year, category, importPrice, sellingPrice, soLuong);
 }
 
-/* Getter functions */
+/***********************Getter functions***********************/
+/* Hàm lấy isbn */
 string Book::getIsbn()
 {
 	return this->isbn;
 }
 
+/* Hàm lấy tên sách */
 string Book::getName() const
 {
 	return this->name;
 }
 
+/* Hàm lấy tác giả */
 string Book::getAuthor() const
 {
 	return this->author;
 }
 
+/* Hàm lấy nxb */
 string Book::getNxb() const
 {
 	return this->nxb;
 }
 
+/* Hàm lấy năm xuất bản */
 int Book::getYear() const
 {
 	return this->year;
 }
 
+/* Hàm lấy thể loại */
 string Book::getCategory() const
 {
 	return this->category;
 }
 
+/* Hàm lấy giá nhập */
 double Book::getImportPrice() const
 {
 	return this->importPrice;
 }
 
+/* Hàm lấy giá bán */
 double Book::getSellingPrice() const
 {
 	return this->sellingPrice;
 }
 
+/* Hàm lấy số lượng sách */
 int Book::getSoLuong() const
 {
 	return this->soLuong;
 }
 
-/* Setter function */
+/*********************** Setter functions ***********************/
+/* Hàm set isbn */
 void Book::setIsbn(const string& isbn)
 {
 	this->isbn = isbn;
 }
 
+/* Hàm set tên sách */
 void Book::setName(const string& name)
 {
 	this->name = name;
 }
 
+/* Hàm set tác giả */
 void Book::setAuthor(const string& author)
 {
 	this->author = author;
 }
 
+/* Hàm set nxb */
 void Book::setNxb(const string& nxb)
 {
 	this->nxb = nxb;
 }
 
+/* Hàm set năm xuất bản */
 void Book::setYear(const int& year)
 {
 	this->year = year;
 }
 
+/* Hàm set số lượng sách */
 void Book::setSoLuong(const int& soLuong, const int& type)
 {
 	/* Set gia trị thẳng */
@@ -187,16 +202,19 @@ void Book::setSoLuong(const int& soLuong, const int& type)
 		this->soLuong += soLuong;
 }
 
+/* Hàm set thể loại */
 void Book::setCategory(const std::string& category)
 {
 	this->category = category;
 }
 
+/* Hàm set giá nhập sách*/
 void Book::setImportPrice(const double& importPrice)
 {
 	this->importPrice = importPrice;
 }
 
+/* Hàm set giá bán */
 void Book::setSellingPrice(const double& sellingPrice)
 {
 	this->sellingPrice = sellingPrice;
@@ -230,6 +248,7 @@ void Book::XuatThongTin() const
 	cout << setfill('=') << setw(42) << "" << endl;
 }
 
+/* Chuyển thành chuỗi đê lưu data ở csv */
 string Book::getCsvString() const
 {
 	/* Thứ tự: ISBN, name, author, nxb, year, category, importPrice, sellingPrice, soLuong */

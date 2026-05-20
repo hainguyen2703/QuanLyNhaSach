@@ -18,23 +18,6 @@ vector<Book*>& BookManagement::getDanhSachBooks()
 	return this->books;
 }
 
-/* Thêm sách mới */
-void BookManagement::addBook()
-{
-	/* Tạo sách mới */
-	Book* newBook = Book::createNewBook();
-
-	/* Kiểm tra nếu sách mới tạo thành công */
-	if (newBook != NULL)
-	{
-		this->books.push_back(newBook);	/* Thêm sách vào vector books */
-		cout << "Đã thêm sách mới thành công!" << endl;
-
-		/* Lưu xuống file csv ngay */
-		BookManagement::storeToCsv();
-	}
-}
-
 /* Menu quản lý sách */
 void BookManagement::Menu()
 {
@@ -50,6 +33,23 @@ void BookManagement::Menu()
 		<< "6. Tìm kiếm khách hàng theo tên sách" << endl
 		<< "0. Thoát" << endl
 		<< setw(42) << "" << endl;
+}
+
+/* Thêm sách mới */
+void BookManagement::addBook()
+{
+	/* Tạo sách mới */
+	Book* newBook = Book::createNewBook();
+
+	/* Kiểm tra nếu sách mới tạo thành công */
+	if (newBook != NULL)
+	{
+		this->books.push_back(newBook);	/* Thêm sách vào vector books */
+		cout << "Đã thêm sách mới thành công!" << endl;
+
+		/* Lưu xuống file csv ngay */
+		BookManagement::storeToCsv();
+	}
 }
 
 /* Hàm xuất danh sách book */
@@ -105,6 +105,20 @@ int BookManagement::findName(const std::string& name)
 
 	/* Không tìm thấy */
 	return -1;
+}
+
+/* Remove book */
+void BookManagement::removeBook(const int& index)
+{
+	vector<Book*> books = BookManagement::getInstance().getDanhSachBooks();
+
+	/* Remove sách */
+	Book* book = books[index];
+	books.erase(books.begin() + index);
+	delete book;
+
+	/* Lưu xuống file csv ngay */
+	BookManagement::storeToCsv();
 }
 
 /* Hàm store data */
@@ -179,18 +193,4 @@ void BookManagement::loadFromCsv(const std::string& filename)
 
 	/* Đóng file */
 	inputFile.close();
-}
-
-/* Remove book */
-void BookManagement::removeBook(const int& index)
-{
-	vector<Book*> books = BookManagement::getInstance().getDanhSachBooks();
-
-	/* Remove sách */
-	Book* book = books[index];
-	books.erase(books.begin() + index);
-	delete book;
-
-	/* Lưu xuống file csv ngay */
-	BookManagement::storeToCsv();
 }
