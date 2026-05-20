@@ -7,8 +7,7 @@
 #include "common.h"
 #include "KhachHang.h"
 #include "users.h"
-#include "storeData.h"
-#include "loadData.h"
+#include "CustomerManagement.h"
 #include "BookManagement.h"
 
 using namespace std;
@@ -20,6 +19,8 @@ enum {
 	BILL_E
 };
 
+static void storeData();
+
 int main()
 {
 	/* Set up ban đầu để chương trình có thể hiểu và in ra ký tự Unicode */
@@ -28,8 +29,8 @@ int main()
 	SetConsoleCP(CP_UTF8);
 
 	/* load dữ liệu từ csv */
-	loadData();
-	BookManagement::loadBooksFromFile();
+	CustomerManagement::loadFromCsv();
+	BookManagement::loadFromCsv();
 
 	/* Loop đến khi exit */
 	while (true)
@@ -59,10 +60,17 @@ int main()
 	}
 
 	cout << "Ghi dữ liệu..." << endl;
-	/* Ghi dữ liệu xuống file csv */
-	storeCustomerData();
-	BookManagement::storeBooksToFile();
+	storeData();
 	cout << "Shutdown..." << endl;
 	
 	return 0;
+}
+
+/* Ghi dữ liệu xuống file csv */
+void storeData()
+{
+	cout << "Tiến hành lưu thông tin khách hàng..." << endl;
+	CustomerManagement::storeToCsv();
+	cout << "Tiến hành lưu thông tin Sách..." << endl;
+	BookManagement::storeToCsv();
 }

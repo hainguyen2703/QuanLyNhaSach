@@ -26,7 +26,7 @@ void bookMain()
 	while (true)
 	{
 		/* Show menu quản lý sách */
-		Books.bookMenu();
+		Books.Menu();
 
 		cout << "Nhập vào chức năng: ";
 		int opt = getOption();

@@ -3,8 +3,9 @@
 #include <cctype>
 #include <fstream>
 #include <sstream>
+#include <vector>
 #include "common.h"
-#include "UserManagement.h"
+#include "CustomerManagement.h"
 
 #ifndef NOMINMAX
 #define NOMINMAX
@@ -120,7 +121,7 @@ bool phoneValidate(const string& phone)
 	}
 
 	/* Kiểm tra số điện thoại đã được đăng ký chưa */
-	if (UserManagement::getInstance().findPhone(phone) != -1)
+	if (CustomerManagement::getInstance().findPhone(phone) != -1)
 	{
 		cout << "Số điện thoại đã được đăng ký!!!" << endl;
 		return false;
@@ -147,7 +148,7 @@ bool mailValidate(const string& mail)
 	}
 
 	/* Kiểm tra xem mail đã được đăng ký chưa */
-	if (UserManagement::getInstance().findMail(tmp) != -1)
+	if (CustomerManagement::getInstance().findMail(tmp) != -1)
 	{
 		cout << "Địa chỉ mail đã được đăng ký!!!" << endl;
 		return false;
@@ -251,4 +252,36 @@ Book* loadBookFromCsvString(string& line)
 
 	/* Tạo khách hàng */
 	return new Book(attribute[ISBN], attribute[NAME], attribute[AUTHOR], attribute[NXB], stoi(attribute[YEAR]), attribute[CATEGORY], importPrice, sellingPrice, stoi(attribute[SO_LUONG]));
+}
+
+/* Hàm tách string thành Khách Hàng data */
+KhachHang* loadUserFromCsvString(string& line)
+{
+	vector<string> attribute;
+
+	stringstream ss(line);
+	string info;
+	int item_cnt = 0;
+
+	/* Tách dòng string theo delmi là dấu phẩy */
+	while (getline(ss, info, '|'))
+	{
+		attribute.push_back(info);
+	}
+
+	/* Convert type sang int */
+	int type = (attribute[6] == "1") ? 1 : 0;
+
+	/* Convert string sang Date */
+	Date date = getDateFromString(attribute[5]);
+
+	/* Tạo khách hàng */
+	KhachHang* kh = new KhachHang(attribute[1], attribute[2], attribute[3], attribute[4], type);
+
+	/* Set thông tin ID và ngày đăng ký */
+	kh->setID(attribute[0]);
+	kh->setRegisterDate(date);
+
+	/* Trả về con trỏ khách hàng */
+	return kh;
 }

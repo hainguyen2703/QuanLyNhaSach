@@ -19,7 +19,7 @@ public:
 	std::vector<Book*>& getDanhSachBooks();
 
     /* Menu quản lý sách */
-	void bookMenu();
+	void Menu();
 
     void addBook();
     void removeBook(const std::string& isbn);
@@ -30,7 +30,7 @@ public:
     int findName(const std::string& name);
 
     /* Các hàm load và store data */
-	static void loadBooksFromFile(const std::string& filename = "books.csv");  /* Mặc định là books.csv */
-	static void storeBooksToFile(const std::string& filename = "books.csv");   /* Mặc định là books.csv */
+	static void loadFromCsv(const std::string& filename = "books.csv");  /* Mặc định là books.csv */
+	static void storeToCsv(const std::string& filename = "books.csv");   /* Mặc định là books.csv */
 };
 

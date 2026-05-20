@@ -33,7 +33,7 @@ void BookManagement::addBook()
 }
 
 /* Menu quản lý sách */
-void BookManagement::bookMenu()
+void BookManagement::Menu()
 {
 	cout << setfill('=')
 		<< setw(42) << "" << endl
@@ -105,10 +105,8 @@ int BookManagement::findName(const std::string& name)
 }
 
 /* Hàm store data */
-void BookManagement::storeBooksToFile(const string& filename)
+void BookManagement::storeToCsv(const string& filename)
 {
-	cout << "Tiến hành lưu thông tin Sách..." << endl;
-
 	/* Mở file để lưu */
 	ofstream outputFile;
 	outputFile.open(filename, ios::out);
@@ -140,7 +138,7 @@ void BookManagement::storeBooksToFile(const string& filename)
 }
 
 /* Hàm load data */
-void BookManagement::loadBooksFromFile(const std::string& filename)
+void BookManagement::loadFromCsv(const std::string& filename)
 {
 	ifstream inputFile;
 	inputFile.open(filename, ios::in);

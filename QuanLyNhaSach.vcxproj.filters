@@ -30,19 +30,10 @@
     <ClCompile Include="common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="loadData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="storeData.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="userMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UserManagement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="userRegister.cpp">
+    <ClCompile Include="CustomerManagement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="editUser.cpp">
@@ -74,19 +65,7 @@
     <ClInclude Include="common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="global.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="loadData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="storeData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UserManagement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="userRegister.h">
+    <ClInclude Include="CustomerManagement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="users.h">

@@ -2,7 +2,7 @@
 #include <string>
 #include <iomanip>
 #include "menu.h"
-#include "UserManagement.h"
+#include "CustomerManagement.h"
 #include "common.h"
 #include "users.h"
 
@@ -38,7 +38,7 @@ void editUser()
 	}
 
 	/* Lấy Users */
-	UserManagement& Users = UserManagement::getInstance();
+	CustomerManagement& Users = CustomerManagement::getInstance();
 
 	/* Tìm kiếm khách hàng theo ID */
 	int index = Users.findID(toUpper(id));
@@ -106,7 +106,7 @@ void editUserName(const int &index)
 	}
 
 	/* Cập nhật tên khách hàng */
-	UserManagement::getInstance().getDanhSach()[index]->setName(name);
+	CustomerManagement::getInstance().getDanhSach()[index]->setName(name);
 	cout << "Đã cập nhật tên khách hàng thành công!" << endl;
 }
 
@@ -125,7 +125,7 @@ void editUserPhone(const int& index)
 	}
 
 	/* Cập nhật số điện thoại khách hàng */
-	UserManagement::getInstance().getDanhSach()[index]->setPhone(phone);
+	CustomerManagement::getInstance().getDanhSach()[index]->setPhone(phone);
 	cout << "Đã cập nhật số điện thoại khách hàng thành công!" << endl;
 }
 
@@ -142,14 +142,14 @@ void editUserAddress(const int& index)
 		return;
 	}
 	/* Cập nhật địa chỉ khách hàng */
-	UserManagement::getInstance().getDanhSach()[index]->setAddress(address);
+	CustomerManagement::getInstance().getDanhSach()[index]->setAddress(address);
 	cout << "Đã cập nhật địa chỉ khách hàng thành công!" << endl;
 }
 
 /* Thay đổi email khách hàng */
 void editUserMail(const int& index)
 {
-	UserManagement& Users = UserManagement::getInstance();
+	CustomerManagement& Users = CustomerManagement::getInstance();
 	string mail;
 	cout << "Nhập vào email mới: ";
 	getline(cin, mail);
@@ -178,6 +178,6 @@ void editUserType(const int& index)
 		return;
 	}
 	/* Cập nhật loại thẻ khách hàng */
-	UserManagement::getInstance().getDanhSach()[index]->setType(type);
+	CustomerManagement::getInstance().getDanhSach()[index]->setType(type);
 	cout << "Đã cập nhật loại thẻ khách hàng thành công!" << endl;
 }

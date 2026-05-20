@@ -1,14 +1,18 @@
 #include <iostream>
+#include <iomanip>
 #include "KhachHang.h"
 #include "common.h"
 
 using namespace std;
 
 /* Khởi tạo giá trị ban đầu cho biến Class */
-int KhachHang::cntUserID = 0;
+int KhachHang::cntCustomerID = 0;
 
-/* Khởi tạo giá trị ban đầu cho biến numOfUser */
-static int numOfUser;
+/* Hàm cập nhật số user id hiện tại */
+void KhachHang::setCntCustomerID(const int& cnt)
+{
+	KhachHang::cntCustomerID = cnt;
+}
 
 /* Hàm khởi tạo có tham số */
 KhachHang::KhachHang(string& name, string& phone, string& mail, string& address, int& type)
@@ -25,13 +29,70 @@ KhachHang::KhachHang(string& name, string& phone, string& mail, string& address,
 
 	/* Set ID */
 	string baseID = "00000000";
-	string nextID = to_string(KhachHang::cntUserID + 1);
+	string nextID = to_string(KhachHang::cntCustomerID + 1);
 	size_t replacePos = 8 - nextID.length();
 	baseID.replace(replacePos, nextID.length(), nextID);
 	this->id = "KH" + baseID;
 
 	/* Tạo khách hàng thành công, tăng một customer */
-	KhachHang::cntUserID++;
+	KhachHang::cntCustomerID++;
+}
+
+KhachHang* KhachHang::createNewKhachHang()
+{
+	/* 1. Họ tên */
+	string hoten;	/* Biến chứa tên khách hàng */
+	cout << setw(30) << setfill('*') << "*" << endl;
+	cout << "Tạo tài khoảng" << endl;
+	cout << setw(30) << setfill('*') << "" << endl;
+	cout << "Họ tên khách hàng: ";
+	getline(cin, hoten);
+	/* Kiểm tra nếu chuỗi input toàn khoảng trắng */
+	if (isAllBlank(hoten)) return NULL;
+
+	/* 2. Số điện thoại */
+	string phone;
+	cout << "Số điện thoại: ";
+	getline(cin, phone);
+	/* Kiểm tra phone input */
+	if (phoneValidate(phone) == false)
+		return NULL;
+
+	/* 3. Mail */
+	string mail;
+	cout << "Mail: ";
+	getline(cin, mail);
+	/* Kiểm tra mail input */
+	if (mailValidate(mail) != true)
+		return NULL;
+	else
+		mail = toLower(mail);
+
+	/* 4. Địa chỉ */
+	string address;
+	cout << "Địa chỉ: ";
+	getline(cin, address);
+	/* Kiểm tra địa chỉ */
+	if (address.empty())
+	{
+		cout << "Địa chỉ không hợp lệ!!\n";
+		return NULL;
+	}
+
+	/* 5. Loại thẻ */
+	int the;
+	cout << "Loại thẻ: ";
+	cin >> the;
+	cin.ignore(100, '\n');
+	if (the != 0 && the != 1)
+	{
+		cout << "Không hợp lệ!!" << endl;
+		cout << "Mặc định hạng thẻ thường!!!" << endl;
+		the = 0;
+	}
+
+	/* Tạo user mới */
+	return new KhachHang(hoten, phone, mail, address, the);
 }
 
 /********************************* Hàm set attribute **************************************/
