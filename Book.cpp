@@ -30,6 +30,13 @@ Book* Book::createNewBook()
 		return NULL;
 	}
 
+	/* Kiểm tra nếu ISBN đã tồn tại */
+	if (BookManagement::getInstance().findISBN(isbn) != -1)
+	{
+		cout << "ISBN đã có trong hệ thống, xin đổi sang mục quản lý kho để cập nhật số lượng sách" << endl;
+		return NULL;
+	}
+
 	/* 2. Tên sách */
 	string name;
 	cout << "Tên sách: ";
@@ -62,7 +69,7 @@ Book* Book::createNewBook()
 	cout << "Năm xuất bản: ";
 	cin >> year;
 	cin.ignore(100, '\n');	/* Làm sạch buffer */
-	if (year <= 0)
+	if (year <= 0 || year > getCurrentDate().year)
 	{
 		cout << "Năm xuất bản không hợp lệ" << endl;
 		return NULL;
@@ -223,29 +230,23 @@ void Book::setSellingPrice(const double& sellingPrice)
 /* Hàm xuất thông tin sách */
 void Book::XuatThongTin() const
 {
-	cout << setfill('=')
-		<< setw(42) << "" << endl
-		<< setfill(' ') << setw(12) << "" << "Thông tin sách" << endl
-		<< setfill('=') << setw(42) << "" << endl;
-	print_utf8_left("ISBN", 15);
-	cout << ": " << this->isbn << endl;
-	print_utf8_left("Tên sách", 15);
-	cout << ": " << this->name << endl;
-	print_utf8_left("Tác giả", 15);
-	cout << ": " << this->author << endl;
-	print_utf8_left("NXB", 15);
-	cout << ": " << this->nxb << endl;
-	print_utf8_left("Năm xuất bản", 15);
-	cout << ": " << this->year << endl;
-	print_utf8_left("Thể loại", 15);
-	cout << ": " << this->category << endl;
-	print_utf8_left("Giá nhập", 15);
-	cout << ": " << this->importPrice << endl;
-	print_utf8_left("Giá bán", 15);
-	cout << ": " << this->sellingPrice << endl;
-	print_utf8_left("Số lượng", 15);
-	cout << ": " << this->soLuong << endl;
-	cout << setfill('=') << setw(42) << "" << endl;
+	print_utf8_left(this->isbn, 15);
+	cout << "|";
+	print_utf8_left(this->name, 25);
+	cout << "|";
+	print_utf8_left(this->author, 20);
+	cout << "|";
+	print_utf8_left(this->nxb, 20);
+	cout << "|";
+	print_utf8_left(to_string(this->year), 10);
+	cout << "|";
+	print_utf8_left(this->category, 15);
+	cout << "|";
+	print_utf8_left(to_string(this->importPrice), 15);
+	cout << "|";
+	print_utf8_left(to_string(this->sellingPrice), 15);
+	cout << "|";
+	print_utf8_left(to_string(this->soLuong), 15);
 }
 
 /* Chuyển thành chuỗi đê lưu data ở csv */

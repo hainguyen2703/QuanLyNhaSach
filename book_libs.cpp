@@ -129,7 +129,7 @@ void updateAuthor(Book* book)
 /* Cập nhật nhà xuất bản */
 void updateNxb(Book* book)
 {
-	cout << "Nhập vào tên nxb: " << endl;
+	cout << "Nhập vào tên nxb: ";
 	string nxb;
 	if (getStringLine(nxb) != true)
 	{
@@ -145,7 +145,7 @@ void updateNxb(Book* book)
 /* Cập nhật thể loại */
 void updateCategory(Book* book)
 {
-	cout << "Nhập vào thể loại: " << endl;
+	cout << "Nhập vào thể loại: ";
 	string nxb;
 	if (getStringLine(nxb) != true)
 	{
