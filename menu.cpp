@@ -5,21 +5,6 @@
 
 using namespace std;
 
-/* Ham trinh chieu main menu */
-void MainMenu()
-{
-	cout	<< setfill('=')
-			<< setw(42) << "" << endl
-			<< setfill(' ') << setw(12) << "" << "Quản Lý Nhà Sách" << endl
-			<< setfill('=') << setw(42) << "" << endl
-			<< "1. Quản lý khách hàng" << endl
-			<< "2. Quản lý sách" << endl
-			<< "3. Quản lý hóa đơn bán hàng" << endl
-			<< "0. Thoát" << endl
-			<< setw(42) << "" << endl;
-
-}
-
 /* Menu chức năng edit thông tin khách hàng */
 void editUserMenu()
 {

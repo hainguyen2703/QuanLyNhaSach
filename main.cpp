@@ -2,6 +2,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <limits>
+#include <iomanip>
 #include "main.h"
 #include "menu.h"
 #include "common.h"
@@ -19,7 +20,9 @@ enum {
 	BILL_E
 };
 
+/* Static function prototype */
 static void storeData();
+static void showMainMenu();
 
 int main()
 {
@@ -36,7 +39,7 @@ int main()
 	while (true)
 	{
 		/* Mở main menu */
-		MainMenu();
+		showMainMenu();
 		cout << "Nhập vào chức năng: ";
 		int opt = getOption();
 
@@ -64,6 +67,20 @@ int main()
 	cout << "Shutdown..." << endl;
 	
 	return 0;
+}
+
+/* Ham trinh chieu main menu */
+void showMainMenu()
+{
+	cout << setfill('=')
+		<< setw(42) << "" << endl
+		<< setfill(' ') << setw(12) << "" << "Quản Lý Nhà Sách" << endl
+		<< setfill('=') << setw(42) << "" << endl
+		<< "1. Quản lý khách hàng" << endl
+		<< "2. Quản lý sách" << endl
+		<< "3. Quản lý hóa đơn bán hàng" << endl
+		<< "0. Thoát" << endl
+		<< setw(42) << "" << endl;
 }
 
 /* Ghi dữ liệu xuống file csv */
