@@ -79,7 +79,7 @@ void editBookMenu()
 }
 
 /* Cập nhật ISBN */
-void updateISBN(const int& index)
+void updateISBN(Book* book)
 {
 	cout << "Nhập vào isbn mới: ";
 	string isbn;
@@ -90,7 +90,7 @@ void updateISBN(const int& index)
 	}
 
 	/* Cập nhật */
-	BookManagement::getInstance().getDanhSachBooks()[index]->setIsbn(isbn);
+	book->setIsbn(isbn);
 	cout << "Cập nhật isbn thành công" << endl;
 }
 
@@ -105,9 +105,12 @@ void updateBookName(Book* book)
 		return;
 	}
 
+	/* Cập nhật */
 	book->setName(name);
+	cout << "Cập nhật tên sách thành công" << endl;
 }
 
+/* Cập nhật tên tác giả */
 void updateAuthor(Book* book)
 {
 	cout << "Nhập vào tên tác giả: ";
@@ -118,9 +121,12 @@ void updateAuthor(Book* book)
 		return;
 	}
 
+	/* Cập nhật */
 	book->setAuthor(author);
+	cout << "Cập nhật tác giả thành công" << endl;
 }
 
+/* Cập nhật nhà xuất bản */
 void updateNxb(Book* book)
 {
 	cout << "Nhập vào tên nxb: " << endl;
@@ -131,5 +137,95 @@ void updateNxb(Book* book)
 		return;
 	}
 
+	/* Cập nhật */
 	book->setNxb(nxb);
+	cout << "Cập nhật nhà xuất bản thành công" << endl;
+}
+
+/* Cập nhật thể loại */
+void updateCategory(Book* book)
+{
+	cout << "Nhập vào thể loại: " << endl;
+	string nxb;
+	if (getStringLine(nxb) != true)
+	{
+		cout << "Input không hợp lệ" << endl;
+		return;
+	}
+
+	/* Cập nhật */
+	book->setCategory(nxb);
+	cout << "Cập nhật thể loại thành công" << endl;
+}
+
+/* Cập nhật năm xuất bản */
+void updateNamXB(Book* book)
+{
+	cout << "Nhập vào năm xuất bản: ";
+	int year;
+	cin >> year;
+	cin.ignore(100, '\n');	/* Làm sạch buffer */
+	if (year <= 0)
+	{
+		cout << "Năm xuất bản không hợp lệ" << endl;
+		return;
+	}
+
+	/* Cập nhật */
+	book->setYear(year);
+	cout << "Cập nhật năm xuất bản thành công" << endl;
+}
+
+/* Set số lượng sách */
+void updateSoLuong(Book* book)
+{
+	cout << "Nhập vào số lượng sách thay đổi: ";
+	int soLuong;
+	cin >> soLuong;
+	cin.ignore(100, '\n'); /* Làm sạch buffer */
+	if (soLuong < 0)
+	{
+		cout << "Số lượng không hợp lệ" << endl;
+		return;
+	}
+
+	/* Cập nhật */
+	book->setSoLuong(soLuong);
+	cout << "Cập nhật số lượng thành công" << endl;
+}
+
+/* Cập nhật giá nhập */
+void updateGiaNhap(Book* book)
+{
+	cout << "Nhập vào giá nhập sách: ";
+	int price;
+	cin >> price;
+	cin.ignore(100, '\n'); /* Làm sạch buffer */
+	if (price < 10000)
+	{
+		cout << "Giá không hợp lệ" << endl;
+		return;
+	}
+
+	/* Cập nhật */
+	book->setImportPrice(price);
+	cout << "Cập nhật giá nhập sách thành công" << endl;
+}
+
+/* Cập nhật giá bán */
+void updateGiaBan(Book* book)
+{
+	cout << "Nhập vào giá bán sách: ";
+	int price;
+	cin >> price;
+	cin.ignore(100, '\n'); /* Làm sạch buffer */
+	if (price < 10000)
+	{
+		cout << "Giá không hợp lệ" << endl;
+		return;
+	}
+
+	/* Cập nhật */
+	book->setSellingPrice(price);
+	cout << "Cập nhật giá bán thành công" << endl;
 }

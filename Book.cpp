@@ -178,6 +178,15 @@ void Book::setYear(const int& year)
 	this->year = year;
 }
 
+void Book::setSoLuong(const int& soLuong, const int& type)
+{
+	/* Set gia trị thẳng */
+	if (type == SET_GIA_TRI)
+		this->soLuong = soLuong;
+	else
+		this->soLuong += soLuong;
+}
+
 void Book::setCategory(const std::string& category)
 {
 	this->category = category;

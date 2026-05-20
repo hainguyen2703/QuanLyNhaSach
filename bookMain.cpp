@@ -19,6 +19,7 @@ enum {
 	NXB,
 	CATEGORY,
 	YEAR,
+	QUANTITY,
 	IMPORT_PRICE,
 	SELL_PRICE,
 };
@@ -177,13 +178,25 @@ void editBook()
 
 		switch (opt)
 		{
-		case ISBN: updateISBN(index);  break;	/* Cập nhật isbn */
-		case NAME: updateBookName(book); break;
+		case ISBN: updateISBN(book);  break;			/* Cập nhật isbn */
+		case NAME: updateBookName(book); break;			/* Cập nhật tên sách */
+		case AUTHOR: updateAuthor(book); break;			/* Cập nhật tên tác giả */
+		case NXB: updateNxb(book); break;				/* Cập nhật nhà xuất bản */
+		case CATEGORY: updateCategory(book); break;		/* Cập nhật thể loại */
+		case YEAR: updateNamXB(book); break;			/* Cập nhật năm xuất bản */
+		case QUANTITY: updateSoLuong(book); break;		/* Cập nhật số lượng sách */
+		case IMPORT_PRICE: updateGiaNhap(book); break;	/* Cập nhật giá nhập vào */
+		case SELL_PRICE: updateGiaBan(book); break;		/* Cập nhật giá bán */
 		default:
 			back = true;
 			break;
 		}
 
-		if (back == true) break;
+		if (back == true)
+		{
+			/* Lưu thông tin xuốn csv trước khi back */
+			BookManagement::storeToCsv();
+			break;
+		}
 	}
 }

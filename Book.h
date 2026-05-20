@@ -1,6 +1,11 @@
 #pragma once
 #include <string>
 
+enum {
+	SET_GIA_TRI = 0,
+	CAP_NHAT
+};
+
 class Book
 {
 private:
@@ -36,6 +41,7 @@ public:
 	void setAuthor(const std::string& author);
 	void setNxb(const std::string& nxb);
 	void setYear(const int& year);
+	void setSoLuong(const int& soLuong, const int& type = SET_GIA_TRI);
 	void setCategory(const std::string& category);
 	void setImportPrice(const double& importPrice);
 	void setSellingPrice(const double& sellingPrice);
