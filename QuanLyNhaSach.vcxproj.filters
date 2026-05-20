@@ -30,7 +30,7 @@
     <ClCompile Include="common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="userMain.cpp">
+    <ClCompile Include="customerMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="CustomerManagement.cpp">
@@ -45,7 +45,7 @@
     <ClCompile Include="BookManagement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bookProcessing.cpp">
+    <ClCompile Include="bookMain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="book_libs.cpp">
