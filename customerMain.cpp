@@ -1,9 +1,5 @@
-#include <iostream>
-#include <string>
-#include <iomanip>
 #include "CustomerManagement.h"
-#include "users.h"
-#include "common.h"
+#include "customer_ultis.h"
 
 using namespace std;
 
@@ -16,10 +12,19 @@ enum {
 	FIND_USER_NAME
 };
 
+enum {
+	USER_NAME_E = 1,
+	USER_PHONE_E,
+	USER_ADDRESS_E,
+	USER_MAIL_E,
+	USER_TYPE_E
+};
+
 /* Static Functions Prototype  */
 static void deleteUser();
 static void findUserPhone();
 static void findUserName();
+static void editUser();
 
 /* Hàm main của việc quản lý khách hàng */
 void userMain()
@@ -144,5 +149,74 @@ void findUserName()
 		cout << setfill('=') << setw(42) << "" << endl;
 		/* Tìm thấy khách hàng, xuất thông tin */
 		Users.getDanhSach()[index]->XuatThongTin();
+	}
+}
+
+/* Hàm chỉnh sửa thông tin Khách hàng */
+void editUser()
+{
+	string id;
+	cout << "Nhập vào ID khách hàng cần sửa: ";
+	/* Kiểm tra ID nhập vào có hợp lệ hay không */
+	if (getStringLine(id) != true || ktUserID(id) != true)
+	{
+		cout << "ID không hợp lệ" << endl;
+		return;
+	}
+
+	/* Lấy Users */
+	CustomerManagement& Users = CustomerManagement::getInstance();
+
+	/* Tìm kiếm khách hàng theo ID */
+	int index = Users.findID(toUpper(id));
+
+	/* Xuất thông tin nếu tìm thấy khách hàng */
+	if (index == -1)
+	{
+		/* Không tìm thấy khách hàng */
+		cout << "Không tìm thấy khách hàng có ID: " << id << endl;
+		return;
+	}
+
+	/* Lấy khách hàng ra */
+	KhachHang* kh = CustomerManagement::getInstance().getDanhSach()[index];
+
+	/* Xuất thông tin khách hàng */
+	kh->XuatThongTin();
+
+	while (true)
+	{
+		/* Xuất menu edit */
+		editUserMenu();
+
+		cout << "Nhập vào thông tin cần thay đổi: ";
+		/* Lấy thông tin cần cập nhật */
+		int opt = getOption();
+		bool back = false;
+
+		/* Thực hiện chức năng tương ứng */
+		switch (opt)
+		{
+		case USER_NAME_E: editUserName(kh); break;			/* Chỉnh sửa tên khách hàng */
+		case USER_PHONE_E: editUserPhone(kh); break;			/* Chỉnh sửa số điện thoại */
+		case USER_ADDRESS_E: editUserAddress(kh); break;		/* Chỉnh sửa địa chỉ */
+		case USER_MAIL_E: editUserMail(kh); break;			/* Chỉnh sửa email */
+		case USER_TYPE_E: editUserType(kh); break;			/* Chỉnh sửa loại thẻ */
+		default:
+			back = true;
+			break;
+		}
+
+		/* Back về main menu*/
+		if (back == true)
+		{
+			/* Lưu xuống csv */
+			CustomerManagement::storeToCsv();
+			break;
+		}
+
+		cout << setfill('_') << setw(42) << "" << endl;
+		Users.getDanhSach()[index]->XuatThongTin();
+		cout << setfill('_') << setw(42) << "" << endl;
 	}
 }

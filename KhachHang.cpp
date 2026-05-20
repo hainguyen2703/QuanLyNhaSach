@@ -1,7 +1,5 @@
-#include <iostream>
-#include <iomanip>
 #include "KhachHang.h"
-#include "common.h"
+#include "customer_ultis.h"
 
 using namespace std;
 
