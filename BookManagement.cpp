@@ -29,6 +29,9 @@ void BookManagement::addBook()
 	{
 		this->books.push_back(newBook);	/* Thêm sách vào vector books */
 		cout << "Đã thêm sách mới thành công!" << endl;
+
+		/* Lưu xuống file csv ngay */
+		BookManagement::storeToCsv();
 	}
 }
 
@@ -134,7 +137,6 @@ void BookManagement::storeToCsv(const string& filename)
 
 	/* Đóng file */
 	outputFile.close();
-	cout << "Lưu thông tin sách thành công!" << endl;
 }
 
 /* Hàm load data */
@@ -177,4 +179,18 @@ void BookManagement::loadFromCsv(const std::string& filename)
 
 	/* Đóng file */
 	inputFile.close();
+}
+
+/* Remove book */
+void BookManagement::removeBook(const int& index)
+{
+	vector<Book*> books = BookManagement::getInstance().getDanhSachBooks();
+
+	/* Remove sách */
+	Book* book = books[index];
+	books.erase(books.begin() + index);
+	delete book;
+
+	/* Lưu xuống file csv ngay */
+	BookManagement::storeToCsv();
 }

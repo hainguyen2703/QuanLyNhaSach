@@ -32,19 +32,7 @@ static int utf8_length(const std::string& s);
 /* Kiểm tra string input toàn space, tab hoặc newline hoặc empty */
 bool isAllBlank(const string str)
 {
-	if (str.empty()) return true;
-
-	/* Duyệt qua từng ký tự */
-	for (char c : str)
-	{
-		/* Kiểm tra nếu ký tự khác blank */
-		/* isspace return 0 nếu ký tự check khác space */
-		if (isspace(c) == 0)
-			return false;
-	}
-
-	/* Không tìm thấy ký tự nào khác -> All blank*/
-	return true;
+	return str.find_first_not_of(" \t\n\r") == string::npos;
 }
 
 /* Clear input cache */
@@ -52,6 +40,19 @@ void clearInputCache()
 {
 	/* Clear input cache */
 	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+}
+
+/* Hàm lấy 1 line input dạng string */
+bool getStringLine(string& str)
+{
+	getline(cin, str);
+	if (isAllBlank(str))
+	{
+		cout << "Tên không hợp lệ" << endl;
+		return false;
+	}
+
+	return true;
 }
 
 /* Hàm lấy lựa chọn chức năng muốn sử dụng 

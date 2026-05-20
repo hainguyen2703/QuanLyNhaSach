@@ -28,10 +28,8 @@ void editUser()
 {
 	string id;
 	cout << "Nhập vào ID khách hàng cần sửa: ";
-	getline(cin, id);
-
 	/* Kiểm tra ID nhập vào có hợp lệ hay không */
-	if (ktUserID(id) != true)
+	if (getStringLine(id) != true || ktUserID(id) != true)
 	{
 		cout << "ID không hợp lệ" << endl;
 		return;
@@ -111,10 +109,7 @@ void editUserName(const int &index)
 {
 	string name;
 	cout << "Nhập vào tên khách hàng mới: ";
-	getline(cin, name);
-
-	/* Kiểm tra input hợp lệ */
-	if (name.empty())
+	if(getStringLine(name) != true)
 	{
 		cout << "Tên không hợp lệ!!!\n";
 		return;
@@ -122,6 +117,10 @@ void editUserName(const int &index)
 
 	/* Cập nhật tên khách hàng */
 	CustomerManagement::getInstance().getDanhSach()[index]->setName(name);
+
+	/* Lưu xuống csv */
+	CustomerManagement::storeToCsv();
+
 	cout << "Đã cập nhật tên khách hàng thành công!" << endl;
 }
 
@@ -130,10 +129,8 @@ void editUserPhone(const int& index)
 {
 	string phone;
 	cout << "Nhập vào số điện thoại mới: ";
-	getline(cin, phone);
-
 	/* Kiểm tra số điện thoại có hợp lệ không */
-	if(phoneValidate(phone) != true)
+	if(getStringLine(phone) != true || phoneValidate(phone) != true)
 	{
 		cout << "Số điện thoại không hợp lệ" << endl;
 		return;
@@ -141,6 +138,10 @@ void editUserPhone(const int& index)
 
 	/* Cập nhật số điện thoại khách hàng */
 	CustomerManagement::getInstance().getDanhSach()[index]->setPhone(phone);
+
+	/* Lưu xuống csv */
+	CustomerManagement::storeToCsv();
+
 	cout << "Đã cập nhật số điện thoại khách hàng thành công!" << endl;
 }
 
@@ -149,15 +150,17 @@ void editUserAddress(const int& index)
 {
 	string address;
 	cout << "Nhập vào địa chỉ mới: ";
-	getline(cin, address);
-	/* Kiểm tra địa chỉ có hợp lệ không */
-	if (address.empty())
+	if(getStringLine(address) != true)
 	{
 		cout << "Địa chỉ không hợp lệ" << endl;
 		return;
 	}
 	/* Cập nhật địa chỉ khách hàng */
 	CustomerManagement::getInstance().getDanhSach()[index]->setAddress(address);
+
+	/* Lưu xuống csv */
+	CustomerManagement::storeToCsv();
+
 	cout << "Đã cập nhật địa chỉ khách hàng thành công!" << endl;
 }
 
@@ -167,9 +170,7 @@ void editUserMail(const int& index)
 	CustomerManagement& Users = CustomerManagement::getInstance();
 	string mail;
 	cout << "Nhập vào email mới: ";
-	getline(cin, mail);
-
-	if(mailValidate(mail) != true)
+	if(getStringLine(mail) != true || mailValidate(mail) != true)
 	{
 		cout << "Email không hợp lệ" << endl;
 		return;
@@ -177,6 +178,10 @@ void editUserMail(const int& index)
 
 	/* Cập nhật email khách hàng */
 	Users.getDanhSach()[index]->setMail(mail);
+
+	/* Lưu xuống csv */
+	CustomerManagement::storeToCsv();
+
 	cout << "Đã cập nhật email khách hàng thành công!" << endl;
 }
 
@@ -194,5 +199,9 @@ void editUserType(const int& index)
 	}
 	/* Cập nhật loại thẻ khách hàng */
 	CustomerManagement::getInstance().getDanhSach()[index]->setType(type);
+
+	/* Lưu xuống csv */
+	CustomerManagement::storeToCsv();
+
 	cout << "Đã cập nhật loại thẻ khách hàng thành công!" << endl;
 }

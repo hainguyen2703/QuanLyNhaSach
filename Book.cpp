@@ -23,9 +23,8 @@ Book* Book::createNewBook()
 	/* 1. ISBN */
 	string isbn;
 	cout << "ISBN: ";
-	getline(cin, isbn);
 	/* Kiểm tra isbn */
-	if (isbnValidate(isbn) != true)
+	if (getStringLine(isbn) != true || isbnValidate(isbn) != true)
 	{
 		cout << "ISBN không hợp lệ!!\n";
 		return NULL;
@@ -34,8 +33,7 @@ Book* Book::createNewBook()
 	/* 2. Tên sách */
 	string name;
 	cout << "Tên sách: ";
-	getline(cin, name);
-	if (isAllBlank(name))
+	if(getStringLine(name) != true)
 	{
 		cout << "Tên sách không hợp lệ!!\n";
 		return NULL;
@@ -44,8 +42,7 @@ Book* Book::createNewBook()
 	/* 3. Tác giả */
 	string author;
 	cout << "Tác giả: ";
-	getline(cin, author);
-	if (isAllBlank(author))
+	if(getStringLine(author) != true)
 	{
 		cout << "Tác giả không hợp lệ!!\n";
 		return NULL;
@@ -54,8 +51,7 @@ Book* Book::createNewBook()
 	/* 4. Nhà xuất bản */
 	string nxb;
 	cout << "Nhà xuất bản: ";
-	getline(cin, nxb);
-	if (isAllBlank(nxb))
+	if(getStringLine(nxb) != true)
 	{
 		cout << "Nhà xuất bản không hợp lệ!!\n";
 		return NULL;
@@ -75,8 +71,7 @@ Book* Book::createNewBook()
 	/* 6. Thể loại */
 	string category;
 	cout << "Thể loại: ";
-	getline(cin, category);
-	if (isAllBlank(category))
+	if(getStringLine(category) != true)
 	{
 		cout << "Thể loại không xác định\n";
 		category = "NA";
@@ -157,8 +152,54 @@ int Book::getSoLuong() const
 	return this->soLuong;
 }
 
+/* Setter function */
+void Book::setIsbn(const string& isbn)
+{
+	this->isbn = isbn;
+}
+
+void Book::setName(const string& name)
+{
+	this->name = name;
+}
+
+void Book::setAuthor(const string& author)
+{
+	this->author = author;
+}
+
+void Book::setNxb(const string& nxb)
+{
+	this->nxb = nxb;
+}
+
+void Book::setYear(const int& year)
+{
+	this->year = year;
+}
+
+void Book::setCategory(const std::string& category)
+{
+	this->category = category;
+}
+
+void Book::setImportPrice(const double& importPrice)
+{
+	this->importPrice = importPrice;
+}
+
+void Book::setSellingPrice(const double& sellingPrice)
+{
+	this->sellingPrice = sellingPrice;
+}
+
+/* Hàm xuất thông tin sách */
 void Book::XuatThongTin() const
 {
+	cout << setfill('=')
+		<< setw(42) << "" << endl
+		<< setfill(' ') << setw(12) << "" << "Thông tin sách" << endl
+		<< setfill('=') << setw(42) << "" << endl;
 	print_utf8_left("ISBN", 15);
 	cout << ": " << this->isbn << endl;
 	print_utf8_left("Tên sách", 15);
@@ -177,6 +218,7 @@ void Book::XuatThongTin() const
 	cout << ": " << this->sellingPrice << endl;
 	print_utf8_left("Số lượng", 15);
 	cout << ": " << this->soLuong << endl;
+	cout << setfill('=') << setw(42) << "" << endl;
 }
 
 string Book::getCsvString() const

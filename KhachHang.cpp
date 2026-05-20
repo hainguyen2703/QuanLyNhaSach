@@ -46,24 +46,20 @@ KhachHang* KhachHang::createNewKhachHang()
 	cout << "Tạo tài khoảng" << endl;
 	cout << setw(30) << setfill('*') << "" << endl;
 	cout << "Họ tên khách hàng: ";
-	getline(cin, hoten);
-	/* Kiểm tra nếu chuỗi input toàn khoảng trắng */
-	if (isAllBlank(hoten)) return NULL;
+	if(getStringLine(hoten) != true) return NULL;
 
 	/* 2. Số điện thoại */
 	string phone;
 	cout << "Số điện thoại: ";
-	getline(cin, phone);
 	/* Kiểm tra phone input */
-	if (phoneValidate(phone) == false)
+	if (getStringLine(phone) != true || phoneValidate(phone) == false)
 		return NULL;
 
 	/* 3. Mail */
 	string mail;
 	cout << "Mail: ";
-	getline(cin, mail);
 	/* Kiểm tra mail input */
-	if (mailValidate(mail) != true)
+	if (getStringLine(mail) != true || mailValidate(mail) != true)
 		return NULL;
 	else
 		mail = toLower(mail);
@@ -71,9 +67,7 @@ KhachHang* KhachHang::createNewKhachHang()
 	/* 4. Địa chỉ */
 	string address;
 	cout << "Địa chỉ: ";
-	getline(cin, address);
-	/* Kiểm tra địa chỉ */
-	if (address.empty())
+	if(getStringLine(address) != true)
 	{
 		cout << "Địa chỉ không hợp lệ!!\n";
 		return NULL;

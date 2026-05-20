@@ -7,3 +7,7 @@
 #include "common.h"
 
 bool isbnValidate(const std::string& isbn);
+void editBookMenu();
+void updateISBN(const int& index);
+void updateBookName(Book* book);
+void updateAuthor(Book* book);

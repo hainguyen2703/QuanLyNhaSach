@@ -7,6 +7,7 @@
 /* Function prototype */
 bool isAllBlank(const std::string str);
 void clearInputCache();
+bool getStringLine(std::string& str);
 int getOption();
 bool ktUserID(const std::string& id);
 bool isAllDigit(const std::string& str);

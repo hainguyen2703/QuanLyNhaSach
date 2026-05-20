@@ -55,6 +55,10 @@ void CustomerManagement::addCustomer()
     if (newCustomer != NULL)
     {
         this->danhSach.push_back(newCustomer);	/* Thêm sách vào vector danhSach */
+
+        /* Lưu xuống csv */
+        CustomerManagement::storeToCsv();
+
         cout << "Đã thêm tài khoản mới thành công!" << endl;
     }
 }
@@ -167,6 +171,9 @@ void CustomerManagement::XoaKhachHang(const int& index)
 
     /* Giải phóng bộ nhớ */
     delete kh;
+
+    /* Lưu xuống csv */
+    CustomerManagement::storeToCsv();
 }
 
 /* Hàm load Khách Hàng từ csv file */

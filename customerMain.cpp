@@ -60,11 +60,9 @@ void deleteUser()
 {
 	CustomerManagement& Users = CustomerManagement::getInstance();
 	string delID;
-	cout << "Nhập vào ID khách hàng cần xóa: ";
-	getline(cin, delID);
-	
+	cout << "Nhập vào ID khách hàng cần xóa: ";	
 	/* Kiểm tra xem ID có hợp lệ hay không */
-	if (ktUserID(delID) != true)
+	if (getStringLine(delID) != true || ktUserID(delID) != true)
 	{
 		cout << "ID không hợp lệ" << endl;
 		return;
@@ -92,10 +90,8 @@ void findUserPhone()
 	CustomerManagement& Users = CustomerManagement::getInstance();
 	string phone;
 	cout << "Nhập vào số điện thoại cần tìm: ";
-	getline(cin, phone);
-
 	/* Kiểm tra số điện thoại có hợp lệ không */
-	if (phone.empty() || phone.size() != 10)
+	if (getStringLine(phone) != true || phone.size() != 10)
 	{
 		cout << "Số điện thoại không hợp lệ" << endl;
 		return;
@@ -123,10 +119,7 @@ void findUserName()
 {
 	string name;
 	cout << "Nhập vào tên khách hàng cần tìm: ";
-	getline(cin, name);
-
-	/* Kiểm tra input hợp lệ */
-	if (name.empty())
+	if(getStringLine(name) != true)
 	{
 		cout << "Tên không hợp lệ!!!\n";
 		return;

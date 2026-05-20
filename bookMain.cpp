@@ -12,9 +12,22 @@ enum {
 	FIND_BOOK_NAME,
 };
 
+enum {
+	ISBN = 1,
+	NAME,
+	AUTHOR,
+	NXB,
+	CATEGORY,
+	YEAR,
+	IMPORT_PRICE,
+	SELL_PRICE,
+};
+
 /* Static function prototype */
 static void findBookISBN();
 static void findBookName();
+static void deleteBook();
+static void editBook();
 
 /* Hàm main của việc quản lý sách */
 void bookMain()
@@ -36,8 +49,8 @@ void bookMain()
 		{
 			case LIST_BOOK_E: Books.XuatDanhSachBooks(); break;		/* Xuất tất cả sách có trong hệ thống */
 			case ADD_BOOK_E: Books.addBook(); break;				/* Thêm sách mới */
-			case MOD_BOOK_E:  break;								/* Chỉnh sửa thông tin sách */
-			case DEL_BOOK_E:  break;								/* Xóa sách */
+			case MOD_BOOK_E: editBook(); break;						/* Chỉnh sửa thông tin sách */
+			case DEL_BOOK_E: deleteBook(); break;					/* Xóa sách */
 			case FIND_BOOK_ISBN: findBookISBN(); break;				/* Tìm kiếm sách theo ISBN */
 			case FIND_BOOK_NAME: findBookName(); break;				/* Tìm kiếm sách theo tên */
 			default:
@@ -55,10 +68,8 @@ void findBookISBN()
 {
 	string isbn;
 	cout << "Nhập vào ISBN cần tìm: ";
-	getline(cin, isbn);
-
 	/* Kiểm tra nếu ISBN không hợp lệ */
-	if (isbnValidate(isbn) != true)
+	if (getStringLine(isbn) != true || isbnValidate(isbn) != true)
 	{
 		cout << "ISBN không hợp lệ!!\n";
 		return;
@@ -70,14 +81,7 @@ void findBookISBN()
 
 	/* Nếu tìm thấy, xuất thông tin sách*/
 	if (index != -1)
-	{
-		cout << setfill('=')
-			<< setw(42) << "" << endl
-			<< setfill(' ') << setw(12) << "" << "Thông tin sách" << endl
-			<< setfill('=') << setw(42) << "" << endl;
 		Books.getDanhSachBooks()[index]->XuatThongTin();
-		cout << setfill('=') << setw(42) << "" << endl;
-	}
 	else
 		cout << "Không tìm thấy sách có ISBN: " << isbn << endl;
 }
@@ -87,10 +91,7 @@ void findBookName()
 {
 	string name;
 	cout << "Nhập vào tên sách cần tìm: ";
-	getline(cin, name);
-
-	/* Kiểm tra input */
-	if (isAllBlank(name))
+	if(getStringLine(name) != true)
 	{
 		cout << "Tên sách không hợp lệ" << endl;
 		return;
@@ -99,14 +100,90 @@ void findBookName()
 	/* Tìm sách theo tên */
 	int index = BookManagement::getInstance().findName(toLowerUtf8(name));
 	if (index != -1)
-	{
-		cout << setfill('=')
-			<< setw(42) << "" << endl
-			<< setfill(' ') << setw(12) << "" << "Thông tin sách" << endl
-			<< setfill('=') << setw(42) << "" << endl;
 		BookManagement::getInstance().getDanhSachBooks()[index]->XuatThongTin();
-		cout << setfill('=') << setw(42) << "" << endl;
-	}
 	else
 		cout << "Không tìm thấy sách " << name << endl;
+}
+
+/* Hàm xóa book khỏi nhà sách theo tên sách */
+void deleteBook()
+{
+	cout << "Nhập vào tên sách muốn xóa: ";
+	string bookName;
+	if(getStringLine(bookName) != true)
+	{
+		cout << "Không tìm thấy sách" << endl;
+		return;
+	}
+
+	/* Tìm sách theo tên sách */
+	int index = BookManagement::getInstance().findName(toLowerUtf8(bookName));
+
+	/* Kiểm tra nếu không tìm thấy sách*/
+	if (index == -1)
+	{
+		cout << "Không tìm thấy sách" << endl;
+		return;
+	}
+
+	/* Kiểm tra nếu sách có thể xóa được 
+	 * Điều kiện: Không thể xóa sách có số lượng tồn kho != 0 */
+	if (BookManagement::getInstance().getDanhSachBooks()[index]->getSoLuong() != 0)
+	{
+		cout << "Không thể xóa sách vì vẫn còn tồn kho!!!" << endl;
+	}
+	else
+	{
+		/* Xóa sách */
+		BookManagement::getInstance().removeBook(index);
+		cout << "Đã xóa sách!!!" << endl;
+	}
+}
+
+/* Hàm edit thông tin book */
+void editBook()
+{
+	cout << "Nhập vào tên sách cần sửa: ";
+	string name;
+	/* Kiểm tra input có hợp lệ không */
+	if (getStringLine(name) != true)
+	{
+		cout << "Không tìm thấy sách" << endl;
+		return;
+	}
+
+	/* Tìm sách */
+	int index = BookManagement::getInstance().findName(toLowerUtf8(name));
+
+	/* Kiểm tra nếu tìm thấy sách */
+	if (index == -1)
+	{
+		cout << "Không tìm thấy sách" << endl;
+		return;
+	}
+
+	/* Lấy book ra */
+	Book* book = BookManagement::getInstance().getDanhSachBooks()[index];
+
+	/* Xuất thông tin sách trước khi sửa */
+	BookManagement::getInstance().getDanhSachBooks()[index]->XuatThongTin();
+
+	while (true)
+	{
+		editBookMenu();
+		cout << "Nhập thông tin cần sửa: ";
+		int opt = getOption();
+		bool back = false;
+
+		switch (opt)
+		{
+		case ISBN: updateISBN(index);  break;	/* Cập nhật isbn */
+		case NAME: updateBookName(book); break;
+		default:
+			back = true;
+			break;
+		}
+
+		if (back == true) break;
+	}
 }

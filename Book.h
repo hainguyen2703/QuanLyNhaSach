@@ -31,14 +31,14 @@ public:
 	double getSellingPrice() const;
 	int getSoLuong() const;
 
-	void setIsbn(std::string isbn);
-	void setName(std::string name);
-	void setAuthor(std::string author);
-	void setNxb(std::string nxb);
-	void setYear(int year);
-	void setCategory(std::string category);
-	void setImportPrice(double importPrice);
-	void setSellingPrice(double sellingPrice);
+	void setIsbn(const std::string& isbn);
+	void setName(const std::string& name);
+	void setAuthor(const std::string& author);
+	void setNxb(const std::string& nxb);
+	void setYear(const int& year);
+	void setCategory(const std::string& category);
+	void setImportPrice(const double& importPrice);
+	void setSellingPrice(const double& sellingPrice);
 
 	/* Hàm xuất thông tin sách */
 	void XuatThongTin() const;

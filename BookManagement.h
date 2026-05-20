@@ -22,7 +22,7 @@ public:
 	void Menu();
 
     void addBook();
-    void removeBook(const std::string& isbn);
+    void removeBook(const int& index);
     void XuatDanhSachBooks() const;
 
     /* Các hàm tìm kiếm */
