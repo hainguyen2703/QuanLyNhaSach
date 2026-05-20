@@ -4,10 +4,6 @@
 #include <limits>
 #include <iomanip>
 #include "main.h"
-#include "common.h"
-#include "KhachHang.h"
-#include "CustomerManagement.h"
-#include "BookManagement.h"
 
 using namespace std;
 
@@ -44,8 +40,8 @@ int main()
 		/* Chọn chức năng */
 		switch (opt)
 		{
-			case CUSTOMER_E: userMain(); break;	/* Quản lý khách hàng */
-			case BOOK_E: bookMain(); break;		/* Quản lý sách */
+			case CUSTOMER_E: customerMain(); break;	/* Quản lý khách hàng */
+			case BOOK_E: bookMain(); break;			/* Quản lý sách */
 			case BILL_E: /* Quản lý hóa đơn */
 				break;
 			case EXIT_E:

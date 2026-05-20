@@ -27,7 +27,7 @@ static void findUserName();
 static void editUser();
 
 /* Hàm main của việc quản lý khách hàng */
-void userMain()
+void customerMain()
 {
 	/* Lấy Users */
 	CustomerManagement &Users = CustomerManagement::getInstance();
