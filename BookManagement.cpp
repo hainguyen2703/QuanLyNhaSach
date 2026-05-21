@@ -112,7 +112,6 @@ vector<Book*> BookManagement::findName(const string& name)
 		}
 	}
 
-	/* Không tìm thấy */
 	return list_book;
 }
 

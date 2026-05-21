@@ -186,25 +186,20 @@ string KhachHang::getLoaiThe() const
 /* Xuất thông tin khách hàng */
 void KhachHang::XuatThongTin() const
 {
-	cout << setfill('=') << setw(42) << "" << endl
-		 << setfill(' ') << setw(12) << "" << "Thông tin khách hàng" << endl
-		 << setfill('=') << setw(42) << "" << endl;
-
-	print_utf8_left("Mã khách hàng", 15);
-	cout << ": " << this->id << endl;
-	print_utf8_left("Tên khách hàng", 15);
-	cout << ": " << this->name << endl;
-	print_utf8_left("Số điện thoại", 15);
-	cout << ": " << this->phone << endl;
-	print_utf8_left("Email", 15);
-	cout << ": " << this->mail << endl;
-	print_utf8_left("Địa chỉ", 15);
-	cout << ": " << this->address << endl;
-	print_utf8_left("Ngày đăng ký", 15);
-	cout << ": " << getDateString(this->ngayDK) << endl;
-	print_utf8_left("Loại thẻ", 15);
-	cout << ": " << getLoaiThe() << endl;
-	cout << setfill('=') << setw(42) << "" << endl;
+	print_utf8_left(this->id, 15);
+	cout << "|";
+	print_utf8_left(this->name, 30);
+	cout << "|";
+	print_utf8_left(this->phone, 15);
+	cout << "|";
+	print_utf8_left(this->mail, 30);
+	cout << "|";
+	print_utf8_left(this->address, 40);
+	cout << "|";
+	print_utf8_left(getDateString(this->ngayDK), 15);
+	cout << "|";
+	print_utf8_left(getLoaiThe(), 12);
+	cout << "|" << endl;
 }
 
 /* Hàm sắp xếp dữ liệu để ghi file csv */

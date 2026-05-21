@@ -25,6 +25,7 @@ static void deleteUser();
 static void findUserPhone();
 static void findUserName();
 static void editUser();
+static void khungInfoKH();
 
 /* Hàm main của việc quản lý khách hàng */
 void customerMain()
@@ -136,20 +137,50 @@ void findUserName()
 	/* Lấy Users */
 	CustomerManagement& Users = CustomerManagement::getInstance();
 
-	int index = Users.findName(name);
+	vector<KhachHang*>  list_kh = Users.findName(toLowerUtf8(name));
 
-	if (index == -1)
+	if (list_kh.empty())
 	{
 		cout << "Không tìm thấy khách hàng" << endl;
 	}
+	else if (list_kh.size() > 1)
+	{
+		/* Nhiều hơn 1 khách hàng */
+		khungInfoKH();
+		for (KhachHang* kh : list_kh)
+		{
+			/* xuất thông tin */
+			kh->XuatThongTin();
+			cout << setfill('_') << setw(164) << "" << endl;
+		}
+	}
 	else
 	{
-		cout << setfill('=') << setw(42) << "" << endl;
-		cout << setfill(' ') << setw(12) << "" << "Thông tin khách hàng" << endl;
-		cout << setfill('=') << setw(42) << "" << endl;
-		/* Tìm thấy khách hàng, xuất thông tin */
-		Users.getDanhSach()[index]->XuatThongTin();
+		khungInfoKH();
+		/* xuất thông tin */
+		list_kh[0]->XuatThongTin();
+		cout << setfill('_') << setw(164) << "" << endl;
 	}
+}
+
+void khungInfoKH()
+{
+	cout << setfill('=') << setw(164) << "" << endl;
+	print_utf8_left("Mã khách hàng", 15);
+	cout << "|";
+	print_utf8_left("Tên khách hàng", 30);
+	cout << "|";
+	print_utf8_left("Số điện thoại", 15);
+	cout << "|";
+	print_utf8_left("Email", 30);
+	cout << "|";
+	print_utf8_left("Địa chỉ", 40);
+	cout << "|";
+	print_utf8_left("Ngày đăng ký", 15);
+	cout << "|";
+	print_utf8_left("Loại thẻ", 12);
+	cout << "|" << endl;
+	cout << setfill('=') << setw(164) << "" << endl;
 }
 
 /* Hàm chỉnh sửa thông tin Khách hàng */
