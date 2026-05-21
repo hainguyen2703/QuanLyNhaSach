@@ -8,6 +8,7 @@ class BookManagement
 private:
     std::vector<Book*> books;
 	BookManagement() {};	/* Hàm khởi tạo mặc định không làm gì hết */
+    int soLuongTheoTheLoai(const std::string& category);
 
 public:
     // Không cho phép copy
@@ -29,6 +30,12 @@ public:
     /* Các hàm tìm kiếm */
     int findISBN(const std::string& isbn);
     std::vector<Book*> findName(const std::string& name);
+
+    /* Thống kê sách */
+    std::vector<std::string> listCategory();
+    int TongSoLuongSach();
+    void thongKeByCategory();
+    void listOutOfStock();
 
     /* Các hàm load và store data */
 	static void loadFromCsv(const std::string& filename = "books.csv");  /* Mặc định là books.csv */

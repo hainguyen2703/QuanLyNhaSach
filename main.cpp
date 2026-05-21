@@ -11,7 +11,9 @@ enum {
 	EXIT_E = 0,
 	CUSTOMER_E,
 	BOOK_E,
-	BILL_E
+	BILL_E,
+	KHO_E,
+	THONG_KE_E
 };
 
 /* Static function prototype */
@@ -42,10 +44,10 @@ int main()
 		{
 			case CUSTOMER_E: customerMain(); break;	/* Quản lý khách hàng */
 			case BOOK_E: bookMain(); break;			/* Quản lý sách */
-			case BILL_E: /* Quản lý hóa đơn */
-				break;
-			case EXIT_E:
-				break;
+			case BILL_E: break;						/* Quản lý hóa đơn */
+			case KHO_E: break;						/* Quản lý kho */
+			case THONG_KE_E: mainThongKe(); break;	/* Thống kê */
+			case EXIT_E: break;
 			default:
 				cout << "Input không hợp lệ!!!" << endl;
 				break;
@@ -73,6 +75,8 @@ void showMainMenu()
 		<< "1. Quản lý khách hàng" << endl
 		<< "2. Quản lý sách" << endl
 		<< "3. Quản lý hóa đơn bán hàng" << endl
+		<< "4. Quản lý kho" << endl
+		<< "5. Thống kê" << endl
 		<< "0. Thoát" << endl
 		<< setw(42) << "" << endl;
 }

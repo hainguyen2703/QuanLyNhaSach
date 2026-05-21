@@ -7,6 +7,7 @@ class CustomerManagement
 private: 
 	std::vector<KhachHang*> danhSach;
 	CustomerManagement() {};	/* Hàm khởi tạo mặc định không làm gì hết */
+    int soLuongKhachTheoHang(const int& type);
 public:
     // Không cho phép copy
     CustomerManagement(const CustomerManagement&) = delete;
@@ -30,6 +31,9 @@ public:
 	int findMail(const string& mail);
     vector<KhachHang*> findName(const string& name);
     int findID(const string& id);
+
+    /* Thống kê */
+    void thongKeTheoThe();
 
     /* Các hàm load và store data */
     static void loadFromCsv(const std::string& filename = "CustomerData.csv");  /* Mặc định là CustomerData.csv */
