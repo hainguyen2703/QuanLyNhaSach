@@ -127,6 +127,114 @@ void BookManagement::removeBook(const int& index)
 	BookManagement::storeToCsv();
 }
 
+/* Hàm thống kê tổng số sách */
+int BookManagement::TongSoLuongSach()
+{
+	int sum = 0;
+	for (Book* book : this->books)
+	{
+		sum += book->getSoLuong();
+	}
+
+	return sum;
+}
+
+/* Hàm lọc ra các thể loại sách trong kho */
+vector<string> BookManagement::listCategory()
+{
+	vector<string> category;
+
+	for (Book* book : this->books)
+	{
+		bool found = false;
+		string bookType = toLowerUtf8(book->getCategory());
+
+		/* Kiểm tra nếu category đã add vào rồi */
+		for (string theloai : category)
+		{
+			if (theloai == bookType)
+			{
+				found = true;
+				break;
+			}
+		}
+
+		/* Nếu không tìm thấy thì add vào list */
+		if (!found) category.push_back(bookType);
+	}
+
+	return category;
+}
+
+/* Hàm tính tổng số sách theo thể loại */
+int BookManagement::soLuongTheoTheLoai(const std::string& category)
+{
+	int sum = 0;
+
+	for (Book* book : this->books)
+	{
+		if (category == toLowerUtf8(book->getCategory()))
+			sum += book->getSoLuong();
+	}
+
+	return sum;
+}
+
+/* Hàm thống kê sách theo thể loại */
+void BookManagement::thongKeByCategory()
+{
+	/* Lấy danh sách các thể loại sách */
+	vector<string> listCategory = this->listCategory();
+
+	/* Tạo khung */
+	cout << setfill('=')
+		<< setw(42) << "" << endl
+		<< setfill(' ') << setw(10) << "" << "Thống kê theo thể loại" << endl
+		<< setfill('=') << setw(42) << "" << endl;
+
+	print_utf8_left("Thể loại", 19);
+	cout << "|" << "Số lượng (quyển)" << endl;
+	cout << setfill('=') << setw(42) << "" << endl;
+
+	for (string category : listCategory)
+	{
+		print_utf8_left(category, 20);
+		cout << "|" << this->soLuongTheoTheLoai(category) << endl;
+		cout << setfill('_') << setw(42) << "" << endl;
+	}
+	cout << setfill('=') << setw(42) << "" << endl;
+}
+
+/* Hàm thống kê sách đã hết hàng */
+void BookManagement::listOutOfStock()
+{
+	/* Tạo khung */
+	cout << setfill('=')
+		<< setw(42) << "" << endl
+		<< setfill(' ') << setw(12) << "" << "Sách đã hết hàng" << endl
+		<< setfill('=') << setw(42) << "" << endl;
+	cout << left << setfill(' ')
+		<< setw(3) << "No."
+		<< setw(15) << "|ISBN" << "|";
+	print_utf8_left("Tên sách", 25);
+	cout << endl << setfill('=') << setw(42) << "" << endl;
+
+	int cnt = 1;
+	for (Book* book : this->books)
+	{
+		/* Kiểm tra nếu số lượng sách = 0*/
+		if (book->getSoLuong() == 0)
+		{
+			cout << left << setfill(' ')
+				<< setw(3) << cnt++
+				<< "|" << setw(14) << book->getIsbn() << "|";
+			print_utf8_left(book->getName(), 25);
+			cout << endl << setfill('_') << setw(42) << "" << endl;
+		}
+	}
+	cout << setfill('=') << setw(42) << "" << endl;
+}
+
 /* Hàm store data */
 void BookManagement::storeToCsv(const string& filename)
 {

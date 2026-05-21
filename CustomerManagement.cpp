@@ -160,6 +160,40 @@ int CustomerManagement::findID(const string& id)
     return -1;
 }
 
+/* Số lượng khách hàng theo hạng thẻ */
+int CustomerManagement::soLuongKhachTheoHang(const int& type)
+{
+    int sum = 0;
+    for (KhachHang* kh : this->danhSach)
+    {
+        if (kh->getType() == type)
+            sum++;
+    }
+
+    return sum;
+}
+
+/* Hàm thống kê khách hàng theo loại thẻ */
+void CustomerManagement::thongKeTheoThe()
+{
+    /* Tạo khung */
+    cout << setfill('=')
+        << setw(42) << "" << endl
+        << setfill(' ') << setw(10) << "" << "Thống kê theo loại thẻ" << endl
+        << setfill('=') << setw(42) << "" << endl;
+
+    print_utf8_left("Loại thẻ", 20);
+    cout << "|Số lượng" << endl;
+    cout << setfill('=') << setw(42) << "" << endl;
+
+    print_utf8_left("Thường", 20);
+    cout << "|" << this->soLuongKhachTheoHang(THUONG) << endl;
+    cout << setfill('_') << setw(42) << "" << endl;
+    print_utf8_left("VIP", 20);
+    cout << "|" << this->soLuongKhachTheoHang(VIP) << endl;
+    cout << setfill('=') << setw(42) << "" << endl;
+}
+
 /* Hàm xóa khách hàng theo ID */
 void CustomerManagement::XoaKhachHang(const int& index)
 {

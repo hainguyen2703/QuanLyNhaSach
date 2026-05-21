@@ -5,3 +5,4 @@
 
 extern void bookMain();
 extern void customerMain();
+void mainThongKe();

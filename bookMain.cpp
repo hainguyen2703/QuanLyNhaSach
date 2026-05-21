@@ -55,8 +55,9 @@ void bookMain()
 			case DEL_BOOK_E: deleteBook(); break;					/* Xóa sách */
 			case FIND_BOOK_ISBN: findBookISBN(); break;				/* Tìm kiếm sách theo ISBN */
 			case FIND_BOOK_NAME: findBookName(); break;				/* Tìm kiếm sách theo tên */
+			case 0: back = true; break;								/* Trở về main menu */
 			default:
-				back = true;
+				cout << "Lựa chọn không hợp lệ" << endl;
 				break;
 		}
 
@@ -295,8 +296,9 @@ void editBook()
 		case QUANTITY: updateSoLuong(book); break;		/* Cập nhật số lượng sách */
 		case IMPORT_PRICE: updateGiaNhap(book); break;	/* Cập nhật giá nhập vào */
 		case SELL_PRICE: updateGiaBan(book); break;		/* Cập nhật giá bán */
+		case 0: back = true;							/* Trở về menu quản lý sách */
 		default:
-			back = true;
+			cout << "Lựa chọn không hợp lệ" << endl;
 			break;
 		}
 

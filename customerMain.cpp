@@ -51,8 +51,9 @@ void customerMain()
 			case DEL_USER_E: deleteUser(); break;				/* Xóa khách hàng */
 			case FIND_USER_NUM: findUserPhone(); break;			/* Tìm kiếm khách hàng theo số điện thoại */
 			case FIND_USER_NAME: findUserName(); break;			/* Tìm kiếm khách hàng theo tên khách hàng */
+			case 0: back = true; break;							/* Trở về main menu */
 			default:
-				back = true;
+				cout << "Lựa chọng không hợp lệ" << endl;
 				break;
 		}
 
@@ -213,7 +214,9 @@ void editUser()
 	KhachHang* kh = CustomerManagement::getInstance().getDanhSach()[index];
 
 	/* Xuất thông tin khách hàng */
+	khungInfoKH();
 	kh->XuatThongTin();
+	cout << setfill('=') << setw(164) << "" << endl;
 
 	while (true)
 	{
@@ -229,12 +232,13 @@ void editUser()
 		switch (opt)
 		{
 		case USER_NAME_E: editUserName(kh); break;			/* Chỉnh sửa tên khách hàng */
-		case USER_PHONE_E: editUserPhone(kh); break;			/* Chỉnh sửa số điện thoại */
-		case USER_ADDRESS_E: editUserAddress(kh); break;		/* Chỉnh sửa địa chỉ */
+		case USER_PHONE_E: editUserPhone(kh); break;		/* Chỉnh sửa số điện thoại */
+		case USER_ADDRESS_E: editUserAddress(kh); break;	/* Chỉnh sửa địa chỉ */
 		case USER_MAIL_E: editUserMail(kh); break;			/* Chỉnh sửa email */
 		case USER_TYPE_E: editUserType(kh); break;			/* Chỉnh sửa loại thẻ */
+		case 0: back = true; break;							/* Trở về menu quản lý khách hàng */
 		default:
-			back = true;
+			cout << "Lựa chọn không hợp lệ" << endl;
 			break;
 		}
 
