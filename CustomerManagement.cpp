@@ -124,8 +124,10 @@ int CustomerManagement::findMail(const string& mail)
 }
 
 /* Hàm tìm kiếm theo tên */
-int CustomerManagement::findName(const string& name)
+vector<KhachHang*> CustomerManagement::findName(const string& name)
 {
+    vector<KhachHang*> list_kh;
+
     for (int index = 0; index < this->danhSach.size(); index++)
     {
         /* Đổi tên thành lowercase */
@@ -133,13 +135,12 @@ int CustomerManagement::findName(const string& name)
         /* So sánh tên */
         if (tmp == name)
         {
-            /* Tìm thấy, trả về index */
-            return index;
+            /* Tìm thấy, add vào list_kh */
+            list_kh.push_back(this->danhSach[index]);
         }
     }
 
-    /* Không tìm thấy, trả về -1 */
-    return -1;
+    return list_kh;
 }
 
 /* Hàm tìm kiếm theo ID */

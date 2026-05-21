@@ -165,7 +165,7 @@ void updateNamXB(Book* book)
 	int year;
 	cin >> year;
 	cin.ignore(100, '\n');	/* Làm sạch buffer */
-	if (year <= 0)
+	if (year <= 0 || year > getCurrentDate().year)
 	{
 		cout << "Năm xuất bản không hợp lệ" << endl;
 		return;

@@ -28,7 +28,7 @@ public:
     /* Các hàm tìm kiếm */
     int findPhone(const string& phone);
 	int findMail(const string& mail);
-    int findName(const string& name);
+    vector<KhachHang*> findName(const string& name);
     int findID(const string& id);
 
     /* Các hàm load và store data */
