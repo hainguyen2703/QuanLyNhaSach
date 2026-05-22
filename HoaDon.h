@@ -14,19 +14,20 @@ struct Item {
 class HoaDon
 {
 private:
-	static int countHD;
+	static int countMaHD;
 	std::string maHD;
 	Date date;
 	std::string maKH;
 	std::vector<Item> items;
 
-	HoaDon(const std::string& maKH, const Date& date);	/* constructor có tham số */
 	bool isVIP();				/* Kiểm tra xem khách hàng hạng vip không */
 
 public:
-	static HoaDon* taoHoaDon();
+	HoaDon(const std::string& maKH, const Date& date);	/* constructor có tham số */
+	static void increaseMaHD();
 	void addItem(const Item& item);
 	double getTongTien();
-	void setMaHD(const std::string& maHD);
+	bool setMaHD();
+	void xuatHoaDon();
 };
 

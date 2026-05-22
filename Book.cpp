@@ -68,7 +68,15 @@ Book* Book::createNewBook()
 	int year;
 	cout << "Năm xuất bản: ";
 	cin >> year;
-	cin.ignore(100, '\n');	/* Làm sạch buffer */
+	if (cin.fail())
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Năm xuất bản không hợp lệ" << endl;
+		return NULL;
+	}
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	if (year <= 0 || year > getCurrentDate().year)
 	{
 		cout << "Năm xuất bản không hợp lệ" << endl;
@@ -88,7 +96,16 @@ Book* Book::createNewBook()
 	double importPrice;
 	cout << "Giá nhập vào: ";
 	cin >> importPrice;
-	cin.ignore(100, '\n'); /* Làm sạch buffer */
+	if (cin.fail())
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Giá nhập không hợp lệ!!!" << endl;
+		return NULL;
+	}
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	/* Mặc định giá nhập phải từ 10.000 vnd */
 	if (importPrice < 10000)
 	{
@@ -102,7 +119,16 @@ Book* Book::createNewBook()
 	int soLuong;
 	cout << "Số lượng: ";
 	cin >> soLuong;
-	cin.ignore(100, '\n'); /* Làm sạch buffer */
+	if (cin.fail())
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Số lượng không hợp lệ!!" << endl;
+		return NULL;
+	}
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	if (soLuong <= 0)
 	{
 		cout << "Số lượng không hợp lệ!!\n";

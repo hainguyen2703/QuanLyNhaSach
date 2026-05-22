@@ -76,12 +76,24 @@ KhachHang* KhachHang::createNewKhachHang()
 	int the;
 	cout << "Loại thẻ (0: Thường, 1: VIP): ";
 	cin >> the;
-	cin.ignore(100, '\n');
-	if (the != 0 && the != 1)
+	if (cin.fail())
 	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
 		cout << "Không hợp lệ!!" << endl;
 		cout << "Mặc định hạng thẻ thường!!!" << endl;
 		the = 0;
+	}
+	else
+	{
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+		if (the != 0 && the != 1)
+		{
+			cout << "Không hợp lệ!!" << endl;
+			cout << "Mặc định hạng thẻ thường!!!" << endl;
+			the = 0;
+		}
 	}
 
 	/* Tạo user mới */

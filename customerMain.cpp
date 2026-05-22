@@ -250,8 +250,8 @@ void editUser()
 			break;
 		}
 
-		cout << setfill('_') << setw(42) << "" << endl;
+		khungInfoKH();
 		Users.getDanhSach()[index]->XuatThongTin();
-		cout << setfill('_') << setw(42) << "" << endl;
+		cout << setfill('=') << setw(164) << "" << endl;
 	}
 }

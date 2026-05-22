@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BillManagement.cpp" />
     <ClCompile Include="Book.cpp" />
     <ClCompile Include="BookManagement.cpp" />
     <ClCompile Include="bookMain.cpp" />
@@ -138,6 +139,7 @@
     <ClCompile Include="thongke.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BillManagement.h" />
     <ClInclude Include="Book.h" />
     <ClInclude Include="BookManagement.h" />
     <ClInclude Include="book_ultis.h" />

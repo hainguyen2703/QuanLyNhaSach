@@ -9,6 +9,7 @@ bool isAllBlank(const std::string str);
 void clearInputCache();
 bool getStringLine(std::string& str);
 int getOption();
+int getNumber();
 bool isAllDigit(const std::string& str);
 std::string toUpper(const std::string& str);
 std::string toLower(const std::string& str);

@@ -76,6 +76,26 @@ int getOption()
 	return opt;
 }
 
+/* Hàm lấy giá trị chữ số */
+int getNumber()
+{
+	int x;
+	cin >> x;
+	if (cin.fail()) 
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Nhập sai, vui lòng nhập chữ số\n";
+		x = -1;
+	}
+
+	/* Clear input cache */
+	clearInputCache();
+
+	return x;
+
+}
+
 /* Kiểm tra string input có chứa ký tự không */
 bool isAllDigit(const string& str)
 {

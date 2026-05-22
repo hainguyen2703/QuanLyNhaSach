@@ -166,13 +166,7 @@ KhachHang* CustomerManagement::getKhByID(const string id)
     /* Lấy index khách hàng */
     int index = findID(id);
 
-    if (index == -1)
-    {
-        cout << "Không tìm thấy khách hàng có mã " << id << endl;
-        return NULL;
-    }
-
-    return this->danhSach[index];
+    return (index == -1) ? NULL : this->danhSach[index];
 }
 
 /* Số lượng khách hàng theo hạng thẻ */
