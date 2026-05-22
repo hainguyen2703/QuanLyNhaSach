@@ -48,7 +48,7 @@ bool getStringLine(string& str)
 	getline(cin, str);
 	if (isAllBlank(str))
 	{
-		cout << "Tên không hợp lệ" << endl;
+		cout << "Input không hợp lệ" << endl;
 		return false;
 	}
 

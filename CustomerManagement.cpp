@@ -160,6 +160,21 @@ int CustomerManagement::findID(const string& id)
     return -1;
 }
 
+/* Hàm lấy khách hàng theo mã KH */
+KhachHang* CustomerManagement::getKhByID(const string id)
+{
+    /* Lấy index khách hàng */
+    int index = findID(id);
+
+    if (index == -1)
+    {
+        cout << "Không tìm thấy khách hàng có mã " << id << endl;
+        return NULL;
+    }
+
+    return this->danhSach[index];
+}
+
 /* Số lượng khách hàng theo hạng thẻ */
 int CustomerManagement::soLuongKhachTheoHang(const int& type)
 {

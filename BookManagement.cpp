@@ -52,33 +52,46 @@ void BookManagement::addBook()
 	}
 }
 
+/* Hàm lấy Book theo mã ISBN */
+Book* BookManagement::getBookByIsbn(const string& isbn)
+{
+	return this->books[findISBN(isbn)];
+}
+
 /* Hàm xuất danh sách book */
 void BookManagement::XuatDanhSachBooks() const
 {
 	/* Tạo khung */
 	cout << setfill('=')
-		<< setw(100) << "" << endl
+		<< setw(120) << "" << endl
 		<< setfill(' ') << setw(40) << "" << "List thông tin sách" << endl
-		<< setfill('=') << setw(100) << "" << endl;
+		<< setfill('=') << setw(120) << "" << endl;
 
+	cout << left << setfill(' ')
+		 << setw(3) << "No." << "|"
+		 << setw(14) << "ISBN" << "|";
 	print_utf8_left("Tên sách", 48);
 	cout << "|";
 	print_utf8_left("Tác giả", 30);
 	cout << "|";
 	print_utf8_left("Số lượng", 10);
 	cout << "|Giá (vnd)" << endl;
-	cout << setfill('=') << setw(100) << "" << endl;
+	cout << setfill('=') << setw(120) << "" << endl;
 
 	/* Xuất thông tin của sách */
+	int cnt = 1;
 	for (Book* book : this->books)
 	{
+		cout << left << setfill(' ')
+			 << setw(3) << cnt++ << "|"
+			 << setw(14) << book->getIsbn() << "|";
 		print_utf8_left(book->getName(), 48);
 		cout << "|";
 		print_utf8_left(book->getAuthor(), 30);
 		cout << left << setfill(' ')
 			 << "|" << std::setw(10) << book->getSoLuong()
 			 << "|" << book->getSellingPrice() << endl;
-		cout << setfill('_') << setw(100) << "" << endl;
+		cout << setfill('_') << setw(120) << "" << endl;
 	}
 }
 
