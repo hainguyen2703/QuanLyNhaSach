@@ -30,6 +30,9 @@ void BillManagement::taoHoaDon()
 		return;
 	}
 
+	/* Chuyển maKH về uppercase */
+	maKH = toUpper(maKH);
+
 	/* Kiểm tra nếu lấy được thông tin khách hàng */
 	if (CustomerManagement::getInstance().findID(maKH) == -1)
 	{
@@ -39,7 +42,7 @@ void BillManagement::taoHoaDon()
 
 	/* Lấy ngày lập hóa đơn */
 	Date date;
-	cout << "Ngày xuất hóa đơn: " << endl;
+	cout << "Ngày xuất hóa đơn: ";
 	cin >> date;
 
 	/* Kiểm tra input */
@@ -71,15 +74,14 @@ void BillManagement::taoHoaDon()
 	/* Loop nhập sách - số lượng */
 	while (true)
 	{
-		cout << "Nhập mã isbn: ";
+		cout << "Nhập mã isbn (hoặc nhập Q để dừng): ";
 		string isbn;
 		if (getStringLine(isbn) != true)
-		{
-			if (isbn == "\n")
-				break;
-			else 
 				continue;
-		}
+
+		/* Kiểm tra exit */
+		if (isbn == "Q" || isbn == "q")
+			break;
 
 		/* Kiểm tra input */
 		if (isbnValidate(isbn) != true || BookManagement::getInstance().findISBN(isbn) == -1)
@@ -116,8 +118,7 @@ void BillManagement::taoHoaDon()
 			else if (soLuong > remain)
 			{
 				cout << "Không đủ sách trong kho, số sách còn lại: " << remain << endl;
-				cout << "Vui lòng nhập lại số lượng sách: ";
-				continue;
+				break;
 			}
 			else
 			{
@@ -144,16 +145,32 @@ void BillManagement::taoHoaDon()
 		char ack;
 		cin >> ack;
 
+		/* Làm sạch buffer */
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+		/* Kiểm tra nếu xác nhận tạo hóa đơn */
 		if (ack == 'Y' || ack == 'y')
 		{
-			HoaDon::increaseMaHD();
+			HoaDon::increaseMaHD();	//Tăng số lượng ID hóa đơn
 
-			/* Thêm vào list hóa đơn */
+			/* Add Hóa đơn vào list hóa đơn */
 			this->listHoaDon.push_back(hd);
+			/* Cập nhật Books trong thư viện sau khi tạo hóa đơn */
+			for (Item item : hd->getListItems())
+			{
+				/* Thay đổi số lượng sách của isbn tương ứng trong kho */
+				int sl = -1 * item.soLuong;
+				BookManagement::getInstance().getBookByIsbn(item.isbn)->setSoLuong(sl, CAP_NHAT);
+			}
+
+			/* Lưu xuống file csv ngay */
+			BookManagement::storeToCsv();
+			cout << "Đã lưu hóa đơn!!!" << endl;
 		}
 		else
 		{
-			delete hd;
+			/* Không tạo hóa đơn */
+			delete hd;	//Xóa hóa đơn nháp vừa tạo
 		}
 
 	}

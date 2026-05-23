@@ -25,7 +25,7 @@ void HoaDon::increaseMaHD()
 void HoaDon::addItem(const Item& newItem)
 {
 	/* Kiểm tra nếu isbn có trong items list rồi */
-	for (Item item : this->items)
+	for (Item& item : this->items)
 	{
 		if (newItem.isbn == item.isbn)
 		{
@@ -38,10 +38,16 @@ void HoaDon::addItem(const Item& newItem)
 	this->items.push_back(newItem);
 }
 
-/* Hàm tính tổng tiền hóa đơn */
-double HoaDon::getTongTien()
+/* Hàm lấy list item trong hóa đơn */
+vector<Item> HoaDon::getListItems()
 {
-	double bill = 0;
+	return this->items;
+}
+
+/* Hàm tính tổng tiền hóa đơn */
+long long HoaDon::getTongTien()
+{
+	long long bill = 0;
 	for (Item item : this->items)
 	{
 		Book* book = BookManagement::getInstance().getBookByIsbn(item.isbn);

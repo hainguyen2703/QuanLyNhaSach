@@ -16,12 +16,12 @@ private:
 	std::string category;
 	int year;
 	int soLuong;
-	double importPrice;
-	double sellingPrice;
+	long long importPrice;
+	long long sellingPrice;
 	
 public:
 	/* Hàm khởi tạo có tham số */
-	Book(const std::string& isbn, const std::string& name, const std::string& author, const std::string& nxb, const int& year, const std::string& category, const double& importPrice, const double& sellingPrice, const int& soLuong);
+	Book(const std::string& isbn, const std::string& name, const std::string& author, const std::string& nxb, const int& year, const std::string& category, const long long& importPrice, const long long& sellingPrice, const int& soLuong);
 
 	static Book* createNewBook();
 
@@ -32,8 +32,8 @@ public:
 	std::string getNxb() const;
 	int getYear() const;
 	std::string getCategory() const;
-	double getImportPrice() const;
-	double getSellingPrice() const;
+	long long getImportPrice() const;
+	long long getSellingPrice() const;
 	int getSoLuong() const;
 
 	void setIsbn(const std::string& isbn);
@@ -43,8 +43,8 @@ public:
 	void setYear(const int& year);
 	void setSoLuong(const int& soLuong, const int& type = SET_GIA_TRI);
 	void setCategory(const std::string& category);
-	void setImportPrice(const double& importPrice);
-	void setSellingPrice(const double& sellingPrice);
+	void setImportPrice(const long long& importPrice);
+	void setSellingPrice(const long long& sellingPrice);
 
 	/* Hàm xuất thông tin sách */
 	void XuatThongTin() const;

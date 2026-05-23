@@ -26,7 +26,8 @@ public:
 	HoaDon(const std::string& maKH, const Date& date);	/* constructor có tham số */
 	static void increaseMaHD();
 	void addItem(const Item& item);
-	double getTongTien();
+	std::vector<Item> getListItems();
+	long long getTongTien();
 	bool setMaHD();
 	void xuatHoaDon();
 };

@@ -199,8 +199,8 @@ Book* loadBookFromCsvString(string& line)
 	}
 
 	/* Convert string sang double */
-	double importPrice = stod(attribute[IMPORT_PRICE]);
-	double sellingPrice = stod(attribute[SELLING_PRICE]);
+	long long importPrice = stoll(attribute[IMPORT_PRICE]);
+	long long sellingPrice = stoll(attribute[SELLING_PRICE]);
 	int soLuong = stoi(attribute[SO_LUONG]);
 
 	/* Tạo khách hàng */

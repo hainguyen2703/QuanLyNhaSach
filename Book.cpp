@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Book::Book(const string& isbn, const string& name, const string& author, const string& nxb, const int& year, const string& category, const double& importPrice, const double& sellingPrice, const int& soLuong)
+Book::Book(const string& isbn, const string& name, const string& author, const string& nxb, const int& year, const string& category, const long long& importPrice, const long long& sellingPrice, const int& soLuong)
 {
 	this->isbn = isbn;
 	this->name = name;
@@ -93,7 +93,7 @@ Book* Book::createNewBook()
 	}
 
 	/* 7. Giá nhập */
-	double importPrice;
+	long long importPrice;
 	cout << "Giá nhập vào: ";
 	cin >> importPrice;
 	if (cin.fail())
@@ -113,7 +113,7 @@ Book* Book::createNewBook()
 		return NULL;
 	}
 
-	double sellingPrice = importPrice * 1.3; /* Giá bán mặc định cao hơn 30% */
+	long long sellingPrice = importPrice * 1.3; /* Giá bán mặc định cao hơn 30% */
 
 	/* 8. Số lượng */
 	int soLuong;
@@ -177,13 +177,13 @@ string Book::getCategory() const
 }
 
 /* Hàm lấy giá nhập */
-double Book::getImportPrice() const
+long long Book::getImportPrice() const
 {
 	return this->importPrice;
 }
 
 /* Hàm lấy giá bán */
-double Book::getSellingPrice() const
+long long Book::getSellingPrice() const
 {
 	return this->sellingPrice;
 }
@@ -247,13 +247,13 @@ void Book::setCategory(const std::string& category)
 }
 
 /* Hàm set giá nhập sách*/
-void Book::setImportPrice(const double& importPrice)
+void Book::setImportPrice(const long long& importPrice)
 {
 	this->importPrice = importPrice;
 }
 
 /* Hàm set giá bán */
-void Book::setSellingPrice(const double& sellingPrice)
+void Book::setSellingPrice(const long long& sellingPrice)
 {
 	this->sellingPrice = sellingPrice;
 }

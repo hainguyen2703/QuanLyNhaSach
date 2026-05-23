@@ -216,7 +216,7 @@ void updateSoLuong(Book* book)
 void updateGiaNhap(Book* book)
 {
 	cout << "Nhập vào giá nhập sách: ";
-	int price;
+	long long price;
 	cin >> price;
 	if (cin.fail())
 	{
@@ -243,7 +243,7 @@ void updateGiaNhap(Book* book)
 void updateGiaBan(Book* book)
 {
 	cout << "Nhập vào giá bán sách: ";
-	int price;
+	long long price;
 	cin >> price;
 	if (cin.fail())
 	{

@@ -9,7 +9,6 @@ private:
 	BillManagement() {};
 public:
 	static BillManagement& getInstance();
-
 	void taoHoaDon();
 };
 

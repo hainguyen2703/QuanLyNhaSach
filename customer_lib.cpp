@@ -15,7 +15,7 @@ bool ktUserID(const string& id)
 	/* Kiểm tra ID có bắt đầu bằng KH */
 	string tmp = toUpper(id);
 
-	if (tmp.find_first_of("KH") != 0)
+	if (tmp.rfind("KH", 0) != 0)
 	{
 		return false;
 	}
