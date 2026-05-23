@@ -15,7 +15,7 @@ bool ktUserID(const string& id)
 	/* Kiểm tra ID có bắt đầu bằng KH */
 	string tmp = toUpper(id);
 
-	if (tmp.find_first_of("KH") != 0)
+	if (tmp.rfind("KH", 0) != 0)
 	{
 		return false;
 	}
@@ -160,7 +160,16 @@ void editUserType(KhachHang* kh)
 	int type;
 	cout << "Nhập vào loại thẻ mới(0: Normal, 1: VIP): ";
 	cin >> type;
-	cin.ignore(100, '\n');
+	if (cin.fail())
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Loại thẻ không hợp lệ!!" << endl;
+		return;
+	}
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	if (type != 0 && type != 1)
 	{
 		cout << "Loại thẻ không hợp lệ!!" << endl;

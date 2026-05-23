@@ -30,6 +30,7 @@ int main()
 	/* load dữ liệu từ csv */
 	CustomerManagement::loadFromCsv();
 	BookManagement::loadFromCsv();
+	BillManagement::loadFromCsv();
 
 	/* Loop đến khi exit */
 	while (true)
@@ -44,8 +45,8 @@ int main()
 		{
 			case CUSTOMER_E: customerMain(); break;	/* Quản lý khách hàng */
 			case BOOK_E: bookMain(); break;			/* Quản lý sách */
-			case BILL_E: break;						/* Quản lý hóa đơn */
-			case KHO_E: break;						/* Quản lý kho */
+			case BILL_E: BillManagement::getInstance().taoHoaDon(); break;						/* Quản lý hóa đơn */
+			case KHO_E: mainKho();  break;			/* Quản lý kho */
 			case THONG_KE_E: mainThongKe(); break;	/* Thống kê */
 			case EXIT_E: break;
 			default:
@@ -74,7 +75,7 @@ void showMainMenu()
 		<< setfill('=') << setw(42) << "" << endl
 		<< "1. Quản lý khách hàng" << endl
 		<< "2. Quản lý sách" << endl
-		<< "3. Quản lý hóa đơn bán hàng" << endl
+		<< "3. Tạo hóa đơn bán hàng" << endl
 		<< "4. Quản lý kho" << endl
 		<< "5. Thống kê" << endl
 		<< "0. Thoát" << endl
@@ -88,4 +89,6 @@ void storeData()
 	CustomerManagement::storeToCsv();
 	cout << "Tiến hành lưu thông tin Sách..." << endl;
 	BookManagement::storeToCsv();
+	cout << "Tiến hành lưu thông tin Hóa Đơn..." << endl;
+	BillManagement::storeToCsv();
 }

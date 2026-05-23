@@ -48,6 +48,18 @@
     <ClCompile Include="book_libs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="thongke.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HoaDon.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BillManagement.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Kho.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KhachHang.h">
@@ -75,6 +87,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HoaDon.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BillManagement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -26,6 +26,7 @@ public:
     void addBook();
     void removeBook(const int& index);
     void XuatDanhSachBooks() const;
+    Book* getBookByIsbn(const std::string& isbn);
 
     /* Các hàm tìm kiếm */
     int findISBN(const std::string& isbn);

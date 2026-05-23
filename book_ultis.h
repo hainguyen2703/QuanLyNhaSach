@@ -17,3 +17,5 @@ void updateNamXB(Book* book);
 void updateSoLuong(Book* book);
 void updateGiaNhap(Book* book);
 void updateGiaBan(Book* book);
+void deleteBook();
+void khungBookInfo();

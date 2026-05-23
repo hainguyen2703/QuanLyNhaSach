@@ -6,6 +6,9 @@
 
 using namespace std;
 
+static bool isLeapYear(const int& year);
+static int getDayInMonth(const Date& date);
+
 /* Hàm lấy và trả về thời gian hiện tại trong hệ thống */
 Date getCurrentDate()
 {
@@ -34,6 +37,7 @@ string getDateString(const Date& date)
 	return day + "/" + month + "/" + to_string(date.year);
 }
 
+/* Hàm chuyển string yyyy/mm/dd thành date */
 Date getDateFromString(const string &str)
 {
 	string year = str.substr(0, 4);
@@ -56,7 +60,7 @@ string getDateCsvString(const Date& date)
 	string day = (date.day > 9) ? to_string(date.day) : ("0" + to_string(date.day));
 	string month = (date.month > 9) ? to_string(date.month) : ("0" + to_string(date.month));
 
-	/* return string dd/mm/yyyy */
+	/* return string yyyy-mm-dd */
 	return to_string(date.year) + "-" + month + "-" + day;
 }
 
@@ -69,9 +73,7 @@ istream& operator>>(istream &in, Date& date)
 	/* Lấy input từ istream */
 	in >> date.day >> sep1 >> date.month >> sep2 >> date.year;
 
-	/* Kiểm tra size day month year */
-	//bool sizeCheck = ((day.size() == 2 || day.size() == 1) && (month.size() == 2 || month.size() == 1) && year.size() == 4);
-	/* Kiểm tra format dd/mm/yyyy */
+	/* Kiểm tra format dd/mm/yyyy hoặc dd-mm-yyyy*/
 	bool formatCheck = ((sep1 == '/' && sep2 == '/') || (sep1 == '-' && sep2 == '-'));
 
 	/* Check input */
@@ -82,4 +84,35 @@ istream& operator>>(istream &in, Date& date)
 	}
 
 	return in;
+}
+
+/* Hàm kiểm tra năm nhuần */
+bool isLeapYear(const int& year)
+{
+	return (year % 400 == 0) || ((year % 4 == 0) && (year % 100 != 0));
+}
+
+/* Hàm lấy số ngày trong tháng */
+int getDayInMonth(const Date& date)
+{
+	switch (date.month)
+	{
+		case 1: case 3: case 5: case 7: case 8: case 10: case 12: return 31;
+		case 4: case 6: case 9: case 11: return 30;
+		case 2: return (isLeapYear(date.year)) ? 29 : 28; 
+	}
+}
+
+/* Hàm kiểm tra date có hợp lệ không */
+bool validateDate(const Date& date)
+{
+	/* Kiểm tra năm */
+	if ((date.year < 2000) ||
+		(date.month < 1 || date.month > 12) ||
+		(date.day < 1 || date.day > getDayInMonth(date)))
+	{
+		return false;
+	}
+		
+	return true;
 }

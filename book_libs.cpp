@@ -164,7 +164,16 @@ void updateNamXB(Book* book)
 	cout << "Nhập vào năm xuất bản: ";
 	int year;
 	cin >> year;
-	cin.ignore(100, '\n');	/* Làm sạch buffer */
+	if (cin.fail())
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Năm xuất bản không hợp lệ!!" << endl;
+		return;
+	}
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	if (year <= 0 || year > getCurrentDate().year)
 	{
 		cout << "Năm xuất bản không hợp lệ" << endl;
@@ -182,7 +191,16 @@ void updateSoLuong(Book* book)
 	cout << "Nhập vào số lượng sách thay đổi: ";
 	int soLuong;
 	cin >> soLuong;
-	cin.ignore(100, '\n'); /* Làm sạch buffer */
+	if (cin.fail())
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Số lượng không hợp lệ!!" << endl;
+		return;
+	}
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	if (soLuong < 0)
 	{
 		cout << "Số lượng không hợp lệ" << endl;
@@ -198,9 +216,18 @@ void updateSoLuong(Book* book)
 void updateGiaNhap(Book* book)
 {
 	cout << "Nhập vào giá nhập sách: ";
-	int price;
+	long long price;
 	cin >> price;
-	cin.ignore(100, '\n'); /* Làm sạch buffer */
+	if (cin.fail())
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Giá không hợp lệ!!" << endl;
+		return;
+	}
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	if (price < 10000)
 	{
 		cout << "Giá không hợp lệ" << endl;
@@ -216,9 +243,18 @@ void updateGiaNhap(Book* book)
 void updateGiaBan(Book* book)
 {
 	cout << "Nhập vào giá bán sách: ";
-	int price;
+	long long price;
 	cin >> price;
-	cin.ignore(100, '\n'); /* Làm sạch buffer */
+	if (cin.fail())
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Giá không hợp lệ!!" << endl;
+		return;
+	}
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	if (price < 10000)
 	{
 		cout << "Giá không hợp lệ" << endl;

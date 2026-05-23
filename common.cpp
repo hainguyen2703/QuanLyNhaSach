@@ -48,7 +48,7 @@ bool getStringLine(string& str)
 	getline(cin, str);
 	if (isAllBlank(str))
 	{
-		cout << "Tên không hợp lệ" << endl;
+		cout << "Input không hợp lệ" << endl;
 		return false;
 	}
 
@@ -74,6 +74,26 @@ int getOption()
 	clearInputCache();
 
 	return opt;
+}
+
+/* Hàm lấy giá trị chữ số */
+int getNumber()
+{
+	int x;
+	cin >> x;
+	if (cin.fail()) 
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Nhập sai, vui lòng nhập chữ số\n";
+		x = -1;
+	}
+
+	/* Clear input cache */
+	clearInputCache();
+
+	return x;
+
 }
 
 /* Kiểm tra string input có chứa ký tự không */
@@ -179,8 +199,8 @@ Book* loadBookFromCsvString(string& line)
 	}
 
 	/* Convert string sang double */
-	double importPrice = stod(attribute[IMPORT_PRICE]);
-	double sellingPrice = stod(attribute[SELLING_PRICE]);
+	long long importPrice = stoll(attribute[IMPORT_PRICE]);
+	long long sellingPrice = stoll(attribute[SELLING_PRICE]);
 	int soLuong = stoi(attribute[SO_LUONG]);
 
 	/* Tạo khách hàng */
@@ -217,4 +237,33 @@ KhachHang* loadUserFromCsvString(string& line)
 
 	/* Trả về con trỏ khách hàng */
 	return kh;
+}
+
+/* Hàm tách string thành Hóa Đơn */
+HoaDon* loadHoaDonFromCsvString(string& line)
+{
+	vector<string> attribute;
+
+	stringstream ss(line);
+	string info;
+
+	/* Tách dòng string theo delmi là dấu gạch dọc */
+	/* Thứ tự: maHD|maKH|Date|<isbn:soluong>| */
+	while (getline(ss, info, '|'))
+	{
+		attribute.push_back(info);
+	}
+
+	vector<Item> listItems;
+	stringstream ssItem(attribute[3]);
+	while (getline(ssItem, info, ';'))
+	{
+		Item item;
+		item.isbn = info.substr(0, 13);
+		item.soLuong = stoi(info.substr(14));
+		listItems.push_back(item);
+	}
+
+	/* Tạo khách hàng */
+	return new HoaDon(attribute[0], attribute[1], getDateFromString(attribute[2]), listItems);
 }

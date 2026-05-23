@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Book::Book(const string& isbn, const string& name, const string& author, const string& nxb, const int& year, const string& category, const double& importPrice, const double& sellingPrice, const int& soLuong)
+Book::Book(const string& isbn, const string& name, const string& author, const string& nxb, const int& year, const string& category, const long long& importPrice, const long long& sellingPrice, const int& soLuong)
 {
 	this->isbn = isbn;
 	this->name = name;
@@ -68,7 +68,15 @@ Book* Book::createNewBook()
 	int year;
 	cout << "Năm xuất bản: ";
 	cin >> year;
-	cin.ignore(100, '\n');	/* Làm sạch buffer */
+	if (cin.fail())
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Năm xuất bản không hợp lệ" << endl;
+		return NULL;
+	}
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
 	if (year <= 0 || year > getCurrentDate().year)
 	{
 		cout << "Năm xuất bản không hợp lệ" << endl;
@@ -85,10 +93,19 @@ Book* Book::createNewBook()
 	}
 
 	/* 7. Giá nhập */
-	double importPrice;
+	long long importPrice;
 	cout << "Giá nhập vào: ";
 	cin >> importPrice;
-	cin.ignore(100, '\n'); /* Làm sạch buffer */
+	if (cin.fail())
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Giá nhập không hợp lệ!!!" << endl;
+		return NULL;
+	}
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	/* Mặc định giá nhập phải từ 10.000 vnd */
 	if (importPrice < 10000)
 	{
@@ -96,13 +113,22 @@ Book* Book::createNewBook()
 		return NULL;
 	}
 
-	double sellingPrice = importPrice * 1.3; /* Giá bán mặc định cao hơn 30% */
+	long long sellingPrice = importPrice * 1.3; /* Giá bán mặc định cao hơn 30% */
 
 	/* 8. Số lượng */
 	int soLuong;
 	cout << "Số lượng: ";
 	cin >> soLuong;
-	cin.ignore(100, '\n'); /* Làm sạch buffer */
+	if (cin.fail())
+	{
+		cin.clear();              // xóa trạng thái lỗi
+		cin.ignore(1000, '\n');   // bỏ ký tự sai trong buffer
+		cout << "Số lượng không hợp lệ!!" << endl;
+		return NULL;
+	}
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	if (soLuong <= 0)
 	{
 		cout << "Số lượng không hợp lệ!!\n";
@@ -151,13 +177,13 @@ string Book::getCategory() const
 }
 
 /* Hàm lấy giá nhập */
-double Book::getImportPrice() const
+long long Book::getImportPrice() const
 {
 	return this->importPrice;
 }
 
 /* Hàm lấy giá bán */
-double Book::getSellingPrice() const
+long long Book::getSellingPrice() const
 {
 	return this->sellingPrice;
 }
@@ -200,13 +226,18 @@ void Book::setYear(const int& year)
 }
 
 /* Hàm set số lượng sách */
-void Book::setSoLuong(const int& soLuong, const int& type)
+void Book::setSoLuong(const int& n, const int& type)
 {
 	/* Set gia trị thẳng */
 	if (type == SET_GIA_TRI)
-		this->soLuong = soLuong;
+		this->soLuong = n;
 	else
-		this->soLuong += soLuong;
+	{
+		if (this->soLuong + n <= 0)
+			this->soLuong = 0;
+		else
+			this->soLuong += n;
+	}
 }
 
 /* Hàm set thể loại */
@@ -216,13 +247,13 @@ void Book::setCategory(const std::string& category)
 }
 
 /* Hàm set giá nhập sách*/
-void Book::setImportPrice(const double& importPrice)
+void Book::setImportPrice(const long long& importPrice)
 {
 	this->importPrice = importPrice;
 }
 
 /* Hàm set giá bán */
-void Book::setSellingPrice(const double& sellingPrice)
+void Book::setSellingPrice(const long long& sellingPrice)
 {
 	this->sellingPrice = sellingPrice;
 }

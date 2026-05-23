@@ -24,7 +24,11 @@ public:
     /* Menu quản lý khách hàng */
     void Menu();
 
+    /* Thêm khách hàng */
     void addCustomer();
+
+    /* Lấy khách hàng theo mã KH */
+    KhachHang* getKhByID(const std::string id);
 
     /* Các hàm tìm kiếm */
     int findPhone(const string& phone);
