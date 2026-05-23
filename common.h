@@ -3,6 +3,7 @@
 #include <fstream>
 #include "Book.h"
 #include "KhachHang.h"
+#include "HoaDon.h"
 
 /* Function prototype */
 bool isAllBlank(const std::string str);
@@ -18,3 +19,4 @@ void print_utf8_left(const std::string& s, int width);
 int getFileSizeInByte(std::ifstream& fileInput);
 KhachHang* loadUserFromCsvString(std::string& line);
 Book* loadBookFromCsvString(std::string& line);
+HoaDon* loadHoaDonFromCsvString(std::string& line);

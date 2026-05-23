@@ -60,7 +60,7 @@ string getDateCsvString(const Date& date)
 	string day = (date.day > 9) ? to_string(date.day) : ("0" + to_string(date.day));
 	string month = (date.month > 9) ? to_string(date.month) : ("0" + to_string(date.month));
 
-	/* return string dd/mm/yyyy */
+	/* return string yyyy-mm-dd */
 	return to_string(date.year) + "-" + month + "-" + day;
 }
 

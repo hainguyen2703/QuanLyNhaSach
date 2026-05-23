@@ -1,11 +1,9 @@
 #include <iostream>
 #include <string>
-#include "BillManagement.h"
-#include "BookManagement.h"
-#include "CustomerManagement.h"
+#include <fstream>
+#include "main.h"
 #include "customer_ultis.h"
 #include "book_ultis.h"
-#include "common.h"
 
 using namespace std;
 
@@ -14,6 +12,12 @@ BillManagement& BillManagement::getInstance()
 {
 	static BillManagement instance;
 	return instance;
+}
+
+/* Hàm lấy list hóa đơn */
+vector<HoaDon*>& BillManagement::getListHD()
+{
+	return this->listHoaDon;
 }
 
 void BillManagement::taoHoaDon()
@@ -164,7 +168,8 @@ void BillManagement::taoHoaDon()
 			}
 
 			/* Lưu xuống file csv ngay */
-			BookManagement::storeToCsv();
+			BookManagement::storeToCsv();	//Lưu sách
+			BillManagement::storeToCsv();	//Lưu hóa đơn
 			cout << "Đã lưu hóa đơn!!!" << endl;
 		}
 		else
@@ -174,4 +179,65 @@ void BillManagement::taoHoaDon()
 		}
 
 	}
+}
+
+/* Hàm load data hóa đơn từ csv */
+void BillManagement::loadFromCsv(const string& filename)
+{
+	/* Mở file */
+	ifstream inputFile(filename, ios::in);
+
+	/* Kiểm tra file mở được không */
+	if (inputFile.is_open() != true)
+	{
+		cout << "Không thể mở được file " << filename << endl;
+		return;
+	}
+
+	/* Lấy file size */
+	int size = getFileSizeInByte(inputFile);
+
+	string line;
+	BillManagement& bm = BillManagement::getInstance();
+
+	while (getline(inputFile, line))
+	{
+		HoaDon* hd = loadHoaDonFromCsvString(line);
+
+		if (hd != NULL)
+		{
+			bm.listHoaDon.push_back(hd);
+		}
+	}
+
+	/* Lấy countMaHD */
+	string latestID = bm.listHoaDon[bm.listHoaDon.size() - 1]->getMaHD();
+	HoaDon::setCountMaHD(stoi(latestID.substr(2)));
+
+	/* Đóng file */
+	inputFile.close();
+}
+
+/* Hàm store data hóa đơn xuống csv */
+void BillManagement::storeToCsv(const string& filename)  
+{
+	ofstream outputFile(filename, ios::out);
+	/* Kiểm tra file có mở được không */
+	if (outputFile.is_open() != true)
+	{
+		cout << "Không thể mở được file " << filename << endl;
+		cout << "Không thể lưu dữ liệu của hóa đơn" << endl;
+		return;
+	}
+
+	/* Mở file thành công */
+	/* Không cần lưu BOM vì hóa đơn không có unicode */
+	for (const HoaDon* hd : BillManagement::getInstance().getListHD())
+	{
+		/* Lấy csv string */
+		outputFile << hd->getCsvString() << "\n";
+	}
+
+	/* Đóng file */
+	outputFile.close();
 }

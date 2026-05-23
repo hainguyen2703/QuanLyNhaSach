@@ -24,11 +24,15 @@ private:
 
 public:
 	HoaDon(const std::string& maKH, const Date& date);	/* constructor có tham số */
+	HoaDon(const std::string& maHD, const std::string& maKH, const Date& date, const std::vector<Item>& listItem);	/* constructor có tham số */
 	static void increaseMaHD();
+	static void setCountMaHD(const int& cnt);
 	void addItem(const Item& item);
 	std::vector<Item> getListItems();
 	long long getTongTien();
+	std::string getMaHD();
 	bool setMaHD();
 	void xuatHoaDon();
+	std::string getCsvString() const;
 };
 

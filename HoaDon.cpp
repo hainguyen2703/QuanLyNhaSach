@@ -16,9 +16,22 @@ HoaDon::HoaDon(const string& maKH, const Date& date)
 	this->date = date;
 }
 
+HoaDon::HoaDon(const string& maHD, const string& maKH, const Date& date, const vector<Item>& listItem)
+{
+	this->maHD = maHD;
+	this->maKH = maKH;
+	this->date = date;
+	this->items = listItem;
+}
+
 void HoaDon::increaseMaHD()
 {
 	HoaDon::countMaHD++;
+}
+
+void HoaDon::setCountMaHD(const int& cnt)
+{
+	HoaDon::countMaHD = cnt;
 }
 
 /* Hàm add thêm item vào hóa đơn */
@@ -63,6 +76,12 @@ bool HoaDon::isVIP()
 	return CustomerManagement::getInstance().getKhByID(this->maKH)->getType();
 }
 
+/* Lấy mã hóa đơn */
+string HoaDon::getMaHD()
+{
+	return this->maHD;
+}
+
 /* Hàm set mã hóa đơn */
 bool HoaDon::setMaHD()
 {
@@ -100,4 +119,21 @@ void HoaDon::xuatHoaDon()
 	print_utf8_left("Tổng tiền", 10);
 	cout << ": " << this->getTongTien() << " vnd" << endl;
 	cout << setfill('=') << setw(42) << "" << endl;
+}
+
+/* Hàm lấy chuỗi string để lưu csv */
+string HoaDon::getCsvString() const
+{
+	/* Format: maHD|maKH|Date|<isbn:soluong>|*/
+	string csv = this->maHD + "|" + this->maKH + "|" + getDateCsvString(this->date) + "|";
+
+	for (Item item : this->items)
+	{
+		csv += item.isbn + ":" + to_string(item.soLuong) + ";";
+	}
+
+	/* Xóa ký tự thừa cuối cùng */
+	csv.pop_back();
+
+	return csv;
 }

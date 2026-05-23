@@ -238,3 +238,32 @@ KhachHang* loadUserFromCsvString(string& line)
 	/* Trả về con trỏ khách hàng */
 	return kh;
 }
+
+/* Hàm tách string thành Hóa Đơn */
+HoaDon* loadHoaDonFromCsvString(string& line)
+{
+	vector<string> attribute;
+
+	stringstream ss(line);
+	string info;
+
+	/* Tách dòng string theo delmi là dấu gạch dọc */
+	/* Thứ tự: maHD|maKH|Date|<isbn:soluong>| */
+	while (getline(ss, info, '|'))
+	{
+		attribute.push_back(info);
+	}
+
+	vector<Item> listItems;
+	stringstream ssItem(attribute[3]);
+	while (getline(ssItem, info, ';'))
+	{
+		Item item;
+		item.isbn = info.substr(0, 13);
+		item.soLuong = stoi(info.substr(14));
+		listItems.push_back(item);
+	}
+
+	/* Tạo khách hàng */
+	return new HoaDon(attribute[0], attribute[1], getDateFromString(attribute[2]), listItems);
+}

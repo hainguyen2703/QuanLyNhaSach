@@ -30,6 +30,7 @@ int main()
 	/* load dữ liệu từ csv */
 	CustomerManagement::loadFromCsv();
 	BookManagement::loadFromCsv();
+	BillManagement::loadFromCsv();
 
 	/* Loop đến khi exit */
 	while (true)
@@ -88,4 +89,6 @@ void storeData()
 	CustomerManagement::storeToCsv();
 	cout << "Tiến hành lưu thông tin Sách..." << endl;
 	BookManagement::storeToCsv();
+	cout << "Tiến hành lưu thông tin Hóa Đơn..." << endl;
+	BillManagement::storeToCsv();
 }
