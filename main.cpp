@@ -45,7 +45,7 @@ int main()
 			case CUSTOMER_E: customerMain(); break;	/* Quản lý khách hàng */
 			case BOOK_E: bookMain(); break;			/* Quản lý sách */
 			case BILL_E: break;						/* Quản lý hóa đơn */
-			case KHO_E: break;						/* Quản lý kho */
+			case KHO_E: mainKho();  break;			/* Quản lý kho */
 			case THONG_KE_E: mainThongKe(); break;	/* Thống kê */
 			case EXIT_E: break;
 			default:

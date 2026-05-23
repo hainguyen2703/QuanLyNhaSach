@@ -226,13 +226,18 @@ void Book::setYear(const int& year)
 }
 
 /* Hàm set số lượng sách */
-void Book::setSoLuong(const int& soLuong, const int& type)
+void Book::setSoLuong(const int& n, const int& type)
 {
 	/* Set gia trị thẳng */
 	if (type == SET_GIA_TRI)
-		this->soLuong = soLuong;
+		this->soLuong = n;
 	else
-		this->soLuong += soLuong;
+	{
+		if (this->soLuong + n <= 0)
+			this->soLuong = 0;
+		else
+			this->soLuong += n;
+	}
 }
 
 /* Hàm set thể loại */

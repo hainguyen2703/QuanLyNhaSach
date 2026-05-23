@@ -27,9 +27,7 @@ enum {
 /* Static function prototype */
 static void findBookISBN();
 static void findBookName();
-static void deleteBook();
 static void editBook();
-static void khungBookInfo();
 
 /* Hàm main của việc quản lý sách */
 void bookMain()
@@ -259,7 +257,7 @@ void editBook()
 			return;
 		}
 		else
-			/* Chỉ có 1 sách nên lấy index từ isbn */
+			/* Lấy index từ isbn */
 			index = BookManagement::getInstance().findISBN(list_book[opt - 1]->getIsbn());
 	}
 	else

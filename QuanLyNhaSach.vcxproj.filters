@@ -57,6 +57,9 @@
     <ClCompile Include="BillManagement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Kho.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="KhachHang.h">

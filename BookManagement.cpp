@@ -113,13 +113,15 @@ vector<Book*> BookManagement::findName(const string& name)
 	/* Danh sách các book trùng tên (nếu có) */
 	vector<Book*> list_book;
 
+	string findName_lwc = toLowerUtf8(name);
+
 	for (int index = 0; index < this->books.size(); index++)
 	{
 		/* Đổi tên sách sang lowercase */
 		string name_lwc = toLowerUtf8(this->books[index]->getName());
 
 		/* So sánh */
-		if (name_lwc == name)
+		if (name_lwc == findName_lwc)
 		{
 			list_book.push_back(this->books[index]);
 		}
