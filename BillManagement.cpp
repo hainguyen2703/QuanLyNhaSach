@@ -177,7 +177,6 @@ void BillManagement::taoHoaDon()
 			/* Không tạo hóa đơn */
 			delete hd;	//Xóa hóa đơn nháp vừa tạo
 		}
-
 	}
 }
 
