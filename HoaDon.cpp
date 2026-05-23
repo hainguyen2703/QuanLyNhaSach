@@ -61,11 +61,31 @@ vector<Item> HoaDon::getListItems()
 long long HoaDon::getTongTien()
 {
 	long long bill = 0;
-	for (Item item : this->items)
+	for (const Item& item : this->items)
 	{
 		Book* book = BookManagement::getInstance().getBookByIsbn(item.isbn);
-		bill += item.soLuong * book->getSellingPrice();
+		/* Tính tiền trước giảm giá */
+		long long sum = item.soLuong * book->getSellingPrice();
+
+		/* Kiểm tra nếu có thể giảm 5% khi mua 5 quyển cùng loại */
+		if (item.soLuong >= 5)
+		{
+			/* Giảm 5% */
+			sum = sum * 95 / 100;
+		}
+
+		/* Add vào tổng bill */
+		bill += sum;
 	}
+
+	/* Kiểm tra nếu có thể giảm 10% cho khách hàng VIP */
+	if (this->isVIP() == true)
+	{
+		bill = bill * 90 / 100;
+	}
+
+	/* Add VAT 10% */
+	bill += bill * 10 / 100;
 
 	return bill;
 }
@@ -73,7 +93,7 @@ long long HoaDon::getTongTien()
 /* Hàm kiểm tra khách hàng có phải hạng VIP không */
 bool HoaDon::isVIP()
 {
-	return CustomerManagement::getInstance().getKhByID(this->maKH)->getType();
+	return (CustomerManagement::getInstance().getKhByID(this->maKH)->getType() == 1);
 }
 
 /* Lấy mã hóa đơn */
@@ -95,6 +115,12 @@ bool HoaDon::setMaHD()
 	this->maHD = "HD" + newMaHD;
 
 	return true;
+}
+
+/* Lấy ngày lập hóa đơn */
+Date HoaDon::getDate()
+{
+	return this->date;
 }
 
 /* Hàm in thông tin hóa đơn */

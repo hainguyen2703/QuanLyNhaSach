@@ -7,7 +7,6 @@
 using namespace std;
 
 static bool isLeapYear(const int& year);
-static int getDayInMonth(const Date& date);
 
 /* Hàm lấy và trả về thời gian hiện tại trong hệ thống */
 Date getCurrentDate()

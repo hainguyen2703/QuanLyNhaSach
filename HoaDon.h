@@ -3,8 +3,6 @@
 #include <vector>
 #include "Date.h"
 
-#define VAT 0.1
-
 /* Struct mapping isbn và soluong */
 struct Item {
 	std::string isbn;
@@ -32,6 +30,7 @@ public:
 	long long getTongTien();
 	std::string getMaHD();
 	bool setMaHD();
+	Date getDate();
 	void xuatHoaDon();
 	std::string getCsvString() const;
 };
