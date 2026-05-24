@@ -108,7 +108,13 @@ void findBookISBN()
 
 	/* Nếu tìm thấy, xuất thông tin sách*/
 	if (index != -1)
+	{
+		khungBookInfo();
+		cout << left << setfill(' ') << setw(3) << 1;
+		cout << "|";
 		Books.getDanhSachBooks()[index]->XuatThongTin();
+		cout << endl << setfill('=') << setw(155) << "" << endl;
+	}
 	else
 		cout << "Không tìm thấy sách có ISBN: " << isbn << endl;
 }
@@ -189,8 +195,10 @@ void deleteBook()
 			return;
 		}
 		else
+		{
 			/* Chỉ có 1 sách nên lấy index từ isbn */
 			index = BookManagement::getInstance().findISBN(list_book[opt - 1]->getIsbn());
+		}
 	}
 	else
 	{
@@ -206,9 +214,27 @@ void deleteBook()
 	}
 	else
 	{
-		/* Xóa sách */
-		BookManagement::getInstance().removeBook(index);
-		cout << "Đã xóa sách!!!" << endl;
+		/* Xác nhận lại */
+		khungBookInfo();
+		cout <<left << setfill(' ') << setw(3) << 1;
+		cout << "|";
+		BookManagement::getInstance().getDanhSachBooks()[index]->XuatThongTin();
+		cout << endl << setfill('_') << setw(155) << "" << endl;
+
+		cout << "Xác nhận xóa (y/n): ";
+		char ack;
+		cin >> ack;
+
+		/* Làm sạch buffer */
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+		/* Kiểm tra nếu xác nhận tạo hóa đơn */
+		if (ack == 'Y' || ack == 'y')
+		{
+			/* Xóa sách */
+			BookManagement::getInstance().removeBook(index);
+			cout << "Đã xóa sách!!!" << endl;
+		}
 	}
 }
 
@@ -294,7 +320,7 @@ void editBook()
 		case QUANTITY: updateSoLuong(book); break;		/* Cập nhật số lượng sách */
 		case IMPORT_PRICE: updateGiaNhap(book); break;	/* Cập nhật giá nhập vào */
 		case SELL_PRICE: updateGiaBan(book); break;		/* Cập nhật giá bán */
-		case 0: back = true;							/* Trở về menu quản lý sách */
+		case 0: back = true; break;						/* Trở về menu quản lý sách */
 		default:
 			cout << "Lựa chọn không hợp lệ" << endl;
 			break;

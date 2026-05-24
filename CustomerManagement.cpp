@@ -46,7 +46,7 @@ void CustomerManagement::Menu()
 }
 
 /* Hàm tạo Khách Hàng mới */
-void CustomerManagement::addCustomer()
+void CustomerManagement::themKhachHang()
 {
     /* Tạo Khách Hàng mới */
     KhachHang* newCustomer = KhachHang::createNewKhachHang();
@@ -307,4 +307,13 @@ void CustomerManagement::storeToCsv(const string& filename)
 
     /* Đóng file */
     outputFile.close();
+}
+
+/* Hàm hủy để giải phóng vùng nhớ */
+CustomerManagement::~CustomerManagement()
+{
+    for (KhachHang* kh : this->danhSach)
+    {
+        delete kh;
+    }
 }

@@ -46,7 +46,7 @@ void customerMain()
 		switch (opt)
 		{
 			case LIST_USER_E: Users.XuatDanhSachKH(); break;	/* Xuất tất cả khách hàng có trong hệ thống */
-			case ADD_USER_E: Users.addCustomer(); break;		/* Thêm khách hàng mới */
+			case ADD_USER_E: Users.themKhachHang(); break;		/* Thêm khách hàng mới */
 			case MOD_USER_E: editUser(); break;					/* Chỉnh sửa thông tin khách hàng */
 			case DEL_USER_E: deleteUser(); break;				/* Xóa khách hàng */
 			case FIND_USER_NUM: findUserPhone(); break;			/* Tìm kiếm khách hàng theo số điện thoại */
@@ -80,9 +80,25 @@ void deleteUser()
 
 	if (index != -1)
 	{
-		/* Tìm thấy Khách Hàng, tiến hành xóa */
-		Users.XoaKhachHang(index);
-		cout << "Đã xóa khách hàng có ID: " << delID << endl;
+		/* Xác nhận trước khi xóa */
+		khungInfoKH();
+		Users.getKhByID(toUpper(delID))->XuatThongTin();
+		cout << setfill('=') << setw(164) << "" << endl;
+
+		cout << "Xác nhận xóa (y/n): ";
+		char ack;
+		cin >> ack;
+
+		/* Làm sạch buffer */
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+		/* Kiểm tra nếu xác nhận tạo hóa đơn */
+		if (ack == 'Y' || ack == 'y')
+		{
+			/* Tìm thấy Khách Hàng, tiến hành xóa */
+			Users.XoaKhachHang(index);
+			cout << "Đã xóa khách hàng có ID: " << delID << endl;
+		}
 	}
 	else
 	{
@@ -109,11 +125,10 @@ void findUserPhone()
 
 	if (index != -1)
 	{
-		cout << setfill('=') << setw(42) << "" << endl;
-		cout << setfill(' ') << setw(12) << "" << "Thông tin khách hàng" << endl;
-		cout << setfill('=') << setw(42) << "" << endl;
+		khungInfoKH();
 		/* Tìm thấy khách hàng, xuất thông tin */
 		Users.getDanhSach()[index]->XuatThongTin();
+		cout << setfill('_') << setw(164) << "" << endl;
 	}
 	else
 	{

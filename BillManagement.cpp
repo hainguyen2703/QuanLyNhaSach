@@ -96,6 +96,17 @@ void BillManagement::taoHoaDon()
 
 		/* Lấy book */
 		int remain = BookManagement::getInstance().getBookByIsbn(isbn)->getSoLuong();
+
+		/* Kiểm tra thêm nếu isbn này đã có trong listItem */
+		for (Item item : hd->getListItems())
+		{
+			if (item.isbn == isbn)
+			{
+				remain -= item.soLuong;
+				break;
+			}
+		}
+
 		bool exit = false;
 		cout << "Nhập vào số lượng: ";
 		int soLuong;
@@ -142,6 +153,8 @@ void BillManagement::taoHoaDon()
 	}
 	else
 	{
+		/* Tính tổng tiền*/
+		hd->tinhTien();
 		/* In hóa đơn */
 		hd->xuatHoaDon();
 		/* Xác nhận */
@@ -246,4 +259,13 @@ void BillManagement::storeToCsv(const string& filename)
 
 	/* Đóng file */
 	outputFile.close();
+}
+
+/* Hàm hủy */
+BillManagement::~BillManagement()
+{
+	for (HoaDon* hd : this->listHoaDon)
+	{
+		delete hd;
+	}
 }

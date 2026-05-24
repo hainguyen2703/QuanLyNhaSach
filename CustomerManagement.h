@@ -15,7 +15,7 @@ public:
 
     // Hàm truy cập instance duy nhất
     static CustomerManagement& getInstance();
-    void themKhachHang(KhachHang* kh);
+   
     std::vector<KhachHang*>& getDanhSach();
     int getSoLuongKH();
     void XuatDanhSachKH();
@@ -25,7 +25,8 @@ public:
     void Menu();
 
     /* Thêm khách hàng */
-    void addCustomer();
+    void themKhachHang(KhachHang* kh);
+    void themKhachHang();
 
     /* Lấy khách hàng theo mã KH */
     KhachHang* getKhByID(const std::string id);
@@ -42,5 +43,8 @@ public:
     /* Các hàm load và store data */
     static void loadFromCsv(const std::string& filename = "CustomerData.csv");  /* Mặc định là CustomerData.csv */
     static void storeToCsv(const std::string& filename = "CustomerData.csv");   /* Mặc định là CustomerData.csv */
+
+    /* Destructor */
+    ~CustomerManagement();
 };
 

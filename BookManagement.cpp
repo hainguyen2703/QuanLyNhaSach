@@ -39,6 +39,11 @@ void BookManagement::Menu()
 void BookManagement::addBook()
 {
 	/* Tạo sách mới */
+	cout << setfill('=')
+		<< setw(42) << "" << endl
+		<< setfill(' ') << setw(12) << "" << "Thêm sách mới" << endl
+		<< setfill('=') << setw(42) << "" << endl;
+
 	Book* newBook = Book::createNewBook();
 
 	/* Kiểm tra nếu sách mới tạo thành công */
@@ -331,4 +336,13 @@ void BookManagement::loadFromCsv(const std::string& filename)
 
 	/* Đóng file */
 	inputFile.close();
+}
+
+/* Hàm hủy */
+BookManagement::~BookManagement()
+{
+	for (Book* b : this->books)
+	{
+		delete b;
+	}
 }

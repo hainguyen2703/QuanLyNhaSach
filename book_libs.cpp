@@ -89,6 +89,13 @@ void updateISBN(Book* book)
 		return;
 	}
 
+	/* Kiểm tra nếu isbn đã tồn tại */
+	if (BookManagement::getInstance().findISBN(isbn) != -1)
+	{
+		cout << "ISBN đã tồn tại, vui lòng kiểm tra lại!!!" << endl;
+		return;
+	}
+
 	/* Cập nhật */
 	book->setIsbn(isbn);
 	cout << "Cập nhật isbn thành công" << endl;
@@ -236,6 +243,7 @@ void updateGiaNhap(Book* book)
 
 	/* Cập nhật */
 	book->setImportPrice(price);
+	book->setSellingPrice(price * 130 / 100);
 	cout << "Cập nhật giá nhập sách thành công" << endl;
 }
 

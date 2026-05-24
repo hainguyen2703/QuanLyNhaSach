@@ -41,5 +41,8 @@ public:
     /* Các hàm load và store data */
 	static void loadFromCsv(const std::string& filename = "books.csv");  /* Mặc định là books.csv */
 	static void storeToCsv(const std::string& filename = "books.csv");   /* Mặc định là books.csv */
+
+    /* Destructor */
+    ~BookManagement();
 };
 
