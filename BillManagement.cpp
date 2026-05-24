@@ -193,14 +193,21 @@ void BillManagement::loadFromCsv(const string& filename)
 		return;
 	}
 
-	/* Lấy file size */
-	int size = getFileSizeInByte(inputFile);
+	/* Kiểm tra nếu file rỗng */
+	if (getFileSizeInByte(inputFile) == 0)
+	{
+		inputFile.close(); 
+		return;
+	}
 
 	string line;
 	BillManagement& bm = BillManagement::getInstance();
 
 	while (getline(inputFile, line))
 	{
+		/* Kiểm tra nếu dòng đang đọc rỗng */
+		if (line.empty()) continue;
+
 		HoaDon* hd = loadHoaDonFromCsvString(line);
 
 		if (hd != NULL)

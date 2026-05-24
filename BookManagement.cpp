@@ -297,6 +297,12 @@ void BookManagement::loadFromCsv(const std::string& filename)
 	/* Lấy file size */
 	int size = getFileSizeInByte(inputFile);
 
+	if (size == 0)
+	{
+		inputFile.close();
+		return;
+	}
+
 	/* Mở được file => Lấy data */
 	string line;
 	bool bomChecked = false;
@@ -309,6 +315,9 @@ void BookManagement::loadFromCsv(const std::string& filename)
 			line.erase(line.begin(), line.begin() + 3);	/* Xóa BOM nếu có */
 			bomChecked = true;
 		}
+
+		/* Kiểm tra nếu dòng đang đọc rỗng */
+		if (line.empty()) continue;
 
 		/* Load book data */
 		Book* book = loadBookFromCsvString(line);

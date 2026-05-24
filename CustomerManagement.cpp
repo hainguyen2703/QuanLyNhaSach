@@ -237,8 +237,12 @@ void CustomerManagement::loadFromCsv(const string& filename)
         return;
     }
 
-    /* Lấy file size */
-    int size = getFileSizeInByte(inputFile);
+    /* Kiểm tra nếu file rỗng */
+    if (getFileSizeInByte(inputFile) == 0)
+    {
+        inputFile.close();
+        return;
+    }
 
     /* Mở được file => Lấy data */
     string line;
@@ -251,6 +255,9 @@ void CustomerManagement::loadFromCsv(const string& filename)
             line.erase(line.begin(), line.begin() + 3);	/* Xóa BOM nếu có */
             bomChecked = true;
         }
+
+        /* Kiểm tra nếu line đang đọc không có gì */
+        if (line.empty()) continue;
 
         KhachHang* kh = loadUserFromCsvString(line);
 
