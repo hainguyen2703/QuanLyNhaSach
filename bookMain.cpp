@@ -189,8 +189,10 @@ void deleteBook()
 			return;
 		}
 		else
+		{
 			/* Chỉ có 1 sách nên lấy index từ isbn */
 			index = BookManagement::getInstance().findISBN(list_book[opt - 1]->getIsbn());
+		}
 	}
 	else
 	{
@@ -206,9 +208,27 @@ void deleteBook()
 	}
 	else
 	{
-		/* Xóa sách */
-		BookManagement::getInstance().removeBook(index);
-		cout << "Đã xóa sách!!!" << endl;
+		/* Xác nhận lại */
+		khungBookInfo();
+		cout <<left << setfill(' ') << setw(3) << 1;
+		cout << "|";
+		BookManagement::getInstance().getDanhSachBooks()[index]->XuatThongTin();
+		cout << endl << setfill('_') << setw(155) << "" << endl;
+
+		cout << "Xác nhận xóa (y/n): ";
+		char ack;
+		cin >> ack;
+
+		/* Làm sạch buffer */
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+		/* Kiểm tra nếu xác nhận tạo hóa đơn */
+		if (ack == 'Y' || ack == 'y')
+		{
+			/* Xóa sách */
+			BookManagement::getInstance().removeBook(index);
+			cout << "Đã xóa sách!!!" << endl;
+		}
 	}
 }
 

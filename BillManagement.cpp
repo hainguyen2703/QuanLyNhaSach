@@ -142,6 +142,8 @@ void BillManagement::taoHoaDon()
 	}
 	else
 	{
+		/* Tính tổng tiền*/
+		hd->tinhTien();
 		/* In hóa đơn */
 		hd->xuatHoaDon();
 		/* Xác nhận */

@@ -80,9 +80,25 @@ void deleteUser()
 
 	if (index != -1)
 	{
-		/* Tìm thấy Khách Hàng, tiến hành xóa */
-		Users.XoaKhachHang(index);
-		cout << "Đã xóa khách hàng có ID: " << delID << endl;
+		/* Xác nhận trước khi xóa */
+		khungInfoKH();
+		Users.getKhByID(toUpper(delID))->XuatThongTin();
+		cout << setfill('=') << setw(164) << "" << endl;
+
+		cout << "Xác nhận xóa (y/n): ";
+		char ack;
+		cin >> ack;
+
+		/* Làm sạch buffer */
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+		/* Kiểm tra nếu xác nhận tạo hóa đơn */
+		if (ack == 'Y' || ack == 'y')
+		{
+			/* Tìm thấy Khách Hàng, tiến hành xóa */
+			Users.XoaKhachHang(index);
+			cout << "Đã xóa khách hàng có ID: " << delID << endl;
+		}
 	}
 	else
 	{
@@ -109,11 +125,10 @@ void findUserPhone()
 
 	if (index != -1)
 	{
-		cout << setfill('=') << setw(42) << "" << endl;
-		cout << setfill(' ') << setw(12) << "" << "Thông tin khách hàng" << endl;
-		cout << setfill('=') << setw(42) << "" << endl;
+		khungInfoKH();
 		/* Tìm thấy khách hàng, xuất thông tin */
 		Users.getDanhSach()[index]->XuatThongTin();
+		cout << setfill('_') << setw(164) << "" << endl;
 	}
 	else
 	{
