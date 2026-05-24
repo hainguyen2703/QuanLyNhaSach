@@ -15,5 +15,8 @@ public:
 	/* Các hàm load và store data */
 	static void loadFromCsv(const std::string& filename = "HoaDon.csv");  /* Mặc định là HoaDon.csv */
 	static void storeToCsv(const std::string& filename = "HoaDon.csv");   /* Mặc định là HoaDon.csv */
+
+	/* Destructor */
+	~BillManagement();
 };
 

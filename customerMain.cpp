@@ -46,7 +46,7 @@ void customerMain()
 		switch (opt)
 		{
 			case LIST_USER_E: Users.XuatDanhSachKH(); break;	/* Xuất tất cả khách hàng có trong hệ thống */
-			case ADD_USER_E: Users.addCustomer(); break;		/* Thêm khách hàng mới */
+			case ADD_USER_E: Users.themKhachHang(); break;		/* Thêm khách hàng mới */
 			case MOD_USER_E: editUser(); break;					/* Chỉnh sửa thông tin khách hàng */
 			case DEL_USER_E: deleteUser(); break;				/* Xóa khách hàng */
 			case FIND_USER_NUM: findUserPhone(); break;			/* Tìm kiếm khách hàng theo số điện thoại */

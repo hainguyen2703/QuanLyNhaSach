@@ -332,3 +332,12 @@ void BookManagement::loadFromCsv(const std::string& filename)
 	/* Đóng file */
 	inputFile.close();
 }
+
+/* Hàm hủy */
+BookManagement::~BookManagement()
+{
+	for (Book* b : this->books)
+	{
+		delete b;
+	}
+}

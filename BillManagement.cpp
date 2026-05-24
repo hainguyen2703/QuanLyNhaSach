@@ -247,3 +247,12 @@ void BillManagement::storeToCsv(const string& filename)
 	/* Đóng file */
 	outputFile.close();
 }
+
+/* Hàm hủy */
+BillManagement::~BillManagement()
+{
+	for (HoaDon* hd : this->listHoaDon)
+	{
+		delete hd;
+	}
+}
