@@ -170,13 +170,37 @@ void print_utf8_left(const string& s, int width) {
 /* Lấy size của file cần đọc */
 int getFileSizeInByte(ifstream& fileInput)
 {
-	/* Di chuyển con trỏ file về cuối file */
+//	/* Di chuyển con trỏ file về cuối file */
+//	fileInput.seekg(0, ios::end);
+//
+//	/* Lấy vị trí cuối file */
+//	int fileSize = fileInput.tellg();
+//
+//	/* Trả về đầu file */
+//	fileInput.seekg(0, ios::beg);
+//
+//	return fileSize;
+
+	// Kiểm tra file rỗng thật sự (0 byte)
+	if (fileInput.peek() == ifstream::traits_type::eof()) {
+		return 0;
+	}
+
+	// Di chuyển con trỏ về cuối file
 	fileInput.seekg(0, ios::end);
 
-	/* Lấy vị trí cuối file */
+	// Lấy vị trí cuối file
 	int fileSize = fileInput.tellg();
 
-	/* Trả về đầu file */
+	// Nếu tellg() lỗi → trả về 0
+	if (fileSize < 0) {
+		fileSize = 0;
+	}
+
+	// Reset trạng thái stream (rất quan trọng)
+	fileInput.clear();
+
+	// Trả con trỏ về đầu file
 	fileInput.seekg(0, ios::beg);
 
 	return fileSize;
@@ -248,7 +272,7 @@ HoaDon* loadHoaDonFromCsvString(string& line)
 	string info;
 
 	/* Tách dòng string theo delmi là dấu gạch dọc */
-	/* Thứ tự: maHD|maKH|Date|<isbn:soluong>| */
+	/* Thứ tự: maHD|maKH|Date|<isbn:soluong>|tongBill */
 	while (getline(ss, info, '|'))
 	{
 		attribute.push_back(info);
@@ -265,5 +289,5 @@ HoaDon* loadHoaDonFromCsvString(string& line)
 	}
 
 	/* Tạo khách hàng */
-	return new HoaDon(attribute[0], attribute[1], getDateFromString(attribute[2]), listItems);
+	return new HoaDon(attribute[0], attribute[1], getDateFromString(attribute[2]), listItems, stoi(attribute[4]));
 }
