@@ -18,7 +18,7 @@ void mainThongKe()
 	{
 		/* Show menu */
 		menuThongKe();
-		cout << "Nhập vao thống kê muốn xem: ";
+		cout << "Nhập vào thống kê muốn xem: ";
 		int opt = getOption();
 
 		BookManagement& bm = BookManagement::getInstance();

@@ -13,12 +13,27 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\Khách Hàng">
+      <UniqueIdentifier>{b4c6b6f6-04d5-46f3-b943-d7d49d2ab65f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Hóa đơn">
+      <UniqueIdentifier>{90d19a85-05e0-4aed-af38-063bef870884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Sách">
+      <UniqueIdentifier>{0af9307a-f814-401b-9156-337e5af0f010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Hóa đơn">
+      <UniqueIdentifier>{3f697012-2ba7-4609-b2bc-2609a3baec38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Khách hàng">
+      <UniqueIdentifier>{2b59af49-b71f-48d0-a7a5-5497141212ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Sách">
+      <UniqueIdentifier>{26746f15-b2af-423c-b6ff-72cce7e67571}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="KhachHang.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="date.cpp">
@@ -27,73 +42,76 @@
     <ClCompile Include="common.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="customerMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CustomerManagement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="customer_lib.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Book.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BookManagement.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="bookMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="book_libs.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="thongke.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HoaDon.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BillManagement.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Kho.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BillManagement.cpp">
+      <Filter>Source Files\Hóa đơn</Filter>
+    </ClCompile>
+    <ClCompile Include="HoaDon.cpp">
+      <Filter>Source Files\Hóa đơn</Filter>
+    </ClCompile>
+    <ClCompile Include="customer_lib.cpp">
+      <Filter>Source Files\Khách Hàng</Filter>
+    </ClCompile>
+    <ClCompile Include="customerMain.cpp">
+      <Filter>Source Files\Khách Hàng</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomerManagement.cpp">
+      <Filter>Source Files\Khách Hàng</Filter>
+    </ClCompile>
+    <ClCompile Include="KhachHang.cpp">
+      <Filter>Source Files\Khách Hàng</Filter>
+    </ClCompile>
+    <ClCompile Include="Book.cpp">
+      <Filter>Source Files\Sách</Filter>
+    </ClCompile>
+    <ClCompile Include="book_libs.cpp">
+      <Filter>Source Files\Sách</Filter>
+    </ClCompile>
+    <ClCompile Include="bookMain.cpp">
+      <Filter>Source Files\Sách</Filter>
+    </ClCompile>
+    <ClCompile Include="BookManagement.cpp">
+      <Filter>Source Files\Sách</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="KhachHang.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Date.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="common.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CustomerManagement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="customer_ultis.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Book.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="book_ultis.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BookManagement.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="HoaDon.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Hóa đơn</Filter>
     </ClInclude>
     <ClInclude Include="BillManagement.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Hóa đơn</Filter>
+    </ClInclude>
+    <ClInclude Include="customer_ultis.h">
+      <Filter>Header Files\Khách hàng</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomerManagement.h">
+      <Filter>Header Files\Khách hàng</Filter>
+    </ClInclude>
+    <ClInclude Include="KhachHang.h">
+      <Filter>Header Files\Khách hàng</Filter>
+    </ClInclude>
+    <ClInclude Include="Book.h">
+      <Filter>Header Files\Sách</Filter>
+    </ClInclude>
+    <ClInclude Include="book_ultis.h">
+      <Filter>Header Files\Sách</Filter>
+    </ClInclude>
+    <ClInclude Include="BookManagement.h">
+      <Filter>Header Files\Sách</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
