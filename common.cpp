@@ -272,7 +272,7 @@ HoaDon* loadHoaDonFromCsvString(string& line)
 	string info;
 
 	/* Tách dòng string theo delmi là dấu gạch dọc */
-	/* Thứ tự: maHD|maKH|Date|<isbn:soluong>| */
+	/* Thứ tự: maHD|maKH|Date|<isbn:soluong>|tongBill */
 	while (getline(ss, info, '|'))
 	{
 		attribute.push_back(info);
@@ -289,5 +289,5 @@ HoaDon* loadHoaDonFromCsvString(string& line)
 	}
 
 	/* Tạo khách hàng */
-	return new HoaDon(attribute[0], attribute[1], getDateFromString(attribute[2]), listItems);
+	return new HoaDon(attribute[0], attribute[1], getDateFromString(attribute[2]), listItems, stoi(attribute[4]));
 }

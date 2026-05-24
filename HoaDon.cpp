@@ -16,12 +16,13 @@ HoaDon::HoaDon(const string& maKH, const Date& date)
 	this->date = date;
 }
 
-HoaDon::HoaDon(const string& maHD, const string& maKH, const Date& date, const vector<Item>& listItem)
+HoaDon::HoaDon(const string& maHD, const string& maKH, const Date& date, const vector<Item>& listItem, const long long& tongBill)
 {
 	this->maHD = maHD;
 	this->maKH = maKH;
 	this->date = date;
 	this->items = listItem;
+	this->tongBill = tongBill;
 }
 
 void HoaDon::increaseMaHD()
@@ -57,8 +58,8 @@ vector<Item> HoaDon::getListItems()
 	return this->items;
 }
 
-/* Hàm tính tổng tiền hóa đơn */
-long long HoaDon::getTongTien()
+/* Hàm tính tiền */
+void HoaDon::tinhTien()
 {
 	long long bill = 0;
 	for (const Item& item : this->items)
@@ -87,7 +88,14 @@ long long HoaDon::getTongTien()
 	/* Add VAT 10% */
 	bill += bill * 10 / 100;
 
-	return bill;
+	/* Update tổng bill */
+	this->tongBill = bill;
+}
+
+/* Get tổng tiền hóa đơn */
+long long HoaDon::getTongTien()
+{
+	return this->tongBill;
 }
 
 /* Hàm kiểm tra khách hàng có phải hạng VIP không */
@@ -150,7 +158,7 @@ void HoaDon::xuatHoaDon()
 /* Hàm lấy chuỗi string để lưu csv */
 string HoaDon::getCsvString() const
 {
-	/* Format: maHD|maKH|Date|<isbn:soluong>|*/
+	/* Format: maHD|maKH|Date|<isbn:soluong>|tongtien*/
 	string csv = this->maHD + "|" + this->maKH + "|" + getDateCsvString(this->date) + "|";
 
 	for (Item item : this->items)
@@ -160,6 +168,7 @@ string HoaDon::getCsvString() const
 
 	/* Xóa ký tự thừa cuối cùng */
 	csv.pop_back();
+	csv += "|" + to_string(this->tongBill);
 
 	return csv;
 }
